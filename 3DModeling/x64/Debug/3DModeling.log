@@ -1,0 +1,4 @@
+﻿  viewwidget.cpp
+viewwidget.cpp(760): warning C4838: 從 'double' 到 'float' 的轉換必須是縮小轉換
+  3DModeling.vcxproj -> C:\Users\lab_503\Documents\GitHub\3DModeling\x64\Debug\3DModeling.exe
+  3DModeling.vcxproj -> C:\Users\lab_503\Documents\GitHub\3DModeling\x64\Debug\3DModeling.pdb (Full PDB)
