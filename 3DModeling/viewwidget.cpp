@@ -1,4 +1,5 @@
 #define _USE_MATH_DEFINES
+#include <iostream>
 #include <math.h>
 #include <time.h>
 #include "LoadShaders.h"
@@ -6,6 +7,7 @@
 #include "mymath.h"
 #include "voxelvbo.h"
 
+using namespace std;
 
 enum RENDER_MODE { RENDER_POLYGON, RENDER_WIREFRAME, RENDER_PICKING };
 
@@ -903,15 +905,17 @@ void ViewWidget::mousePressEvent(QMouseEvent *e)
 	switch (e->buttons())
 	{
 	case Qt::LeftButton:
+		//cout<<"Left\n";
 		break;
 	case Qt::MidButton:
+		//cout<<"Mid\n";
 		break;
 	case Qt::RightButton:
+		//cout << "Right\n";
 		break;
 	default:
 		break;
 	}
-	
 	oldPosX = e->x();
 	oldPosY = e->y();
 	update();
