@@ -3,38 +3,5 @@
   main.cpp
   mainwindow.cpp
   正在產生程式碼...
-LINK : warning LNK4098: 預設的程式庫 'LIBCMT' 與其他使用的程式庫衝突，請使用 /NODEFAULTLIB:library
-viewwidget.obj : warning LNK4217: 本機定義的符號 glewInit 已匯入函式 "protected: virtual void __cdecl ViewWidget::initializeGL(void)" (?initializeGL@ViewWidget@@MEAAXXZ)
-viewwidget.obj : warning LNK4049: 本機定義的符號 __glewActiveTexture 已匯入
-viewwidget.obj : warning LNK4049: 本機定義的符號 __glewBindBuffer 已匯入
-viewwidget.obj : warning LNK4049: 本機定義的符號 __glewBufferData 已匯入
-viewwidget.obj : warning LNK4049: 本機定義的符號 __glewGenBuffers 已匯入
-viewwidget.obj : warning LNK4049: 本機定義的符號 __glewDisableVertexAttribArray 已匯入
-viewwidget.obj : warning LNK4049: 本機定義的符號 __glewDrawBuffers 已匯入
-viewwidget.obj : warning LNK4049: 本機定義的符號 __glewEnableVertexAttribArray 已匯入
-viewwidget.obj : warning LNK4049: 本機定義的符號 __glewGetUniformLocation 已匯入
-viewwidget.obj : warning LNK4049: 本機定義的符號 __glewUniform1f 已匯入
-viewwidget.obj : warning LNK4049: 本機定義的符號 __glewUniform1i 已匯入
-viewwidget.obj : warning LNK4049: 本機定義的符號 __glewUniform2fv 已匯入
-viewwidget.obj : warning LNK4049: 本機定義的符號 __glewUniform3fv 已匯入
-viewwidget.obj : warning LNK4049: 本機定義的符號 __glewUniform4f 已匯入
-viewwidget.obj : warning LNK4049: 本機定義的符號 __glewUniform4fv 已匯入
-viewwidget.obj : warning LNK4049: 本機定義的符號 __glewUniformMatrix4fv 已匯入
-viewwidget.obj : warning LNK4049: 本機定義的符號 __glewUseProgram 已匯入
-viewwidget.obj : warning LNK4049: 本機定義的符號 __glewVertexAttribPointer 已匯入
-viewwidget.obj : warning LNK4049: 本機定義的符號 __glewBindFramebuffer 已匯入
-viewwidget.obj : warning LNK4049: 本機定義的符號 __glewBindRenderbuffer 已匯入
-viewwidget.obj : warning LNK4049: 本機定義的符號 __glewBlitFramebuffer 已匯入
-viewwidget.obj : warning LNK4049: 本機定義的符號 __glewCheckFramebufferStatus 已匯入
-viewwidget.obj : warning LNK4049: 本機定義的符號 __glewFramebufferRenderbuffer 已匯入
-viewwidget.obj : warning LNK4049: 本機定義的符號 __glewFramebufferTexture2D 已匯入
-viewwidget.obj : warning LNK4049: 本機定義的符號 __glewGenFramebuffers 已匯入
-viewwidget.obj : warning LNK4049: 本機定義的符號 __glewGenRenderbuffers 已匯入
-viewwidget.obj : warning LNK4049: 本機定義的符號 __glewRenderbufferStorage 已匯入
-viewwidget.obj : warning LNK4049: 本機定義的符號 __glewRenderbufferStorageMultisample 已匯入
-viewwidget.obj : warning LNK4049: 本機定義的符號 __glewTexImage2DMultisample 已匯入
-viewwidget.obj : warning LNK4049: 本機定義的符號 __glewBindVertexArray 已匯入
-viewwidget.obj : warning LNK4049: 本機定義的符號 __glewGenVertexArrays 已匯入
-glew32s.lib(glew.obj) : warning LNK4099: 找不到 PDB 'vc120.pdb' (有 'glew32s.lib(glew.obj)' 或位於 'C:\Users\lab_503\Documents\GitHub\3DModeling\x64\Debug\vc120.pdb')，當做沒有偵錯資訊，連結物件
   3DModeling.vcxproj -> C:\Users\lab_503\Documents\GitHub\3DModeling\x64\Debug\3DModeling.exe
   3DModeling.vcxproj -> C:\Users\lab_503\Documents\GitHub\3DModeling\x64\Debug\3DModeling.pdb (Full PDB)
