@@ -1,7 +1,4 @@
 ﻿  Uic'ing mainwindow.ui...
-  moc_mainwindow.cpp
-  main.cpp
   mainwindow.cpp
-  正在產生程式碼...
   3DModeling.vcxproj -> C:\Users\lab_503\Documents\GitHub\3DModeling\x64\Debug\3DModeling.exe
   3DModeling.vcxproj -> C:\Users\lab_503\Documents\GitHub\3DModeling\x64\Debug\3DModeling.pdb (Full PDB)
