@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.7.1
+** Created by: Qt User Interface Compiler version 5.7.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -19,13 +19,17 @@
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
-#include <QtWidgets/QOpenGLWidget>
 #include <QtWidgets/QRadioButton>
 #include <QtWidgets/QSplitter>
 #include <QtWidgets/QTabWidget>
 #include <QtWidgets/QToolBox>
 #include <QtWidgets/QTreeView>
 #include <QtWidgets/QWidget>
+#include "threedimesion_viewwidget.h"
+#include "viewwidget.h"
+#include "x_axis_viewwidget.h"
+#include "y_axis_viewwidget.h"
+#include "z_axis_viewwidget.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -52,14 +56,14 @@ public:
     QTabWidget *view_tabWidget;
     QWidget *viewWidgetLayout;
     QGridLayout *gridLayout_2;
-    QOpenGLWidget *viewWidget;
+    ViewWidget *viewWidget;
     QWidget *editWidgetLayout;
     QGridLayout *gridLayout_7;
     QGridLayout *four_edit_viewWidgetLayout;
-    QOpenGLWidget *x_axis_viewwidget;
-    QOpenGLWidget *threedimesion_viewwidget;
-    QOpenGLWidget *y_axis_viewwidget;
-    QOpenGLWidget *z_axis_viewwidget;
+    X_Axis_ViewWidget *x_axis_viewwidget;
+    ThreeDimesion_ViewWidget *threedimesion_viewwidget;
+    Y_Axis_ViewWidget *y_axis_viewwidget;
+    Z_Axis_ViewWidget *z_axis_viewwidget;
     QToolBox *toolBox;
     QWidget *ioWidget;
     QGridLayout *gridLayout_4;
@@ -75,7 +79,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(716, 595);
+        MainWindow->resize(773, 595);
         actionImport = new QAction(MainWindow);
         actionImport->setObjectName(QStringLiteral("actionImport"));
         actionExport = new QAction(MainWindow);
@@ -179,7 +183,7 @@ public:
         gridLayout_2->setSpacing(6);
         gridLayout_2->setContentsMargins(11, 11, 11, 11);
         gridLayout_2->setObjectName(QStringLiteral("gridLayout_2"));
-        viewWidget = new QOpenGLWidget(viewWidgetLayout);
+        viewWidget = new ViewWidget(viewWidgetLayout);
         viewWidget->setObjectName(QStringLiteral("viewWidget"));
         sizePolicy.setHeightForWidth(viewWidget->sizePolicy().hasHeightForWidth());
         viewWidget->setSizePolicy(sizePolicy);
@@ -199,7 +203,7 @@ public:
         four_edit_viewWidgetLayout = new QGridLayout();
         four_edit_viewWidgetLayout->setSpacing(6);
         four_edit_viewWidgetLayout->setObjectName(QStringLiteral("four_edit_viewWidgetLayout"));
-        x_axis_viewwidget = new QOpenGLWidget(editWidgetLayout);
+        x_axis_viewwidget = new X_Axis_ViewWidget(editWidgetLayout);
         x_axis_viewwidget->setObjectName(QStringLiteral("x_axis_viewwidget"));
         sizePolicy.setHeightForWidth(x_axis_viewwidget->sizePolicy().hasHeightForWidth());
         x_axis_viewwidget->setSizePolicy(sizePolicy);
@@ -207,7 +211,7 @@ public:
 
         four_edit_viewWidgetLayout->addWidget(x_axis_viewwidget, 0, 0, 1, 1);
 
-        threedimesion_viewwidget = new QOpenGLWidget(editWidgetLayout);
+        threedimesion_viewwidget = new ThreeDimesion_ViewWidget(editWidgetLayout);
         threedimesion_viewwidget->setObjectName(QStringLiteral("threedimesion_viewwidget"));
         sizePolicy.setHeightForWidth(threedimesion_viewwidget->sizePolicy().hasHeightForWidth());
         threedimesion_viewwidget->setSizePolicy(sizePolicy);
@@ -215,7 +219,7 @@ public:
 
         four_edit_viewWidgetLayout->addWidget(threedimesion_viewwidget, 0, 1, 1, 1);
 
-        y_axis_viewwidget = new QOpenGLWidget(editWidgetLayout);
+        y_axis_viewwidget = new Y_Axis_ViewWidget(editWidgetLayout);
         y_axis_viewwidget->setObjectName(QStringLiteral("y_axis_viewwidget"));
         sizePolicy.setHeightForWidth(y_axis_viewwidget->sizePolicy().hasHeightForWidth());
         y_axis_viewwidget->setSizePolicy(sizePolicy);
@@ -223,7 +227,7 @@ public:
 
         four_edit_viewWidgetLayout->addWidget(y_axis_viewwidget, 1, 0, 1, 1);
 
-        z_axis_viewwidget = new QOpenGLWidget(editWidgetLayout);
+        z_axis_viewwidget = new Z_Axis_ViewWidget(editWidgetLayout);
         z_axis_viewwidget->setObjectName(QStringLiteral("z_axis_viewwidget"));
         sizePolicy.setHeightForWidth(z_axis_viewwidget->sizePolicy().hasHeightForWidth());
         z_axis_viewwidget->setSizePolicy(sizePolicy);
@@ -245,7 +249,7 @@ public:
         toolBox->setMaximumSize(QSize(16777215, 500));
         ioWidget = new QWidget();
         ioWidget->setObjectName(QStringLiteral("ioWidget"));
-        ioWidget->setGeometry(QRect(0, 0, 458, 69));
+        ioWidget->setGeometry(QRect(0, 0, 101, 56));
         sizePolicy.setHeightForWidth(ioWidget->sizePolicy().hasHeightForWidth());
         ioWidget->setSizePolicy(sizePolicy);
         gridLayout_4 = new QGridLayout(ioWidget);
@@ -265,7 +269,7 @@ public:
         toolBox->addItem(ioWidget, QStringLiteral("Insert , Delete"));
         morphologicalWidget = new QWidget();
         morphologicalWidget->setObjectName(QStringLiteral("morphologicalWidget"));
-        morphologicalWidget->setGeometry(QRect(0, 0, 458, 69));
+        morphologicalWidget->setGeometry(QRect(0, 0, 100, 30));
         sizePolicy.setHeightForWidth(morphologicalWidget->sizePolicy().hasHeightForWidth());
         morphologicalWidget->setSizePolicy(sizePolicy);
         toolBox->addItem(morphologicalWidget, QStringLiteral("Morphological"));
@@ -289,7 +293,7 @@ public:
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 716, 21));
+        menuBar->setGeometry(QRect(0, 0, 773, 21));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QStringLiteral("menuFile"));
         menuHelp = new QMenu(menuBar);
@@ -314,21 +318,21 @@ public:
 
     void retranslateUi(QMainWindow *MainWindow)
     {
-        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "mainwindow", Q_NULLPTR));
-        actionImport->setText(QApplication::translate("MainWindow", "Import", Q_NULLPTR));
-        actionExport->setText(QApplication::translate("MainWindow", "Export", Q_NULLPTR));
-        actionOpen->setText(QApplication::translate("MainWindow", "Open", Q_NULLPTR));
-        voxel_tabWidget->setTabText(voxel_tabWidget->indexOf(model_list_tab), QApplication::translate("MainWindow", "Voxel Model", Q_NULLPTR));
-        voxel_tabWidget->setTabText(voxel_tabWidget->indexOf(object_tree_tab), QApplication::translate("MainWindow", "Voxel Object Tree", Q_NULLPTR));
-        view_tabWidget->setTabText(view_tabWidget->indexOf(viewWidgetLayout), QApplication::translate("MainWindow", "View Model", Q_NULLPTR));
-        radioButton->setText(QApplication::translate("MainWindow", "RadioButton", Q_NULLPTR));
-        radioButton_2->setText(QApplication::translate("MainWindow", "RadioButton", Q_NULLPTR));
-        toolBox->setItemText(toolBox->indexOf(ioWidget), QApplication::translate("MainWindow", "Insert , Delete", Q_NULLPTR));
-        toolBox->setItemText(toolBox->indexOf(morphologicalWidget), QApplication::translate("MainWindow", "Morphological", Q_NULLPTR));
-        toolBox->setItemText(toolBox->indexOf(modellogicalWidget), QApplication::translate("MainWindow", "Model logical", Q_NULLPTR));
-        view_tabWidget->setTabText(view_tabWidget->indexOf(editWidgetLayout), QApplication::translate("MainWindow", "Edit Model", Q_NULLPTR));
-        menuFile->setTitle(QApplication::translate("MainWindow", "File", Q_NULLPTR));
-        menuHelp->setTitle(QApplication::translate("MainWindow", "Help", Q_NULLPTR));
+        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "mainwindow", 0));
+        actionImport->setText(QApplication::translate("MainWindow", "Import", 0));
+        actionExport->setText(QApplication::translate("MainWindow", "Export", 0));
+        actionOpen->setText(QApplication::translate("MainWindow", "Open", 0));
+        voxel_tabWidget->setTabText(voxel_tabWidget->indexOf(model_list_tab), QApplication::translate("MainWindow", "Voxel Model", 0));
+        voxel_tabWidget->setTabText(voxel_tabWidget->indexOf(object_tree_tab), QApplication::translate("MainWindow", "Voxel Object Tree", 0));
+        view_tabWidget->setTabText(view_tabWidget->indexOf(viewWidgetLayout), QApplication::translate("MainWindow", "View Model", 0));
+        radioButton->setText(QApplication::translate("MainWindow", "RadioButton", 0));
+        radioButton_2->setText(QApplication::translate("MainWindow", "RadioButton", 0));
+        toolBox->setItemText(toolBox->indexOf(ioWidget), QApplication::translate("MainWindow", "Insert , Delete", 0));
+        toolBox->setItemText(toolBox->indexOf(morphologicalWidget), QApplication::translate("MainWindow", "Morphological", 0));
+        toolBox->setItemText(toolBox->indexOf(modellogicalWidget), QApplication::translate("MainWindow", "Model logical", 0));
+        view_tabWidget->setTabText(view_tabWidget->indexOf(editWidgetLayout), QApplication::translate("MainWindow", "Edit Model", 0));
+        menuFile->setTitle(QApplication::translate("MainWindow", "File", 0));
+        menuHelp->setTitle(QApplication::translate("MainWindow", "Help", 0));
     } // retranslateUi
 
 };

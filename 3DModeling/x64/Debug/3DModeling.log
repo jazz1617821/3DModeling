@@ -1,4 +1,201 @@
-﻿  Uic'ing mainwindow.ui...
+﻿  Moc'ing mainwindow.h...
+  Uic'ing mainwindow.ui...
+  Moc'ing threedimesion_viewwidget.h...
+  Moc'ing x_axis_viewwidget.h...
+  Moc'ing z_axis_viewwidget.h...
+  Moc'ing y_axis_viewwidget.h...
+  Moc'ing viewwidget.h...
+  Rcc'ing mainwindow.qrc...
+RCC : warning : No resources in 'C:\Users\jazz1\Documents\Github\3DModeling\3DModeling\mainwindow.qrc'.
+  
+  moc_mainwindow.cpp
+  moc_threedimesion_viewwidget.cpp
+  moc_viewwidget.cpp
+  moc_x_axis_viewwidget.cpp
+  moc_y_axis_viewwidget.cpp
+  moc_z_axis_viewwidget.cpp
+  light.cpp
+  LoadShaders.cpp
+  main.cpp
   mainwindow.cpp
-  3DModeling.vcxproj -> C:\Users\lab_503\Documents\GitHub\3DModeling\x64\Debug\3DModeling.exe
-  3DModeling.vcxproj -> C:\Users\lab_503\Documents\GitHub\3DModeling\x64\Debug\3DModeling.pdb (Full PDB)
+  material.cpp
+material.cpp(62): warning C4838: 從 'double' 到 'float' 的轉換必須是縮小轉換
+material.cpp(90): warning C4838: 從 'double' 到 'float' 的轉換必須是縮小轉換
+material.cpp(118): warning C4838: 從 'double' 到 'float' 的轉換必須是縮小轉換
+material.cpp(146): warning C4838: 從 'double' 到 'float' 的轉換必須是縮小轉換
+  meshmodel.cpp
+  mymath.cpp
+  object.cpp
+object.cpp(204): warning C4838: 從 'int' 到 'float' 的轉換必須是縮小轉換
+  threedimesion_viewwidget.cpp
+threedimesion_viewwidget.cpp(762): warning C4838: 從 'double' 到 'float' 的轉換必須是縮小轉換
+  x_axis_viewwidget.cpp
+x_axis_viewwidget.cpp(762): warning C4838: 從 'double' 到 'float' 的轉換必須是縮小轉換
+  y_axis_viewwidget.cpp
+y_axis_viewwidget.cpp(762): warning C4838: 從 'double' 到 'float' 的轉換必須是縮小轉換
+  viewwidget.cpp
+viewwidget.cpp(762): warning C4838: 從 'double' 到 'float' 的轉換必須是縮小轉換
+  voxel.cpp
+  z_axis_viewwidget.cpp
+z_axis_viewwidget.cpp(762): warning C4838: 從 'double' 到 'float' 的轉換必須是縮小轉換
+  正在產生程式碼...
+  qrc_mainwindow.cpp
+LINK : warning LNK4098: 預設的程式庫 'LIBCMT' 與其他使用的程式庫衝突，請使用 /NODEFAULTLIB:library
+z_axis_viewwidget.obj : warning LNK4217: 本機定義的符號 glewInit 已匯入函式 "protected: virtual void __cdecl Z_Axis_ViewWidget::initializeGL(void)" (?initializeGL@Z_Axis_ViewWidget@@MEAAXXZ)
+threedimesion_viewwidget.obj : warning LNK4217: 本機定義的符號 glewInit 已匯入函式 "protected: virtual void __cdecl ThreeDimesion_ViewWidget::initializeGL(void)" (?initializeGL@ThreeDimesion_ViewWidget@@MEAAXXZ)
+x_axis_viewwidget.obj : warning LNK4217: 本機定義的符號 glewInit 已匯入函式 "protected: virtual void __cdecl X_Axis_ViewWidget::initializeGL(void)" (?initializeGL@X_Axis_ViewWidget@@MEAAXXZ)
+y_axis_viewwidget.obj : warning LNK4217: 本機定義的符號 glewInit 已匯入函式 "protected: virtual void __cdecl Y_Axis_ViewWidget::initializeGL(void)" (?initializeGL@Y_Axis_ViewWidget@@MEAAXXZ)
+viewwidget.obj : warning LNK4217: 本機定義的符號 glewInit 已匯入函式 "protected: virtual void __cdecl ViewWidget::initializeGL(void)" (?initializeGL@ViewWidget@@MEAAXXZ)
+z_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewActiveTexture 已匯入
+threedimesion_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewActiveTexture 已匯入
+x_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewActiveTexture 已匯入
+y_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewActiveTexture 已匯入
+viewwidget.obj : warning LNK4049: 本機定義的符號 __glewActiveTexture 已匯入
+z_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewBindBuffer 已匯入
+threedimesion_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewBindBuffer 已匯入
+x_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewBindBuffer 已匯入
+y_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewBindBuffer 已匯入
+viewwidget.obj : warning LNK4049: 本機定義的符號 __glewBindBuffer 已匯入
+z_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewBufferData 已匯入
+threedimesion_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewBufferData 已匯入
+x_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewBufferData 已匯入
+y_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewBufferData 已匯入
+viewwidget.obj : warning LNK4049: 本機定義的符號 __glewBufferData 已匯入
+z_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewGenBuffers 已匯入
+threedimesion_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewGenBuffers 已匯入
+x_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewGenBuffers 已匯入
+y_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewGenBuffers 已匯入
+viewwidget.obj : warning LNK4049: 本機定義的符號 __glewGenBuffers 已匯入
+z_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewDisableVertexAttribArray 已匯入
+threedimesion_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewDisableVertexAttribArray 已匯入
+x_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewDisableVertexAttribArray 已匯入
+y_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewDisableVertexAttribArray 已匯入
+viewwidget.obj : warning LNK4049: 本機定義的符號 __glewDisableVertexAttribArray 已匯入
+z_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewDrawBuffers 已匯入
+threedimesion_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewDrawBuffers 已匯入
+x_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewDrawBuffers 已匯入
+y_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewDrawBuffers 已匯入
+viewwidget.obj : warning LNK4049: 本機定義的符號 __glewDrawBuffers 已匯入
+z_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewEnableVertexAttribArray 已匯入
+threedimesion_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewEnableVertexAttribArray 已匯入
+x_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewEnableVertexAttribArray 已匯入
+y_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewEnableVertexAttribArray 已匯入
+viewwidget.obj : warning LNK4049: 本機定義的符號 __glewEnableVertexAttribArray 已匯入
+z_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewGetUniformLocation 已匯入
+threedimesion_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewGetUniformLocation 已匯入
+x_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewGetUniformLocation 已匯入
+y_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewGetUniformLocation 已匯入
+viewwidget.obj : warning LNK4049: 本機定義的符號 __glewGetUniformLocation 已匯入
+z_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewUniform1f 已匯入
+threedimesion_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewUniform1f 已匯入
+x_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewUniform1f 已匯入
+y_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewUniform1f 已匯入
+viewwidget.obj : warning LNK4049: 本機定義的符號 __glewUniform1f 已匯入
+z_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewUniform1i 已匯入
+threedimesion_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewUniform1i 已匯入
+x_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewUniform1i 已匯入
+y_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewUniform1i 已匯入
+viewwidget.obj : warning LNK4049: 本機定義的符號 __glewUniform1i 已匯入
+z_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewUniform2fv 已匯入
+threedimesion_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewUniform2fv 已匯入
+x_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewUniform2fv 已匯入
+y_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewUniform2fv 已匯入
+viewwidget.obj : warning LNK4049: 本機定義的符號 __glewUniform2fv 已匯入
+z_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewUniform3fv 已匯入
+threedimesion_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewUniform3fv 已匯入
+x_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewUniform3fv 已匯入
+y_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewUniform3fv 已匯入
+viewwidget.obj : warning LNK4049: 本機定義的符號 __glewUniform3fv 已匯入
+z_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewUniform4f 已匯入
+threedimesion_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewUniform4f 已匯入
+x_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewUniform4f 已匯入
+y_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewUniform4f 已匯入
+viewwidget.obj : warning LNK4049: 本機定義的符號 __glewUniform4f 已匯入
+z_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewUniform4fv 已匯入
+threedimesion_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewUniform4fv 已匯入
+x_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewUniform4fv 已匯入
+y_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewUniform4fv 已匯入
+viewwidget.obj : warning LNK4049: 本機定義的符號 __glewUniform4fv 已匯入
+z_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewUniformMatrix4fv 已匯入
+threedimesion_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewUniformMatrix4fv 已匯入
+x_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewUniformMatrix4fv 已匯入
+y_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewUniformMatrix4fv 已匯入
+viewwidget.obj : warning LNK4049: 本機定義的符號 __glewUniformMatrix4fv 已匯入
+z_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewUseProgram 已匯入
+threedimesion_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewUseProgram 已匯入
+x_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewUseProgram 已匯入
+y_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewUseProgram 已匯入
+viewwidget.obj : warning LNK4049: 本機定義的符號 __glewUseProgram 已匯入
+z_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewVertexAttribPointer 已匯入
+threedimesion_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewVertexAttribPointer 已匯入
+x_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewVertexAttribPointer 已匯入
+y_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewVertexAttribPointer 已匯入
+viewwidget.obj : warning LNK4049: 本機定義的符號 __glewVertexAttribPointer 已匯入
+z_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewBindFramebuffer 已匯入
+threedimesion_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewBindFramebuffer 已匯入
+x_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewBindFramebuffer 已匯入
+y_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewBindFramebuffer 已匯入
+viewwidget.obj : warning LNK4049: 本機定義的符號 __glewBindFramebuffer 已匯入
+z_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewBindRenderbuffer 已匯入
+threedimesion_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewBindRenderbuffer 已匯入
+x_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewBindRenderbuffer 已匯入
+y_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewBindRenderbuffer 已匯入
+viewwidget.obj : warning LNK4049: 本機定義的符號 __glewBindRenderbuffer 已匯入
+z_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewBlitFramebuffer 已匯入
+threedimesion_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewBlitFramebuffer 已匯入
+x_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewBlitFramebuffer 已匯入
+y_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewBlitFramebuffer 已匯入
+viewwidget.obj : warning LNK4049: 本機定義的符號 __glewBlitFramebuffer 已匯入
+z_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewCheckFramebufferStatus 已匯入
+threedimesion_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewCheckFramebufferStatus 已匯入
+x_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewCheckFramebufferStatus 已匯入
+y_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewCheckFramebufferStatus 已匯入
+viewwidget.obj : warning LNK4049: 本機定義的符號 __glewCheckFramebufferStatus 已匯入
+z_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewFramebufferRenderbuffer 已匯入
+threedimesion_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewFramebufferRenderbuffer 已匯入
+x_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewFramebufferRenderbuffer 已匯入
+y_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewFramebufferRenderbuffer 已匯入
+viewwidget.obj : warning LNK4049: 本機定義的符號 __glewFramebufferRenderbuffer 已匯入
+z_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewFramebufferTexture2D 已匯入
+threedimesion_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewFramebufferTexture2D 已匯入
+x_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewFramebufferTexture2D 已匯入
+y_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewFramebufferTexture2D 已匯入
+viewwidget.obj : warning LNK4049: 本機定義的符號 __glewFramebufferTexture2D 已匯入
+z_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewGenFramebuffers 已匯入
+threedimesion_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewGenFramebuffers 已匯入
+x_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewGenFramebuffers 已匯入
+y_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewGenFramebuffers 已匯入
+viewwidget.obj : warning LNK4049: 本機定義的符號 __glewGenFramebuffers 已匯入
+z_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewGenRenderbuffers 已匯入
+threedimesion_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewGenRenderbuffers 已匯入
+x_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewGenRenderbuffers 已匯入
+y_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewGenRenderbuffers 已匯入
+viewwidget.obj : warning LNK4049: 本機定義的符號 __glewGenRenderbuffers 已匯入
+z_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewRenderbufferStorage 已匯入
+threedimesion_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewRenderbufferStorage 已匯入
+x_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewRenderbufferStorage 已匯入
+y_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewRenderbufferStorage 已匯入
+viewwidget.obj : warning LNK4049: 本機定義的符號 __glewRenderbufferStorage 已匯入
+z_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewRenderbufferStorageMultisample 已匯入
+threedimesion_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewRenderbufferStorageMultisample 已匯入
+x_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewRenderbufferStorageMultisample 已匯入
+y_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewRenderbufferStorageMultisample 已匯入
+viewwidget.obj : warning LNK4049: 本機定義的符號 __glewRenderbufferStorageMultisample 已匯入
+z_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewTexImage2DMultisample 已匯入
+threedimesion_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewTexImage2DMultisample 已匯入
+x_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewTexImage2DMultisample 已匯入
+y_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewTexImage2DMultisample 已匯入
+viewwidget.obj : warning LNK4049: 本機定義的符號 __glewTexImage2DMultisample 已匯入
+z_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewBindVertexArray 已匯入
+threedimesion_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewBindVertexArray 已匯入
+x_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewBindVertexArray 已匯入
+y_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewBindVertexArray 已匯入
+viewwidget.obj : warning LNK4049: 本機定義的符號 __glewBindVertexArray 已匯入
+z_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewGenVertexArrays 已匯入
+threedimesion_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewGenVertexArrays 已匯入
+x_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewGenVertexArrays 已匯入
+y_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewGenVertexArrays 已匯入
+viewwidget.obj : warning LNK4049: 本機定義的符號 __glewGenVertexArrays 已匯入
+glew32s.lib(glew.obj) : warning LNK4099: 找不到 PDB 'vc120.pdb' (有 'glew32s.lib(glew.obj)' 或位於 'C:\Users\jazz1\Documents\Github\3DModeling\x64\Debug\vc120.pdb')，當做沒有偵錯資訊，連結物件
+  3DModeling.vcxproj -> C:\Users\jazz1\Documents\Github\3DModeling\x64\Debug\3DModeling.exe
+  3DModeling.vcxproj -> C:\Users\jazz1\Documents\Github\3DModeling\x64\Debug\3DModeling.pdb (Full PDB)
