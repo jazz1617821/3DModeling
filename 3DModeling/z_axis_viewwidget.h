@@ -3,10 +3,8 @@
 #include <QOpenGLWidget>
 #include <QPushButton>
 #include <QMouseEvent>
-#include "meshmodel.h"
 #include "object.h"
 #include "light.h"
-#include "voxel.h"
 
 class Z_Axis_ViewWidget : public QOpenGLWidget {
 	Q_OBJECT
@@ -150,12 +148,6 @@ private:
 	int oldPosY;
 	int selectedPosX;
 	int selectedPoxY;
-
-	// mesh model array
-	moa_t* moa;
-
-	// voxel array
-	voa_t* voa;
 
 	// vbo array
 	vboa_t* vboa;

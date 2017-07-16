@@ -20,12 +20,17 @@ X_Axis_ViewWidget::X_Axis_ViewWidget(QWidget * parent) : QOpenGLWidget(parent)
 	eye[0] = 1; eye[1] = 0; eye[2] = 0;
 	lok[0] = 0; lok[1] = 0; lok[2] = 0;
 	vup[0] = 0, vup[1] = 1, vup[2] = 0;
-	viewTrans[0] = 0; viewTrans[1] = 0; viewTrans[2] = 0;
+	/*viewTrans[0] = 0; viewTrans[1] = 0; viewTrans[2] = 0;
 	viewRot[0] = 0; viewRot[1] = 0; viewRot[2] = 0;
 	viewPhi = radians(0);
 	viewTheta = radians(60);
 	viewRadius = 400.0;
 	fovy = 45.0;
+	*/
+	left = -25;
+	right = 25;
+	bottom = -25;
+	top = 25;
 	nearClip = 0.1;
 	farClip = 1000.0;
 	fixView();
@@ -52,9 +57,6 @@ X_Axis_ViewWidget::X_Axis_ViewWidget(QWidget * parent) : QOpenGLWidget(parent)
 	shadowWidth = 4096;
 	shadowHeight = 4096;
 
-
-	moa = NULL;
-	voa = newVoxelObjectArray();
 	vboa = newVertexBufferObjectArray();
 
 	//  set opengl version and profile
@@ -428,7 +430,8 @@ void X_Axis_ViewWidget::setViewingMatrix(void)
 	transposeMat4fv(normalMat, mat);
 	glUniformMatrix4fv(5, 1, false, mat);
 	aspect = this->width() / (float)this->height();	// projection matrix
-	perspective(fovy, aspect, nearClip, farClip, projectionMat);
+	ortho(left, right, bottom, top, nearClip, farClip, projectionMat);
+	//perspective(fovy, aspect, nearClip, farClip, projectionMat);
 	transposeMat4fv(projectionMat, mat);
 	glUniformMatrix4fv(2, 1, false, mat);
 	multMat4fv(projectionMat, viewMat, mvpMat);
@@ -472,7 +475,7 @@ void X_Axis_ViewWidget::setMaterial(vbo_t obj)
 void X_Axis_ViewWidget::fixView(void)
 {
 	float temp;
-
+	/*
 	if (viewTheta < 0.01) {
 		viewTheta = 0.0 + 0.001;
 	}
@@ -490,6 +493,7 @@ void X_Axis_ViewWidget::fixView(void)
 	eye[2] = lok[2] + viewRadius * sin(viewPhi) * sin(viewTheta);
 
 	lookAt(eye, lok, vup, viewMat);
+	*/
 }
 
 
@@ -886,10 +890,10 @@ void X_Axis_ViewWidget::resizeGL(int width, int height)
 
 	glViewport(0, 0, width, height);
 	float aspect = width / (float)height;
-	perspective(fovy, aspect, nearClip, farClip, projectionMat);
+	ortho(left, right, bottom, top, nearClip, farClip, projectionMat);
+	//perspective(fovy, aspect, nearClip, farClip, projectionMat);
 	transposeMat4fv(projectionMat, mat);
 	glUniformMatrix4fv(2, 1, false, mat);
-
 
 	update();
 }
@@ -923,6 +927,7 @@ void X_Axis_ViewWidget::mousePressEvent(QMouseEvent *e)
 
 void X_Axis_ViewWidget::mouseMoveEvent(QMouseEvent *e)
 {
+	/*
 	float u[3] = { viewMat[0], viewMat[1], viewMat[2] };
 	float v[3] = { viewMat[4], viewMat[5], viewMat[6] };
 	float w[3] = { viewMat[8], viewMat[9], viewMat[10] };
@@ -953,6 +958,7 @@ void X_Axis_ViewWidget::mouseMoveEvent(QMouseEvent *e)
 	oldPosX = e->x();
 	oldPosY = e->y();
 	fixView();
+	*/
 	update();
 }
 
@@ -973,8 +979,10 @@ void X_Axis_ViewWidget::keyPressEvent(QKeyEvent *e)
 
 void X_Axis_ViewWidget::wheelEvent(QWheelEvent *e)
 {
+	/*
 	viewRadius += viewRadius * e->delta() / 250;
 	fixView();
+	*/
 	update();
 }
 

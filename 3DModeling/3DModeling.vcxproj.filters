@@ -59,9 +59,6 @@
     <ClCompile Include="material.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="meshmodel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="mymath.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -69,9 +66,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="viewwidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="voxel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_viewwidget.cpp">
@@ -116,6 +110,9 @@
     <ClCompile Include="z_axis_viewwidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="voxelvbo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="mainwindow.h">
@@ -156,19 +153,16 @@
     <ClInclude Include="material.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="meshmodel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="mymath.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="object.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="voxel.h">
+    <ClInclude Include="voxelvbo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="voxelvbo.h">
+    <ClInclude Include="voxel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

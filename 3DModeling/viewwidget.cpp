@@ -52,9 +52,6 @@ ViewWidget::ViewWidget(QWidget * parent) : QOpenGLWidget(parent)
 	shadowWidth = 4096;
 	shadowHeight = 4096;
 
-
-	moa = NULL;
-	voa = newVoxelObjectArray();
 	vboa = newVertexBufferObjectArray();
 
 	//  set opengl version and profile
@@ -930,7 +927,6 @@ void ViewWidget::mouseMoveEvent(QMouseEvent *e)
 	int offsetX = (e->x() - oldPosX);
 	int offsetY = -(e->y() - oldPosY);
 	float nWidth, nHeight, mOffX, mOffY;
-	aabb_t bbox;
 
 	
 	switch (e->buttons())
@@ -973,7 +969,7 @@ void ViewWidget::keyPressEvent(QKeyEvent *e)
 
 void ViewWidget::wheelEvent(QWheelEvent *e)
 {
-	viewRadius += viewRadius * e->delta() / 250;
+	viewRadius -= viewRadius * e->delta() / 250;
 	fixView();
 	update();
 }

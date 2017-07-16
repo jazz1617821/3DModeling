@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.7.0
+** Created by: Qt User Interface Compiler version 5.7.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -318,21 +318,21 @@ public:
 
     void retranslateUi(QMainWindow *MainWindow)
     {
-        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "mainwindow", 0));
-        actionImport->setText(QApplication::translate("MainWindow", "Import", 0));
-        actionExport->setText(QApplication::translate("MainWindow", "Export", 0));
-        actionOpen->setText(QApplication::translate("MainWindow", "Open", 0));
-        voxel_tabWidget->setTabText(voxel_tabWidget->indexOf(model_list_tab), QApplication::translate("MainWindow", "Voxel Model", 0));
-        voxel_tabWidget->setTabText(voxel_tabWidget->indexOf(object_tree_tab), QApplication::translate("MainWindow", "Voxel Object Tree", 0));
-        view_tabWidget->setTabText(view_tabWidget->indexOf(viewWidgetLayout), QApplication::translate("MainWindow", "View Model", 0));
-        radioButton->setText(QApplication::translate("MainWindow", "RadioButton", 0));
-        radioButton_2->setText(QApplication::translate("MainWindow", "RadioButton", 0));
-        toolBox->setItemText(toolBox->indexOf(ioWidget), QApplication::translate("MainWindow", "Insert , Delete", 0));
-        toolBox->setItemText(toolBox->indexOf(morphologicalWidget), QApplication::translate("MainWindow", "Morphological", 0));
-        toolBox->setItemText(toolBox->indexOf(modellogicalWidget), QApplication::translate("MainWindow", "Model logical", 0));
-        view_tabWidget->setTabText(view_tabWidget->indexOf(editWidgetLayout), QApplication::translate("MainWindow", "Edit Model", 0));
-        menuFile->setTitle(QApplication::translate("MainWindow", "File", 0));
-        menuHelp->setTitle(QApplication::translate("MainWindow", "Help", 0));
+        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "mainwindow", Q_NULLPTR));
+        actionImport->setText(QApplication::translate("MainWindow", "Import", Q_NULLPTR));
+        actionExport->setText(QApplication::translate("MainWindow", "Export", Q_NULLPTR));
+        actionOpen->setText(QApplication::translate("MainWindow", "Open", Q_NULLPTR));
+        voxel_tabWidget->setTabText(voxel_tabWidget->indexOf(model_list_tab), QApplication::translate("MainWindow", "Voxel Model", Q_NULLPTR));
+        voxel_tabWidget->setTabText(voxel_tabWidget->indexOf(object_tree_tab), QApplication::translate("MainWindow", "Voxel Object Tree", Q_NULLPTR));
+        view_tabWidget->setTabText(view_tabWidget->indexOf(viewWidgetLayout), QApplication::translate("MainWindow", "View Model", Q_NULLPTR));
+        radioButton->setText(QApplication::translate("MainWindow", "RadioButton", Q_NULLPTR));
+        radioButton_2->setText(QApplication::translate("MainWindow", "RadioButton", Q_NULLPTR));
+        toolBox->setItemText(toolBox->indexOf(ioWidget), QApplication::translate("MainWindow", "Insert , Delete", Q_NULLPTR));
+        toolBox->setItemText(toolBox->indexOf(morphologicalWidget), QApplication::translate("MainWindow", "Morphological", Q_NULLPTR));
+        toolBox->setItemText(toolBox->indexOf(modellogicalWidget), QApplication::translate("MainWindow", "Model logical", Q_NULLPTR));
+        view_tabWidget->setTabText(view_tabWidget->indexOf(editWidgetLayout), QApplication::translate("MainWindow", "Edit Model", Q_NULLPTR));
+        menuFile->setTitle(QApplication::translate("MainWindow", "File", Q_NULLPTR));
+        menuHelp->setTitle(QApplication::translate("MainWindow", "Help", Q_NULLPTR));
     } // retranslateUi
 
 };

@@ -53,8 +53,6 @@ Z_Axis_ViewWidget::Z_Axis_ViewWidget(QWidget * parent) : QOpenGLWidget(parent)
 	shadowHeight = 4096;
 
 
-	moa = NULL;
-	voa = newVoxelObjectArray();
 	vboa = newVertexBufferObjectArray();
 
 	//  set opengl version and profile
@@ -930,8 +928,6 @@ void Z_Axis_ViewWidget::mouseMoveEvent(QMouseEvent *e)
 	int offsetX = (e->x() - oldPosX);
 	int offsetY = -(e->y() - oldPosY);
 	float nWidth, nHeight, mOffX, mOffY;
-	aabb_t bbox;
-
 
 	switch (e->buttons())
 	{
