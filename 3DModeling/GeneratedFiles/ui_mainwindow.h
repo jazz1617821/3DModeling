@@ -15,13 +15,15 @@
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHeaderView>
-#include <QtWidgets/QListView>
+#include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QRadioButton>
+#include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QSplitter>
 #include <QtWidgets/QTabWidget>
+#include <QtWidgets/QTableView>
 #include <QtWidgets/QToolBox>
 #include <QtWidgets/QTreeView>
 #include <QtWidgets/QWidget>
@@ -44,13 +46,12 @@ public:
     QSplitter *splitter;
     QWidget *leftWidgetLayout;
     QGridLayout *gridLayout_5;
-    QTabWidget *voxel_tabWidget;
-    QWidget *model_list_tab;
-    QGridLayout *gridLayout_6;
-    QListView *listView;
-    QWidget *object_tree_tab;
-    QGridLayout *gridLayout_8;
+    QLabel *label;
+    QSpacerItem *horizontalSpacer;
     QTreeView *treeView;
+    QLabel *label_2;
+    QSpacerItem *horizontalSpacer_2;
+    QTableView *tableView;
     QWidget *rightWidgetLayout;
     QGridLayout *gridLayout;
     QTabWidget *view_tabWidget;
@@ -117,48 +118,38 @@ public:
         gridLayout_5->setSpacing(6);
         gridLayout_5->setContentsMargins(11, 11, 11, 11);
         gridLayout_5->setObjectName(QStringLiteral("gridLayout_5"));
-        voxel_tabWidget = new QTabWidget(leftWidgetLayout);
-        voxel_tabWidget->setObjectName(QStringLiteral("voxel_tabWidget"));
-        sizePolicy1.setHeightForWidth(voxel_tabWidget->sizePolicy().hasHeightForWidth());
-        voxel_tabWidget->setSizePolicy(sizePolicy1);
-        voxel_tabWidget->setMaximumSize(QSize(16777215, 16777215));
-        model_list_tab = new QWidget();
-        model_list_tab->setObjectName(QStringLiteral("model_list_tab"));
-        sizePolicy1.setHeightForWidth(model_list_tab->sizePolicy().hasHeightForWidth());
-        model_list_tab->setSizePolicy(sizePolicy1);
-        gridLayout_6 = new QGridLayout(model_list_tab);
-        gridLayout_6->setSpacing(6);
-        gridLayout_6->setContentsMargins(11, 11, 11, 11);
-        gridLayout_6->setObjectName(QStringLiteral("gridLayout_6"));
-        listView = new QListView(model_list_tab);
-        listView->setObjectName(QStringLiteral("listView"));
-        sizePolicy1.setHeightForWidth(listView->sizePolicy().hasHeightForWidth());
-        listView->setSizePolicy(sizePolicy1);
-        listView->setMinimumSize(QSize(200, 0));
+        label = new QLabel(leftWidgetLayout);
+        label->setObjectName(QStringLiteral("label"));
 
-        gridLayout_6->addWidget(listView, 0, 0, 1, 1);
+        gridLayout_5->addWidget(label, 0, 0, 1, 1);
 
-        voxel_tabWidget->addTab(model_list_tab, QString());
-        object_tree_tab = new QWidget();
-        object_tree_tab->setObjectName(QStringLiteral("object_tree_tab"));
-        sizePolicy1.setHeightForWidth(object_tree_tab->sizePolicy().hasHeightForWidth());
-        object_tree_tab->setSizePolicy(sizePolicy1);
-        gridLayout_8 = new QGridLayout(object_tree_tab);
-        gridLayout_8->setSpacing(6);
-        gridLayout_8->setContentsMargins(11, 11, 11, 11);
-        gridLayout_8->setObjectName(QStringLiteral("gridLayout_8"));
-        treeView = new QTreeView(object_tree_tab);
+        horizontalSpacer = new QSpacerItem(162, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        gridLayout_5->addItem(horizontalSpacer, 0, 1, 1, 1);
+
+        treeView = new QTreeView(leftWidgetLayout);
         treeView->setObjectName(QStringLiteral("treeView"));
-        sizePolicy1.setHeightForWidth(treeView->sizePolicy().hasHeightForWidth());
-        treeView->setSizePolicy(sizePolicy1);
-        treeView->setMinimumSize(QSize(200, 0));
-        treeView->setMaximumSize(QSize(500, 16777215));
 
-        gridLayout_8->addWidget(treeView, 0, 0, 1, 1);
+        gridLayout_5->addWidget(treeView, 1, 0, 1, 2);
 
-        voxel_tabWidget->addTab(object_tree_tab, QString());
+        label_2 = new QLabel(leftWidgetLayout);
+        label_2->setObjectName(QStringLiteral("label_2"));
 
-        gridLayout_5->addWidget(voxel_tabWidget, 0, 0, 1, 1);
+        gridLayout_5->addWidget(label_2, 2, 0, 1, 1);
+
+        horizontalSpacer_2 = new QSpacerItem(162, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        gridLayout_5->addItem(horizontalSpacer_2, 2, 1, 1, 1);
+
+        tableView = new QTableView(leftWidgetLayout);
+        tableView->setObjectName(QStringLiteral("tableView"));
+        QSizePolicy sizePolicy2(QSizePolicy::Preferred, QSizePolicy::Preferred);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(0);
+        sizePolicy2.setHeightForWidth(tableView->sizePolicy().hasHeightForWidth());
+        tableView->setSizePolicy(sizePolicy2);
+
+        gridLayout_5->addWidget(tableView, 3, 0, 1, 2);
 
         splitter->addWidget(leftWidgetLayout);
         rightWidgetLayout = new QWidget(splitter);
@@ -240,11 +231,11 @@ public:
 
         toolBox = new QToolBox(editWidgetLayout);
         toolBox->setObjectName(QStringLiteral("toolBox"));
-        QSizePolicy sizePolicy2(QSizePolicy::Expanding, QSizePolicy::Maximum);
-        sizePolicy2.setHorizontalStretch(0);
-        sizePolicy2.setVerticalStretch(0);
-        sizePolicy2.setHeightForWidth(toolBox->sizePolicy().hasHeightForWidth());
-        toolBox->setSizePolicy(sizePolicy2);
+        QSizePolicy sizePolicy3(QSizePolicy::Expanding, QSizePolicy::Maximum);
+        sizePolicy3.setHorizontalStretch(0);
+        sizePolicy3.setVerticalStretch(0);
+        sizePolicy3.setHeightForWidth(toolBox->sizePolicy().hasHeightForWidth());
+        toolBox->setSizePolicy(sizePolicy3);
         toolBox->setMinimumSize(QSize(0, 0));
         toolBox->setMaximumSize(QSize(16777215, 500));
         ioWidget = new QWidget();
@@ -308,7 +299,6 @@ public:
 
         retranslateUi(MainWindow);
 
-        voxel_tabWidget->setCurrentIndex(0);
         view_tabWidget->setCurrentIndex(0);
         toolBox->setCurrentIndex(2);
 
@@ -322,8 +312,8 @@ public:
         actionImport->setText(QApplication::translate("MainWindow", "Import", Q_NULLPTR));
         actionExport->setText(QApplication::translate("MainWindow", "Export", Q_NULLPTR));
         actionOpen->setText(QApplication::translate("MainWindow", "Open", Q_NULLPTR));
-        voxel_tabWidget->setTabText(voxel_tabWidget->indexOf(model_list_tab), QApplication::translate("MainWindow", "Voxel Model", Q_NULLPTR));
-        voxel_tabWidget->setTabText(voxel_tabWidget->indexOf(object_tree_tab), QApplication::translate("MainWindow", "Voxel Object Tree", Q_NULLPTR));
+        label->setText(QApplication::translate("MainWindow", "Voxel Model", Q_NULLPTR));
+        label_2->setText(QApplication::translate("MainWindow", "Attributes", Q_NULLPTR));
         view_tabWidget->setTabText(view_tabWidget->indexOf(viewWidgetLayout), QApplication::translate("MainWindow", "View Model", Q_NULLPTR));
         radioButton->setText(QApplication::translate("MainWindow", "RadioButton", Q_NULLPTR));
         radioButton_2->setText(QApplication::translate("MainWindow", "RadioButton", Q_NULLPTR));

@@ -1,13 +1,19 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <iostream>
 #include <QFileDialog>
 #include <QMessageBox>
+
+using namespace std;
 
 MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent),
 	ui(new Ui::MainWindow)
 {
 	ui->setupUi(this);
+
+
+
 }
 
 MainWindow::~MainWindow()
@@ -17,25 +23,36 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_actionOpen_triggered()
 {
-
-}
-
-void MainWindow::on_actionImport_triggered()
-{
-	QString fileName = QFileDialog::getOpenFileName(
+	QString filename = QFileDialog::getOpenFileName(
 		this,
 		tr("Open Voxel Model"),
 		"",
 		tr("Voxel Files (*.vdat *.vo *.vm)")
-	);
+		);
 
-	QByteArray ba = fileName.toLatin1();
+	QByteArray ba = filename.toLatin1();
 	const char *fileLocationStr = ba.data();
-	printf("Info file location:%s\n", fileLocationStr);
+	printf("File location:%s\n", fileLocationStr);
 
+	const char *str = ba.data();
+	const char *fe;
 
+	fe = strrchr(str, '.');
+	if (!filename.isEmpty()) {
+		if (!strcmp(fe, ".vdat")) {
+			openVD(str);
+		}
+		if (!strcmp(fe, ".vo")) {
+			openVO(str);
+		}
+		if (!strcmp(fe, ".vm")) {
+			openVM(str);
+		}
+	}
+}
 
-
+void MainWindow::on_actionImport_triggered()
+{
 
 
 
@@ -50,8 +67,8 @@ void MainWindow::on_actionExport_triggered()
 	char* buffer = (char *)calloc(sizeof(char), 256 * 256 * 256);
 
 	QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
-		"untitled.vdata",
-		tr("(*.vdata)"));
+		"untitled.vdat",
+		tr("(*.vdat)"));
 	if (fileName.length() != 0) {
 		QByteArray ba = fileName.toLatin1();
 		const char *fileLocationStr = ba.data();
@@ -72,4 +89,71 @@ void MainWindow::on_actionExport_triggered()
 		QMessageBox::information(this, tr("Warning"), "Failed to save the file.");
 	}
 
+}
+
+void MainWindow::openVD(const char* fileName) 
+{
+	//vdata_t* temp;
+	int resolution[3];
+	float voxelsize[3];
+	bool isbit;
+	char* buffer;
+
+	FILE * vdata = fopen(fileName, "r");
+	if (vdata!=NULL) {
+		fread(resolution, sizeof(resolution), sizeof(int), vdata);
+		fread(voxelsize, sizeof(voxelsize), sizeof(float), vdata);
+		fread(&isbit, 1, sizeof(bool), vdata);
+
+		(char *)buffer = (char *)calloc(resolution[0] * resolution[1] * resolution[2], sizeof(char));
+
+		fread(buffer, sizeof(buffer), sizeof(char), vdata);
+	}
+	fclose(vdata);
+
+	cout << resolution[0] << ", " << resolution[1] << ", " << resolution[2] << endl;
+	cout << voxelsize[0] << ", " << voxelsize[1] << ", " << voxelsize[2] << endl;
+	cout << isbit << endl;
+
+	free(buffer);
+
+	return;
+}
+
+void MainWindow::openVO(const char* fileName) 
+{
+	vobj_t* temp;
+
+	FILE * vdata = fopen(fileName, "r");
+	if (vdata != NULL) {
+
+
+
+
+
+
+	}
+
+	fclose(vdata);
+
+	return;
+}
+
+void MainWindow::openVM(const char* fileName)
+{
+	vmodel_t* temp;
+
+	FILE * vdata = fopen(fileName, "r");
+	if (vdata != NULL) {
+
+
+
+
+
+
+	}
+
+	fclose(vdata);
+
+	return;
 }

@@ -16,13 +16,17 @@ class MainWindow : public QMainWindow
 public:
 	MainWindow(QWidget *parent = 0);
 	~MainWindow();
+	void openVD(const char* fileName);
+	void openVO(const char* fileName);
+	void openVM(const char* fileName);
 
 private slots:
     void on_actionImport_triggered();
-
     void on_actionExport_triggered();
-
     void on_actionOpen_triggered();
+
+signals:
+	
 
 private:
 	Ui::MainWindow *ui;
