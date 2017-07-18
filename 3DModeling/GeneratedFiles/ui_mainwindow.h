@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.7.1
+** Created by: Qt User Interface Compiler version 5.7.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -19,13 +19,13 @@
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
+#include <QtWidgets/QPushButton>
 #include <QtWidgets/QRadioButton>
-#include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QSplitter>
 #include <QtWidgets/QTabWidget>
 #include <QtWidgets/QTableView>
 #include <QtWidgets/QToolBox>
-#include <QtWidgets/QTreeView>
+#include <QtWidgets/QTreeWidget>
 #include <QtWidgets/QWidget>
 #include "threedimesion_viewwidget.h"
 #include "viewwidget.h"
@@ -46,12 +46,11 @@ public:
     QSplitter *splitter;
     QWidget *leftWidgetLayout;
     QGridLayout *gridLayout_5;
-    QLabel *label;
-    QSpacerItem *horizontalSpacer;
-    QTreeView *treeView;
-    QLabel *label_2;
-    QSpacerItem *horizontalSpacer_2;
-    QTableView *tableView;
+    QLabel *TreeLabel;
+    QTreeWidget *voxeltreeWidget;
+    QLabel *AttributeLabel;
+    QTableView *attributetableView;
+    QPushButton *pushButton_2;
     QWidget *rightWidgetLayout;
     QGridLayout *gridLayout;
     QTabWidget *view_tabWidget;
@@ -118,38 +117,44 @@ public:
         gridLayout_5->setSpacing(6);
         gridLayout_5->setContentsMargins(11, 11, 11, 11);
         gridLayout_5->setObjectName(QStringLiteral("gridLayout_5"));
-        label = new QLabel(leftWidgetLayout);
-        label->setObjectName(QStringLiteral("label"));
+        TreeLabel = new QLabel(leftWidgetLayout);
+        TreeLabel->setObjectName(QStringLiteral("TreeLabel"));
 
-        gridLayout_5->addWidget(label, 0, 0, 1, 1);
+        gridLayout_5->addWidget(TreeLabel, 0, 0, 1, 1);
 
-        horizontalSpacer = new QSpacerItem(162, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        voxeltreeWidget = new QTreeWidget(leftWidgetLayout);
+        QTreeWidgetItem *__qtreewidgetitem = new QTreeWidgetItem();
+        __qtreewidgetitem->setText(0, QStringLiteral("1"));
+        voxeltreeWidget->setHeaderItem(__qtreewidgetitem);
+        voxeltreeWidget->setObjectName(QStringLiteral("voxeltreeWidget"));
 
-        gridLayout_5->addItem(horizontalSpacer, 0, 1, 1, 1);
+        gridLayout_5->addWidget(voxeltreeWidget, 1, 0, 1, 1);
 
-        treeView = new QTreeView(leftWidgetLayout);
-        treeView->setObjectName(QStringLiteral("treeView"));
+        AttributeLabel = new QLabel(leftWidgetLayout);
+        AttributeLabel->setObjectName(QStringLiteral("AttributeLabel"));
 
-        gridLayout_5->addWidget(treeView, 1, 0, 1, 2);
+        gridLayout_5->addWidget(AttributeLabel, 2, 0, 1, 1);
 
-        label_2 = new QLabel(leftWidgetLayout);
-        label_2->setObjectName(QStringLiteral("label_2"));
-
-        gridLayout_5->addWidget(label_2, 2, 0, 1, 1);
-
-        horizontalSpacer_2 = new QSpacerItem(162, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        gridLayout_5->addItem(horizontalSpacer_2, 2, 1, 1, 1);
-
-        tableView = new QTableView(leftWidgetLayout);
-        tableView->setObjectName(QStringLiteral("tableView"));
+        attributetableView = new QTableView(leftWidgetLayout);
+        attributetableView->setObjectName(QStringLiteral("attributetableView"));
         QSizePolicy sizePolicy2(QSizePolicy::Preferred, QSizePolicy::Preferred);
         sizePolicy2.setHorizontalStretch(0);
         sizePolicy2.setVerticalStretch(0);
-        sizePolicy2.setHeightForWidth(tableView->sizePolicy().hasHeightForWidth());
-        tableView->setSizePolicy(sizePolicy2);
+        sizePolicy2.setHeightForWidth(attributetableView->sizePolicy().hasHeightForWidth());
+        attributetableView->setSizePolicy(sizePolicy2);
 
-        gridLayout_5->addWidget(tableView, 3, 0, 1, 2);
+        gridLayout_5->addWidget(attributetableView, 3, 0, 1, 1);
+
+        pushButton_2 = new QPushButton(leftWidgetLayout);
+        pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
+        QSizePolicy sizePolicy3(QSizePolicy::Preferred, QSizePolicy::Fixed);
+        sizePolicy3.setHorizontalStretch(0);
+        sizePolicy3.setVerticalStretch(0);
+        sizePolicy3.setHeightForWidth(pushButton_2->sizePolicy().hasHeightForWidth());
+        pushButton_2->setSizePolicy(sizePolicy3);
+        pushButton_2->setLayoutDirection(Qt::LeftToRight);
+
+        gridLayout_5->addWidget(pushButton_2, 4, 0, 1, 1);
 
         splitter->addWidget(leftWidgetLayout);
         rightWidgetLayout = new QWidget(splitter);
@@ -231,11 +236,11 @@ public:
 
         toolBox = new QToolBox(editWidgetLayout);
         toolBox->setObjectName(QStringLiteral("toolBox"));
-        QSizePolicy sizePolicy3(QSizePolicy::Expanding, QSizePolicy::Maximum);
-        sizePolicy3.setHorizontalStretch(0);
-        sizePolicy3.setVerticalStretch(0);
-        sizePolicy3.setHeightForWidth(toolBox->sizePolicy().hasHeightForWidth());
-        toolBox->setSizePolicy(sizePolicy3);
+        QSizePolicy sizePolicy4(QSizePolicy::Expanding, QSizePolicy::Maximum);
+        sizePolicy4.setHorizontalStretch(0);
+        sizePolicy4.setVerticalStretch(0);
+        sizePolicy4.setHeightForWidth(toolBox->sizePolicy().hasHeightForWidth());
+        toolBox->setSizePolicy(sizePolicy4);
         toolBox->setMinimumSize(QSize(0, 0));
         toolBox->setMaximumSize(QSize(16777215, 500));
         ioWidget = new QWidget();
@@ -308,21 +313,22 @@ public:
 
     void retranslateUi(QMainWindow *MainWindow)
     {
-        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "mainwindow", Q_NULLPTR));
-        actionImport->setText(QApplication::translate("MainWindow", "Import", Q_NULLPTR));
-        actionExport->setText(QApplication::translate("MainWindow", "Export", Q_NULLPTR));
-        actionOpen->setText(QApplication::translate("MainWindow", "Open", Q_NULLPTR));
-        label->setText(QApplication::translate("MainWindow", "Voxel Model", Q_NULLPTR));
-        label_2->setText(QApplication::translate("MainWindow", "Attributes", Q_NULLPTR));
-        view_tabWidget->setTabText(view_tabWidget->indexOf(viewWidgetLayout), QApplication::translate("MainWindow", "View Model", Q_NULLPTR));
-        radioButton->setText(QApplication::translate("MainWindow", "RadioButton", Q_NULLPTR));
-        radioButton_2->setText(QApplication::translate("MainWindow", "RadioButton", Q_NULLPTR));
-        toolBox->setItemText(toolBox->indexOf(ioWidget), QApplication::translate("MainWindow", "Insert , Delete", Q_NULLPTR));
-        toolBox->setItemText(toolBox->indexOf(morphologicalWidget), QApplication::translate("MainWindow", "Morphological", Q_NULLPTR));
-        toolBox->setItemText(toolBox->indexOf(modellogicalWidget), QApplication::translate("MainWindow", "Model logical", Q_NULLPTR));
-        view_tabWidget->setTabText(view_tabWidget->indexOf(editWidgetLayout), QApplication::translate("MainWindow", "Edit Model", Q_NULLPTR));
-        menuFile->setTitle(QApplication::translate("MainWindow", "File", Q_NULLPTR));
-        menuHelp->setTitle(QApplication::translate("MainWindow", "Help", Q_NULLPTR));
+        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "mainwindow", 0));
+        actionImport->setText(QApplication::translate("MainWindow", "Import", 0));
+        actionExport->setText(QApplication::translate("MainWindow", "Export", 0));
+        actionOpen->setText(QApplication::translate("MainWindow", "Open", 0));
+        TreeLabel->setText(QApplication::translate("MainWindow", "Voxel Model", 0));
+        AttributeLabel->setText(QApplication::translate("MainWindow", "Attributes", 0));
+        pushButton_2->setText(QApplication::translate("MainWindow", "Rander", 0));
+        view_tabWidget->setTabText(view_tabWidget->indexOf(viewWidgetLayout), QApplication::translate("MainWindow", "View Model", 0));
+        radioButton->setText(QApplication::translate("MainWindow", "RadioButton", 0));
+        radioButton_2->setText(QApplication::translate("MainWindow", "RadioButton", 0));
+        toolBox->setItemText(toolBox->indexOf(ioWidget), QApplication::translate("MainWindow", "Insert , Delete", 0));
+        toolBox->setItemText(toolBox->indexOf(morphologicalWidget), QApplication::translate("MainWindow", "Morphological", 0));
+        toolBox->setItemText(toolBox->indexOf(modellogicalWidget), QApplication::translate("MainWindow", "Model logical", 0));
+        view_tabWidget->setTabText(view_tabWidget->indexOf(editWidgetLayout), QApplication::translate("MainWindow", "Edit Model", 0));
+        menuFile->setTitle(QApplication::translate("MainWindow", "File", 0));
+        menuHelp->setTitle(QApplication::translate("MainWindow", "Help", 0));
     } // retranslateUi
 
 };

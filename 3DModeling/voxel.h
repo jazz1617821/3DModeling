@@ -8,6 +8,7 @@ typedef struct Voxel
 
 typedef struct VoxelData
 {
+	char name[256];
 	int resolution[3];
 	float voxelsize[3];
 	bool isbitcompress;

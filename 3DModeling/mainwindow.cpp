@@ -12,12 +12,62 @@ MainWindow::MainWindow(QWidget *parent)
 {
 	ui->setupUi(this);
 
+	ui->voxeltreeWidget->setColumnCount(1);
+	
 
 
 }
 
 MainWindow::~MainWindow()
 {
+
+}
+
+void MainWindow::makeTreeList()
+{
+
+
+
+}
+
+void MainWindow::addInTreeList_VD(QTreeWidgetItem * parent, vdata_t vdata)
+{
+	QTreeWidgetItem * itm = new QTreeWidgetItem();
+
+
+	parent->addChild(itm);
+}
+
+void MainWindow::addInTreeList_VD(vdata_t vdata)
+{
+	QTreeWidgetItem * itm = new QTreeWidgetItem(ui->voxeltreeWidget);
+	if (vdata.name!=NULL) {
+		itm->setText(0, QString(vdata.name));
+	}
+	else {
+		itm->setText(0, "vdata");
+	}
+}
+
+void MainWindow::addInTreeList_VO(QTreeWidgetItem * parent, vobj_t vobject)
+{
+	QTreeWidgetItem * itm = new QTreeWidgetItem();
+	
+
+}
+
+void MainWindow::addInTreeList_VO(vobj_t vobject)
+{
+	QTreeWidgetItem * itm = new QTreeWidgetItem(ui->voxeltreeWidget);
+
+
+}
+
+void MainWindow::addInTreeList_VM(vmodel_t vmodel)
+{
+	QTreeWidgetItem * itm = new QTreeWidgetItem(ui->voxeltreeWidget);
+
+
 
 }
 
@@ -93,27 +143,45 @@ void MainWindow::on_actionExport_triggered()
 
 void MainWindow::openVD(const char* fileName) 
 {
-	//vdata_t* temp;
 	int resolution[3];
 	float voxelsize[3];
-	bool isbit;
-	char* buffer;
+	bool isbitcompress;
+	unsigned char * buffer;
 
 	FILE * vdata = fopen(fileName, "r");
 	if (vdata!=NULL) {
 		fread(resolution, sizeof(resolution), sizeof(int), vdata);
 		fread(voxelsize, sizeof(voxelsize), sizeof(float), vdata);
-		fread(&isbit, 1, sizeof(bool), vdata);
+		fread(&isbitcompress, 1, sizeof(bool), vdata);
 
-		(char *)buffer = (char *)calloc(resolution[0] * resolution[1] * resolution[2], sizeof(char));
+		(unsigned char *)buffer = (unsigned char *)calloc(resolution[0] * resolution[1] * resolution[2], sizeof(char));
 
 		fread(buffer, sizeof(buffer), sizeof(char), vdata);
 	}
 	fclose(vdata);
 
+	/*
 	cout << resolution[0] << ", " << resolution[1] << ", " << resolution[2] << endl;
 	cout << voxelsize[0] << ", " << voxelsize[1] << ", " << voxelsize[2] << endl;
 	cout << isbit << endl;
+	*/
+
+	//Creat a vdata_t
+	vdata_t* temp;
+	for (int i = 0; i < 3;i++) {
+		temp->resolution[i] = resolution[i];
+		temp->voxelsize[i] = voxelsize[i];
+	}
+	temp->isbitcompress = isbitcompress;
+	(voxel_t *)temp->rawdata = (voxel_t *)calloc(resolution[0] * resolution[1] * resolution[2], sizeof(char));
+	for (int i = 0; i < resolution[0] * resolution[1] * resolution[2]; i++) {
+		(temp->rawdata + i)->data = buffer[i];
+	}
+
+	//
+	(vdata_t **)vda = (vdata_t **)realloc(vda, (sizeof(vda) + 1) * sizeof(vdata_t));
+	vda[sizeof(vda) - 1] = temp;
+
 
 	free(buffer);
 

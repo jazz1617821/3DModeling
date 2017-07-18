@@ -14,8 +14,25 @@ class MainWindow : public QMainWindow
 	Q_OBJECT
 
 public:
+	vdata_t ** vda;
+
+private:
+	Ui::MainWindow *ui;
+
+
+
+public:
 	MainWindow(QWidget *parent = 0);
 	~MainWindow();
+
+private:
+	void makeTreeList();
+	void addInTreeList_VD(QTreeWidgetItem * parent, vdata_t vdata);
+	void addInTreeList_VD(vdata_t vdata);
+	void addInTreeList_VO(QTreeWidgetItem * parent, vobj_t vobject);
+	void addInTreeList_VO(vobj_t vobject);
+	void addInTreeList_VM(vmodel_t );
+
 	void openVD(const char* fileName);
 	void openVO(const char* fileName);
 	void openVM(const char* fileName);
@@ -28,8 +45,6 @@ private slots:
 signals:
 	
 
-private:
-	Ui::MainWindow *ui;
 };
 
 #endif // MAINWINDOW_H
