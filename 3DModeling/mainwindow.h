@@ -14,7 +14,7 @@ class MainWindow : public QMainWindow
 	Q_OBJECT
 
 public:
-	vdata_t ** vda;
+	VoxelModel vmodel;
 
 private:
 	Ui::MainWindow *ui;
@@ -27,18 +27,16 @@ public:
 
 private:
 	void makeTreeList();
-	void addInTreeList_VD(QTreeWidgetItem * parent, vdata_t vdata);
-	void addInTreeList_VD(vdata_t vdata);
-	void addInTreeList_VO(QTreeWidgetItem * parent, vobj_t vobject);
-	void addInTreeList_VO(vobj_t vobject);
-	void addInTreeList_VM(vmodel_t );
+	void addInTreeList_VD(QTreeWidgetItem * parent, VoxelData vdata);
+	void addInTreeList_VD(VoxelData vdata);
+	void addInTreeList_VO(QTreeWidgetItem * parent, VoxelObject vobject);
+	void addInTreeList_VO(VoxelObject vobject);
+	void addInTreeList_VM(VoxelModel);
 
 	void openVD(const char* fileName);
-	void openVO(const char* fileName);
 	void openVM(const char* fileName);
 
 private slots:
-    void on_actionImport_triggered();
     void on_actionExport_triggered();
     void on_actionOpen_triggered();
 

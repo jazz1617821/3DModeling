@@ -12,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
 	ui->setupUi(this);
 
-	ui->voxeltreeWidget->setColumnCount(1);
+	//ui->voxeltreeWidget->setColumnCount(1);
 	
 
 
@@ -30,7 +30,7 @@ void MainWindow::makeTreeList()
 
 }
 
-void MainWindow::addInTreeList_VD(QTreeWidgetItem * parent, vdata_t vdata)
+void MainWindow::addInTreeList_VD(QTreeWidgetItem * parent, VoxelData vdata)
 {
 	QTreeWidgetItem * itm = new QTreeWidgetItem();
 
@@ -38,7 +38,7 @@ void MainWindow::addInTreeList_VD(QTreeWidgetItem * parent, vdata_t vdata)
 	parent->addChild(itm);
 }
 
-void MainWindow::addInTreeList_VD(vdata_t vdata)
+void MainWindow::addInTreeList_VD(VoxelData vdata)
 {
 	QTreeWidgetItem * itm = new QTreeWidgetItem(ui->voxeltreeWidget);
 	if (vdata.name!=NULL) {
@@ -49,21 +49,21 @@ void MainWindow::addInTreeList_VD(vdata_t vdata)
 	}
 }
 
-void MainWindow::addInTreeList_VO(QTreeWidgetItem * parent, vobj_t vobject)
+void MainWindow::addInTreeList_VO(QTreeWidgetItem * parent, VoxelObject vobject)
 {
 	QTreeWidgetItem * itm = new QTreeWidgetItem();
 	
 
 }
 
-void MainWindow::addInTreeList_VO(vobj_t vobject)
+void MainWindow::addInTreeList_VO(VoxelObject vobject)
 {
 	QTreeWidgetItem * itm = new QTreeWidgetItem(ui->voxeltreeWidget);
 
 
 }
 
-void MainWindow::addInTreeList_VM(vmodel_t vmodel)
+void MainWindow::addInTreeList_VM(VoxelModel vmodel)
 {
 	QTreeWidgetItem * itm = new QTreeWidgetItem(ui->voxeltreeWidget);
 
@@ -77,7 +77,7 @@ void MainWindow::on_actionOpen_triggered()
 		this,
 		tr("Open Voxel Model"),
 		"",
-		tr("Voxel Files (*.vdat *.vo *.vm)")
+		tr("Voxel Files (*.vdat *.vm)")
 		);
 
 	QByteArray ba = filename.toLatin1();
@@ -92,21 +92,12 @@ void MainWindow::on_actionOpen_triggered()
 		if (!strcmp(fe, ".vdat")) {
 			openVD(str);
 		}
-		if (!strcmp(fe, ".vo")) {
-			openVO(str);
-		}
 		if (!strcmp(fe, ".vm")) {
 			openVM(str);
 		}
 	}
 }
 
-void MainWindow::on_actionImport_triggered()
-{
-
-
-
-}
 
 void MainWindow::on_actionExport_triggered()
 {
@@ -114,7 +105,11 @@ void MainWindow::on_actionExport_triggered()
 	int resolution[3] = { 256,256,256 };
 	float voxelsize[3] = { 1.0,0.5,1.0 };
 	bool isbit = 1;
-	char* buffer = (char *)calloc(sizeof(char), 256 * 256 * 256);
+	unsigned char* buffer = (unsigned char *)calloc(sizeof(unsigned char), 256 * 256 * 256);
+
+	for (int i = 0; i < resolution[0] * resolution[1] * resolution[2]; i++) {
+		buffer[i] = rand() % 256;
+	}
 
 	QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
 		"untitled.vdat",
@@ -130,7 +125,7 @@ void MainWindow::on_actionExport_triggered()
 		fwrite(voxelsize, sizeof(float), sizeof(voxelsize), vdatafile);
 		
 		fwrite(&isbit, sizeof(bool), 1, vdatafile);
-		fwrite(buffer, sizeof(char), sizeof(buffer), vdatafile);
+		fwrite(buffer, sizeof(unsigned char), sizeof(buffer), vdatafile);
 		
 		fclose(vdatafile);
 		return;
@@ -148,68 +143,54 @@ void MainWindow::openVD(const char* fileName)
 	bool isbitcompress;
 	unsigned char * buffer;
 
-	FILE * vdata = fopen(fileName, "r");
-	if (vdata!=NULL) {
-		fread(resolution, sizeof(resolution), sizeof(int), vdata);
-		fread(voxelsize, sizeof(voxelsize), sizeof(float), vdata);
-		fread(&isbitcompress, 1, sizeof(bool), vdata);
+	FILE * vdatafile = fopen(fileName, "rb");
+	if (vdatafile!=NULL) {
+		fread(resolution, 3, sizeof(int), vdatafile);
+		fread(voxelsize, 3, sizeof(float), vdatafile);
 
-		(unsigned char *)buffer = (unsigned char *)calloc(resolution[0] * resolution[1] * resolution[2], sizeof(char));
+		fread(&isbitcompress, 1, sizeof(bool), vdatafile);
 
-		fread(buffer, sizeof(buffer), sizeof(char), vdata);
+		(unsigned char *)buffer = (unsigned char *)calloc(resolution[0] * resolution[1] * resolution[2], sizeof(unsigned char));
+
+		fread(buffer, resolution[0] * resolution[1] * resolution[2], sizeof(unsigned char), vdatafile);
 	}
-	fclose(vdata);
-
-	/*
-	cout << resolution[0] << ", " << resolution[1] << ", " << resolution[2] << endl;
-	cout << voxelsize[0] << ", " << voxelsize[1] << ", " << voxelsize[2] << endl;
-	cout << isbit << endl;
-	*/
-
-	//Creat a vdata_t
-	vdata_t* temp;
+	fclose(vdatafile);
+	
+	//Creat a VoxelData
+	VoxelData temp;
 	for (int i = 0; i < 3;i++) {
-		temp->resolution[i] = resolution[i];
-		temp->voxelsize[i] = voxelsize[i];
+		temp.resolution[i] = resolution[i];
+		temp.voxelsize[i] = voxelsize[i];
 	}
-	temp->isbitcompress = isbitcompress;
-	(voxel_t *)temp->rawdata = (voxel_t *)calloc(resolution[0] * resolution[1] * resolution[2], sizeof(char));
-	for (int i = 0; i < resolution[0] * resolution[1] * resolution[2]; i++) {
-		(temp->rawdata + i)->data = buffer[i];
+	temp.isbitcompress = isbitcompress;
+
+	(Voxel *)temp.rawdata = (Voxel *)calloc(resolution[0] * resolution[1] * resolution[2] , sizeof(Voxel));
+	
+
+	for (int i = 0; i < resolution[0] * resolution[1] * resolution[2];i++) {
+		temp.rawdata[i].data = buffer[i];
 	}
-
-	//
-	(vdata_t **)vda = (vdata_t **)realloc(vda, (sizeof(vda) + 1) * sizeof(vdata_t));
-	vda[sizeof(vda) - 1] = temp;
-
 
 	free(buffer);
 
-	return;
-}
-
-void MainWindow::openVO(const char* fileName) 
-{
-	vobj_t* temp;
-
-	FILE * vdata = fopen(fileName, "r");
-	if (vdata != NULL) {
 
 
 
 
 
 
-	}
 
-	fclose(vdata);
+
+
+
+
 
 	return;
 }
 
 void MainWindow::openVM(const char* fileName)
 {
-	vmodel_t* temp;
+	VoxelModel* temp;
 
 	FILE * vdata = fopen(fileName, "r");
 	if (vdata != NULL) {
