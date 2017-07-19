@@ -4,6 +4,7 @@
 #include <QtWidgets/QMainWindow>
 #include "ui_mainwindow.h"
 #include "voxel.h"
+#include "mytreewidgetitem.h"
 
 namespace Ui {
 	class MainWindow;
@@ -14,7 +15,7 @@ class MainWindow : public QMainWindow
 	Q_OBJECT
 
 public:
-	VoxelModel vmodel;
+	VoxelModel* vmodel = NULL;
 
 private:
 	Ui::MainWindow *ui;
@@ -27,11 +28,9 @@ public:
 
 private:
 	void makeTreeList();
-	void addInTreeList_VD(QTreeWidgetItem * parent, VoxelData vdata);
-	void addInTreeList_VD(VoxelData vdata);
-	void addInTreeList_VO(QTreeWidgetItem * parent, VoxelObject vobject);
-	void addInTreeList_VO(VoxelObject vobject);
-	void addInTreeList_VM(VoxelModel);
+	void addInTreeList_VD(MyTreeWidgetItem * parent, VoxelData* vdata);
+	void addInTreeList_VO(MyTreeWidgetItem * parent, VoxelObject* vobject);
+	void addInTreeList_VM(VoxelModel* vmodel);
 
 	void openVD(const char* fileName);
 	void openVM(const char* fileName);

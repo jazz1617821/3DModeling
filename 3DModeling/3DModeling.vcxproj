@@ -205,6 +205,7 @@
     <ClCompile Include="mainwindow.cpp" />
     <ClCompile Include="material.cpp" />
     <ClCompile Include="mymath.cpp" />
+    <ClCompile Include="mytreewidgetitem.cpp" />
     <ClCompile Include="object.cpp" />
     <ClCompile Include="threedimesion_viewwidget.cpp" />
     <ClCompile Include="voxelvbo.cpp" />
@@ -295,6 +296,32 @@
     <ClInclude Include="LoadShaders.h" />
     <ClInclude Include="material.h" />
     <ClInclude Include="mymath.h" />
+    <CustomBuild Include="mytreewidgetitem.h">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Command>
+    </CustomBuild>
     <ClInclude Include="object.h" />
     <CustomBuild Include="z_axis_viewwidget.h">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath);$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>

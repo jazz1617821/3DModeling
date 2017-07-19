@@ -113,6 +113,9 @@
     <ClCompile Include="voxelvbo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="mytreewidgetitem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="mainwindow.h">
@@ -137,6 +140,9 @@
       <Filter>Header Files</Filter>
     </CustomBuild>
     <CustomBuild Include="y_axis_viewwidget.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="mytreewidgetitem.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
   </ItemGroup>

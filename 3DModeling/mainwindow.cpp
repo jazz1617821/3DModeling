@@ -23,52 +23,37 @@ MainWindow::~MainWindow()
 
 }
 
-void MainWindow::makeTreeList()
+void MainWindow::addInTreeList_VD(MyTreeWidgetItem * parent, VoxelData* vdata)
 {
-
-
-
-}
-
-void MainWindow::addInTreeList_VD(QTreeWidgetItem * parent, VoxelData vdata)
-{
-	QTreeWidgetItem * itm = new QTreeWidgetItem();
-
-
+	MyTreeWidgetItem * itm = new MyTreeWidgetItem();
+	itm->setText(0, (QString)vdata->name);
+	itm->vd = vdata;
 	parent->addChild(itm);
 }
 
-void MainWindow::addInTreeList_VD(VoxelData vdata)
+
+void MainWindow::addInTreeList_VO(MyTreeWidgetItem * parent, VoxelObject* vobject)
 {
-	QTreeWidgetItem * itm = new QTreeWidgetItem(ui->voxeltreeWidget);
-	if (vdata.name!=NULL) {
-		itm->setText(0, QString(vdata.name));
+	MyTreeWidgetItem * itm = new MyTreeWidgetItem();
+	itm->setText(0, (QString)vobject->name);
+	itm->vo = vobject;
+	parent->addChild(itm);
+	if (vobject->number_of_child > 1) {
+		for (int i = 0; i < vobject->number_of_child; i++) {
+			addInTreeList_VO(parent, vobject->child[i]);
+		}
 	}
 	else {
-		itm->setText(0, "vdata");
+		addInTreeList_VD(itm, vobject->vd);
 	}
 }
 
-void MainWindow::addInTreeList_VO(QTreeWidgetItem * parent, VoxelObject vobject)
+void MainWindow::addInTreeList_VM(VoxelModel* vmodel)
 {
-	QTreeWidgetItem * itm = new QTreeWidgetItem();
-	
-
-}
-
-void MainWindow::addInTreeList_VO(VoxelObject vobject)
-{
-	QTreeWidgetItem * itm = new QTreeWidgetItem(ui->voxeltreeWidget);
-
-
-}
-
-void MainWindow::addInTreeList_VM(VoxelModel vmodel)
-{
-	QTreeWidgetItem * itm = new QTreeWidgetItem(ui->voxeltreeWidget);
-
-
-
+	MyTreeWidgetItem * itm = new MyTreeWidgetItem(ui->voxeltreeWidget);
+	itm->setText(0,(QString)vmodel->name);
+	itm->vm = vmodel;
+	addInTreeList_VO(itm, vmodel->root_vobj);
 }
 
 void MainWindow::on_actionOpen_triggered()
@@ -105,7 +90,7 @@ void MainWindow::on_actionExport_triggered()
 	int resolution[3] = { 256,256,256 };
 	float voxelsize[3] = { 1.0,0.5,1.0 };
 	bool isbit = 1;
-	unsigned char* buffer = (unsigned char *)calloc(sizeof(unsigned char), 256 * 256 * 256);
+	unsigned char* buffer = (unsigned char *)calloc(sizeof(unsigned char), resolution[0] * resolution[1] * resolution[2]);
 
 	for (int i = 0; i < resolution[0] * resolution[1] * resolution[2]; i++) {
 		buffer[i] = rand() % 256;
@@ -121,11 +106,11 @@ void MainWindow::on_actionExport_triggered()
 		FILE* vdatafile;
 		vdatafile = fopen(fileLocationStr, "wb");
 
-		fwrite(resolution, sizeof(int), sizeof(resolution), vdatafile);
-		fwrite(voxelsize, sizeof(float), sizeof(voxelsize), vdatafile);
+		fwrite(resolution, sizeof(int), 3, vdatafile);
+		fwrite(voxelsize, sizeof(float), 3, vdatafile);
 		
 		fwrite(&isbit, sizeof(bool), 1, vdatafile);
-		fwrite(buffer, sizeof(unsigned char), sizeof(buffer), vdatafile);
+		fwrite(buffer, sizeof(unsigned char), resolution[0] * resolution[1] * resolution[2], vdatafile);
 		
 		fclose(vdatafile);
 		return;
@@ -157,33 +142,58 @@ void MainWindow::openVD(const char* fileName)
 	fclose(vdatafile);
 	
 	//Creat a VoxelData
-	VoxelData temp;
+	VoxelData* temp = new VoxelData;
+	temp->name = (char*)malloc(sizeof(char) * 256);
+	strcpy(temp->name, "Data_0");
 	for (int i = 0; i < 3;i++) {
-		temp.resolution[i] = resolution[i];
-		temp.voxelsize[i] = voxelsize[i];
+		temp->resolution[i] = resolution[i];
+		temp->voxelsize[i] = voxelsize[i];
 	}
-	temp.isbitcompress = isbitcompress;
+	temp->isbitcompress = isbitcompress;
 
-	(Voxel *)temp.rawdata = (Voxel *)calloc(resolution[0] * resolution[1] * resolution[2] , sizeof(Voxel));
+	(Voxel *)temp->rawdata = (Voxel *)calloc(resolution[0] * resolution[1] * resolution[2] , sizeof(Voxel));
 	
 
 	for (int i = 0; i < resolution[0] * resolution[1] * resolution[2];i++) {
-		temp.rawdata[i].data = buffer[i];
+		temp->rawdata[i].data = buffer[i];
 	}
 
 	free(buffer);
 
 
+	if(vmodel==NULL) {
+		//Creat Model
+		vmodel = new VoxelModel;
+		vmodel->name = (char*)malloc(sizeof(char) * 256);
+		strcpy(vmodel->name, "Model_0");
+		for (int i = 0; i < 3; i++) {
+			vmodel->resolution[i] = resolution[i];
+			vmodel->voxelsize[i] = voxelsize[i];
+		}
+		vmodel->number_of_voxel_data = 1;
+		
+		//Creat root object
+		vmodel->root_vobj = new VoxelObject;
+		vmodel->root_vobj->name = (char*)malloc(sizeof(char) * 256);
+		strcpy(vmodel->root_vobj->name, "Object_0");
+		for (int i = 0; i < 3; i++) {
+			vmodel->root_vobj->max_bound[0] = resolution[0];
+			vmodel->root_vobj->min_bound[0] = 0;
+		}
+		vmodel->root_vobj->number_of_child = 1;
+		vmodel->root_vobj->vd = temp;
+
+	}
+	else {
+		//merge vdata into exist vmodel
 
 
 
+	}
 
+	addInTreeList_VM(vmodel);
 
-
-
-
-
-
+	delete temp;
 
 	return;
 }

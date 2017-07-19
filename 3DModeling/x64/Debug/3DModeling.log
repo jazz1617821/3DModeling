@@ -1,4 +1,4 @@
-﻿已經開始建置於 2017/7/18 下午 09:39:36。
+﻿已經開始建置於 2017/7/20 上午 12:32:00。
      1>節點 2 (Rebuild 目標) 上的專案 "C:\Users\User\Documents\GitHub\3DModeling\3DModeling\3DModeling.vcxproj"。
      1>CustomBuild:
          Moc'ing mainwindow.h...
@@ -13,7 +13,7 @@
      1>RCC : warning : No resources in 'C:\Users\User\Documents\GitHub\3DModeling\3DModeling\mainwindow.qrc'.
          
        ClCompile:
-         D:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\x86_amd64\CL.exe /c /I.\GeneratedFiles /I. /IC:\Qt\5.7\msvc2015_64\include /I.\GeneratedFiles\Debug /IC:\Qt\5.7\msvc2015_64\include\QtCore /IC:\Qt\5.7\msvc2015_64\include\QtGui /IC:\Qt\5.7\msvc2015_64\include\QtWidgets /IC:\Qt\5.7\msvc2015_64\include\QtOpenGL /Zi /nologo /W1 /WX- /Od /D UNICODE /D WIN32 /D QT_DLL /D QT_CORE_LIB /D QT_GUI_LIB /D QT_WIDGETS_LIB /D QT_OPENGL_LIB /Gm- /EHsc /MDd /GS- /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"x64\Debug\\" /Fd"x64\Debug\vc140.pdb" /Gd /TP /errorReport:prompt GeneratedFiles\Debug\moc_mainwindow.cpp GeneratedFiles\Debug\moc_threedimesion_viewwidget.cpp GeneratedFiles\Debug\moc_viewwidget.cpp GeneratedFiles\Debug\moc_x_axis_viewwidget.cpp GeneratedFiles\Debug\moc_y_axis_viewwidget.cpp GeneratedFiles\Debug\moc_z_axis_viewwidget.cpp light.cpp LoadShaders.cpp main.cpp mainwindow.cpp material.cpp mymath.cpp object.cpp threedimesion_viewwidget.cpp voxelvbo.cpp x_axis_viewwidget.cpp y_axis_viewwidget.cpp viewwidget.cpp z_axis_viewwidget.cpp
+         D:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\x86_amd64\CL.exe /c /I.\GeneratedFiles /I. /IC:\Qt\5.7\msvc2015_64\include /I.\GeneratedFiles\Debug /IC:\Qt\5.7\msvc2015_64\include\QtCore /IC:\Qt\5.7\msvc2015_64\include\QtGui /IC:\Qt\5.7\msvc2015_64\include\QtWidgets /IC:\Qt\5.7\msvc2015_64\include\QtOpenGL /Zi /nologo /W1 /WX- /Od /D UNICODE /D WIN32 /D QT_DLL /D QT_CORE_LIB /D QT_GUI_LIB /D QT_WIDGETS_LIB /D QT_OPENGL_LIB /Gm- /EHsc /MDd /GS- /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"x64\Debug\\" /Fd"x64\Debug\vc140.pdb" /Gd /TP /errorReport:prompt GeneratedFiles\Debug\moc_mainwindow.cpp GeneratedFiles\Debug\moc_threedimesion_viewwidget.cpp GeneratedFiles\Debug\moc_viewwidget.cpp GeneratedFiles\Debug\moc_x_axis_viewwidget.cpp GeneratedFiles\Debug\moc_y_axis_viewwidget.cpp GeneratedFiles\Debug\moc_z_axis_viewwidget.cpp light.cpp LoadShaders.cpp main.cpp mainwindow.cpp material.cpp mymath.cpp mytreewidgetitem.cpp object.cpp threedimesion_viewwidget.cpp voxelvbo.cpp x_axis_viewwidget.cpp y_axis_viewwidget.cpp viewwidget.cpp z_axis_viewwidget.cpp
          moc_mainwindow.cpp
          moc_threedimesion_viewwidget.cpp
          moc_viewwidget.cpp
@@ -30,6 +30,7 @@
      1>material.cpp(118): warning C4838: 從 'double' 到 'float' 的轉換必須是縮小轉換
      1>material.cpp(146): warning C4838: 從 'double' 到 'float' 的轉換必須是縮小轉換
          mymath.cpp
+         mytreewidgetitem.cpp
          object.cpp
      1>object.cpp(204): warning C4838: 從 'int' 到 'float' 的轉換必須是縮小轉換
          threedimesion_viewwidget.cpp
@@ -63,6 +64,7 @@
          x64\Debug\mainwindow.obj
          x64\Debug\material.obj
          x64\Debug\mymath.obj
+         x64\Debug\mytreewidgetitem.obj
          x64\Debug\object.obj
          x64\Debug\threedimesion_viewwidget.obj
          x64\Debug\voxelvbo.obj
@@ -232,4 +234,4 @@
 
 建置成功。
 
-經過時間 00:00:28.72
+經過時間 00:00:34.44
