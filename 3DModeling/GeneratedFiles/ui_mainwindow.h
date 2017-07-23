@@ -16,7 +16,7 @@
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
-#include <QtWidgets/QListView>
+#include <QtWidgets/QListWidget>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
@@ -52,7 +52,7 @@ public:
     QTreeWidget *voxeltreeWidget;
     QWidget *widget1;
     QGridLayout *gridLayout_8;
-    QListView *listView;
+    QListWidget *listWidget;
     QLabel *AttributeLabel;
     QTableView *attributetableView;
     QPushButton *pushButton_2;
@@ -143,10 +143,10 @@ public:
         gridLayout_8->setSpacing(6);
         gridLayout_8->setContentsMargins(11, 11, 11, 11);
         gridLayout_8->setObjectName(QStringLiteral("gridLayout_8"));
-        listView = new QListView(widget1);
-        listView->setObjectName(QStringLiteral("listView"));
+        listWidget = new QListWidget(widget1);
+        listWidget->setObjectName(QStringLiteral("listWidget"));
 
-        gridLayout_8->addWidget(listView, 0, 0, 1, 1);
+        gridLayout_8->addWidget(listWidget, 0, 0, 1, 1);
 
         tabWidget->addTab(widget1, QString());
 

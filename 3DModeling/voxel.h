@@ -37,7 +37,8 @@ typedef struct VoxelModel
 	float voxelsize[3];				//體素大小
 	int number_of_voxel_data;		//體素資料個數
 
-	VoxelObject* root_vobj;		//
+	char* root_object_filename;		//
+	VoxelObject* root_vobj;			//
 
 }vmodel_t;
 
