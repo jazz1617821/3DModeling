@@ -165,30 +165,68 @@ void MainWindow::on_actionExport_triggered()
 	vmodel->root_vobj->child[2] = tempobj_3;
 
 	
-
-
-
-
-
-
 	QString filename = QFileDialog::getSaveFileName(this, tr("Save File"),
-		"untitled.vdat",
-		tr("(*.vdat)"));
-	if (filename.length() != 0) {
-		QByteArray ba = filename.toLatin1();
-		const char *fileLocationStr = ba.data();
+		"untitled",
+		tr("Model Files (*.vm);; Data Files (*.vdat)"));
+	QByteArray ba = filename.toLatin1();
+	const char *str = ba.data();
+	const char *fe;
+	fe = strrchr(str, '.');
 
-		FILE* vdatafile;
-		vdatafile = fopen(fileLocationStr, "wb");
+	if (!filename.isEmpty()) {
+		if (!strcmp(fe,".vm")) {
+			//export vmodel
 
-		fwrite(resolution, sizeof(int), 3, vdatafile);
-		fwrite(voxelsize, sizeof(float), 3, vdatafile);
-		
-		fwrite(&isbitcompress, sizeof(bool), 1, vdatafile);
-		fwrite(buffer, sizeof(unsigned char), resolution[0] * resolution[1] * resolution[2], vdatafile);
-		
-		fclose(vdatafile);
-		return;
+
+			FILE* vdatafile;
+			vdatafile = fopen(str, "w");
+
+			//Write vmodel 
+			fprintf(vdatafile, "Voxel Model:\n");
+			fprintf(vdatafile, "Name:%s\n", vmodel->name);
+			fprintf(vdatafile, "Resolution:%dx%dx%d\n",vmodel->resolution[0], vmodel->resolution[1], vmodel->resolution[2]);
+			fprintf(vdatafile, "Voxelsize:%.2f:%.2f:%.2f\n", vmodel->voxelsize[0], vmodel->voxelsize[1], vmodel->voxelsize[2]);
+			fprintf(vdatafile, "Number of voxel data:%d\n", vmodel->number_of_voxel_data);
+
+
+			/*
+			int len = strlen(vmodel->name);
+			fwrite(&len,sizeof(int),1, vdatafile);									//name length
+			fwrite(vmodel->name, sizeof(char), len, vdatafile);	//name
+			fwrite(vmodel->resolution, sizeof(int), 3, vdatafile);					//resolution
+			fwrite(vmodel->voxelsize, sizeof(float), 3, vdatafile);					//voxelsize
+			fwrite(&(vmodel->number_of_voxel_data), sizeof(int), 1, vdatafile);		//number of voxel data
+			*/
+
+			//Write root root_object
+			fprintf(vdatafile, "Root object:\n");
+			fprintf(vdatafile, "Name:%s\n", vmodel->root_vobj->name);
+			fprintf(vdatafile, "Resolution:%dx%dx%d\n", vmodel->resolution[0], vmodel->resolution[1], vmodel->resolution[2]);
+			fprintf(vdatafile, "Voxelsize:%.2f:%.2f:%.2f\n", vmodel->voxelsize[0], vmodel->voxelsize[1], vmodel->voxelsize[2]);
+			fprintf(vdatafile, "Number of voxel data:%d\n", vmodel->number_of_voxel_data);
+
+			/*
+			len = strlen(vmodel->root_vobj->name);
+			fwrite(&len, sizeof(int), 1, vdatafile);									//name length
+			fwrite(vmodel->root_vobj->name, sizeof(char), len, vdatafile);				//name
+			fwrite(vmodel->root_vobj->max_bound, sizeof(float), 3, vdatafile);			//maxbound
+			fwrite(vmodel->root_vobj->min_bound, sizeof(float), 3, vdatafile);			//minbound
+			fwrite(&(vmodel->root_vobj->number_of_child), sizeof(int), 1, vdatafile);	//number of child
+			*/
+
+
+
+
+			//
+			fclose(vdatafile);
+			return;
+		}
+		else if(!strcmp(fe, ".vdat")) {
+			//export vdata
+
+
+
+		}
 	}
 	else {
 		QMessageBox::information(this, tr("Warning"), "Failed to save the file.");

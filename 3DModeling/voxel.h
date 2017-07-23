@@ -9,7 +9,7 @@ typedef struct Voxel
 
 typedef struct VoxelData
 {
-	char* name;			//體素物件名稱
+	char* name;				//體素物件名稱
 	int resolution[3];		//此Data解析度
 	float voxelsize[3];		//此Data體素大小
 	bool isbitcompress;		//
@@ -37,7 +37,6 @@ typedef struct VoxelModel
 	float voxelsize[3];				//體素大小
 	int number_of_voxel_data;		//體素資料個數
 
-	char* root_object_filename;		//
 	VoxelObject* root_vobj;			//
 
 }vmodel_t;
