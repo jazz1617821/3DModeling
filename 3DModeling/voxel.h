@@ -4,7 +4,6 @@
 typedef struct Voxel
 {
 	unsigned char data;
-
 }voxel_t;
 
 typedef struct VoxelData

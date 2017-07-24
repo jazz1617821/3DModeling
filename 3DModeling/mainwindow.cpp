@@ -94,20 +94,53 @@ void MainWindow::on_actionExport_triggered()
 		buffer[i] = rand() % 256;
 	}
 
-	VoxelData* temp = new VoxelData;
-	temp->name = (char*)malloc(sizeof(char) * 256);
-	strcpy(temp->name, "Data_0");
+	VoxelData* tempData_1 = new VoxelData;
+	tempData_1->name = (char*)malloc(sizeof(char) * 256);
+	strcpy(tempData_1->name, "Data_0");
 	for (int i = 0; i < 3; i++) {
-		temp->resolution[i] = resolution[i];
-		temp->voxelsize[i] = voxelsize[i];
+		tempData_1->resolution[i] = resolution[i];
+		tempData_1->voxelsize[i] = voxelsize[i];
 	}
-	temp->isbitcompress = isbitcompress;
+	tempData_1->isbitcompress = isbitcompress;
 
-	(Voxel *)temp->rawdata = (Voxel *)calloc(resolution[0] * resolution[1] * resolution[2], sizeof(Voxel));
+	(Voxel *)tempData_1->rawdata = (Voxel *)calloc(resolution[0] * resolution[1] * resolution[2], sizeof(Voxel));
 
 	for (int i = 0; i < resolution[0] * resolution[1] * resolution[2]; i++) {
-		temp->rawdata[i].data = buffer[i];
+		tempData_1->rawdata[i].data = buffer[i];
 	}
+
+	VoxelData* tempData_2 = new VoxelData;
+	tempData_2->name = (char*)malloc(sizeof(char) * 256);
+	strcpy(tempData_2->name, "Data_1");
+	for (int i = 0; i < 3; i++) {
+		tempData_2->resolution[i] = resolution[i];
+		tempData_2->voxelsize[i] = voxelsize[i];
+	}
+	tempData_2->isbitcompress = isbitcompress;
+
+	(Voxel *)tempData_2->rawdata = (Voxel *)calloc(resolution[0] * resolution[1] * resolution[2], sizeof(Voxel));
+
+	for (int i = 0; i < resolution[0] * resolution[1] * resolution[2]; i++) {
+		tempData_2->rawdata[i].data = buffer[i];
+	}
+
+	VoxelData* tempData_3 = new VoxelData;
+	tempData_3->name = (char*)malloc(sizeof(char) * 256);
+	strcpy(tempData_3->name, "Data_2");
+	for (int i = 0; i < 3; i++) {
+		tempData_3->resolution[i] = resolution[i];
+		tempData_3->voxelsize[i] = voxelsize[i];
+	}
+	tempData_3->isbitcompress = isbitcompress;
+
+	(Voxel *)tempData_3->rawdata = (Voxel *)calloc(resolution[0] * resolution[1] * resolution[2], sizeof(Voxel));
+
+	for (int i = 0; i < resolution[0] * resolution[1] * resolution[2]; i++) {
+		tempData_3->rawdata[i].data = buffer[i];
+	}
+
+	free(buffer);
+
 
 	vmodel = new VoxelModel;
 	vmodel->name = (char*)malloc(sizeof(char) * 256);
@@ -116,15 +149,15 @@ void MainWindow::on_actionExport_triggered()
 		vmodel->resolution[i] = 4096;
 		vmodel->voxelsize[i] = 1;
 	}
-	vmodel->number_of_voxel_data = 1;
+	vmodel->number_of_voxel_data = 3;
 
 	//Creat root object
 	vmodel->root_vobj = new VoxelObject;
 	vmodel->root_vobj->name = (char*)malloc(sizeof(char) * 256);
 	strcpy(vmodel->root_vobj->name, "Object_0");
 	for (int i = 0; i < 3; i++) {
-		vmodel->root_vobj->max_bound[0] = 4096;
-		vmodel->root_vobj->min_bound[0] = 0;
+		vmodel->root_vobj->max_bound[i] = 4096;
+		vmodel->root_vobj->min_bound[i] = 0;
 	}
 	vmodel->root_vobj->number_of_child = 3;
 	
@@ -134,31 +167,31 @@ void MainWindow::on_actionExport_triggered()
 	tempobj_1->name = (char*)malloc(sizeof(char) * 256);
 	strcpy(tempobj_1->name, "Object_1");
 	for (int i = 0; i < 3; i++) {
-		tempobj_1->max_bound[0] = 2048;
-		tempobj_1->min_bound[0] = 0;
+		tempobj_1->max_bound[i] = 2048;
+		tempobj_1->min_bound[i] = 0;
 	}
 	tempobj_1->number_of_child = 1;
-	tempobj_1->vd = temp;
+	tempobj_1->vd = tempData_1;
 
 	VoxelObject * tempobj_2 = new VoxelObject;
 	tempobj_2->name = (char*)malloc(sizeof(char) * 256);
 	strcpy(tempobj_2->name, "Object_2");
 	for (int i = 0; i < 3; i++) {
-		tempobj_2->max_bound[0] = 4096;
-		tempobj_2->min_bound[0] = 2048;
+		tempobj_2->max_bound[i] = 4096;
+		tempobj_2->min_bound[i] = 2048;
 	}
 	tempobj_2->number_of_child = 1;
-	tempobj_2->vd = temp;
+	tempobj_2->vd = tempData_2;
 
 	VoxelObject * tempobj_3 = new VoxelObject;
 	tempobj_3->name = (char*)malloc(sizeof(char) * 256);
 	strcpy(tempobj_3->name, "Object_3");
 	for (int i = 0; i < 3; i++) {
-		tempobj_3->max_bound[0] = 4096;
-		tempobj_3->min_bound[0] = 0;
+		tempobj_3->max_bound[i] = 4096;
+		tempobj_3->min_bound[i] = 0;
 	}
 	tempobj_3->number_of_child = 1;
-	tempobj_3->vd = temp;
+	tempobj_3->vd = tempData_3;
 
 	vmodel->root_vobj->child[0] = tempobj_1;
 	vmodel->root_vobj->child[1] = tempobj_2;
@@ -177,48 +210,22 @@ void MainWindow::on_actionExport_triggered()
 		if (!strcmp(fe,".vm")) {
 			//export vmodel
 
-
-			FILE* vdatafile;
-			vdatafile = fopen(str, "w");
+			FILE* vmodelfile = fopen(str, "w");
 
 			//Write vmodel 
-			fprintf(vdatafile, "Voxel Model:\n");
-			fprintf(vdatafile, "Name:%s\n", vmodel->name);
-			fprintf(vdatafile, "Resolution:%dx%dx%d\n",vmodel->resolution[0], vmodel->resolution[1], vmodel->resolution[2]);
-			fprintf(vdatafile, "Voxelsize:%.2f:%.2f:%.2f\n", vmodel->voxelsize[0], vmodel->voxelsize[1], vmodel->voxelsize[2]);
-			fprintf(vdatafile, "Number of voxel data:%d\n", vmodel->number_of_voxel_data);
-
-
-			/*
-			int len = strlen(vmodel->name);
-			fwrite(&len,sizeof(int),1, vdatafile);									//name length
-			fwrite(vmodel->name, sizeof(char), len, vdatafile);	//name
-			fwrite(vmodel->resolution, sizeof(int), 3, vdatafile);					//resolution
-			fwrite(vmodel->voxelsize, sizeof(float), 3, vdatafile);					//voxelsize
-			fwrite(&(vmodel->number_of_voxel_data), sizeof(int), 1, vdatafile);		//number of voxel data
-			*/
-
-			//Write root root_object
-			fprintf(vdatafile, "Root object:\n");
-			fprintf(vdatafile, "Name:%s\n", vmodel->root_vobj->name);
-			fprintf(vdatafile, "Resolution:%dx%dx%d\n", vmodel->resolution[0], vmodel->resolution[1], vmodel->resolution[2]);
-			fprintf(vdatafile, "Voxelsize:%.2f:%.2f:%.2f\n", vmodel->voxelsize[0], vmodel->voxelsize[1], vmodel->voxelsize[2]);
-			fprintf(vdatafile, "Number of voxel data:%d\n", vmodel->number_of_voxel_data);
-
-			/*
-			len = strlen(vmodel->root_vobj->name);
-			fwrite(&len, sizeof(int), 1, vdatafile);									//name length
-			fwrite(vmodel->root_vobj->name, sizeof(char), len, vdatafile);				//name
-			fwrite(vmodel->root_vobj->max_bound, sizeof(float), 3, vdatafile);			//maxbound
-			fwrite(vmodel->root_vobj->min_bound, sizeof(float), 3, vdatafile);			//minbound
-			fwrite(&(vmodel->root_vobj->number_of_child), sizeof(int), 1, vdatafile);	//number of child
-			*/
+			fprintf(vmodelfile, "Voxel Model:\n");
+			fprintf(vmodelfile, "Name:%s\n", vmodel->name);
+			fprintf(vmodelfile, "Resolution:%dx%dx%d\n",vmodel->resolution[0], vmodel->resolution[1], vmodel->resolution[2]);
+			fprintf(vmodelfile, "Voxelsize:%.2f:%.2f:%.2f\n", vmodel->voxelsize[0], vmodel->voxelsize[1], vmodel->voxelsize[2]);
+			fprintf(vmodelfile, "Number of voxel data:%d\n", vmodel->number_of_voxel_data);
 
 
 
+			//DFS Write Voxel Object
+			writeVO(str,vmodelfile, vmodel->root_vobj);
 
 			//
-			fclose(vdatafile);
+			fclose(vmodelfile);
 			return;
 		}
 		else if(!strcmp(fe, ".vdat")) {
@@ -237,14 +244,14 @@ void MainWindow::on_actionExport_triggered()
 	
 }
 
-void MainWindow::openVD(const char* fileName) 
+void MainWindow::openVD(const char* filepath)
 {
 	int resolution[3];
 	float voxelsize[3];
 	bool isbitcompress;
 	unsigned char * buffer;
 
-	FILE * vdatafile = fopen(fileName, "rb");
+	FILE * vdatafile = fopen(filepath, "rb");
 	if (vdatafile!=NULL) {
 		fread(resolution, 3, sizeof(int), vdatafile);
 		fread(voxelsize, 3, sizeof(float), vdatafile);
@@ -269,7 +276,6 @@ void MainWindow::openVD(const char* fileName)
 
 	(Voxel *)temp->rawdata = (Voxel *)calloc(resolution[0] * resolution[1] * resolution[2] , sizeof(Voxel));
 	
-
 	for (int i = 0; i < resolution[0] * resolution[1] * resolution[2];i++) {
 		temp->rawdata[i].data = buffer[i];
 	}
@@ -314,21 +320,143 @@ void MainWindow::openVD(const char* fileName)
 	return;
 }
 
-void MainWindow::openVM(const char* fileName)
+void MainWindow::openVD(const char * filepath, VoxelData * vd)
 {
-	VoxelModel* temp;
+	char* str = (char*)malloc(sizeof(char)* (strlen(filepath) + strlen(vd->name) + 5));
+	strcpy(str, filepath);
+	char* i = strrchr(str, '/');
+	str[i - str + 1] = '\0';
+	strcat(str, vd->name);
+	strcat(str, ".vdat");
+	cout << str << endl;
+	FILE* vdatafile = fopen(str, "rb");
 
-	FILE * vmodelfile = fopen(fileName, "r");
+	if (vdatafile != NULL) {
+		fread(vd->resolution, sizeof(int), 3, vdatafile);
+		cout << vd->resolution[0] << " " << vd->resolution[1] << " " << vd->resolution[2] << endl;
+		fread(vd->voxelsize, sizeof(float), 3, vdatafile);
+		cout << vd->voxelsize[0] << " " << vd->voxelsize[1] << " " << vd->voxelsize[2] << endl;
+		fread(&vd->isbitcompress, sizeof(int), 1, vdatafile);
+		cout << vd->isbitcompress << endl;
+
+		(Voxel*)vd->rawdata = (Voxel *)calloc(sizeof(Voxel) , vd->resolution[0] * vd->resolution[1] * vd->resolution[2]);
+
+		for (int i = 0; i < vd->resolution[0] * vd->resolution[1] * vd->resolution[2]; i++) {
+			fread(&vd->rawdata[i].data, sizeof(unsigned char), 1, vdatafile);
+		}
+		fclose(vdatafile);
+	}
+
+	free(str);
+
+	return;
+}
+
+void MainWindow::openVO(const char* filepath,FILE * vmodelfile, VoxelObject* vo)
+{
+	(char*)vo->name = (char*)calloc(sizeof(char) , 20);
+	fscanf(vmodelfile, "Name:%s\n", vo->name);
+	cout << vo->name << endl;
+	fscanf(vmodelfile, "Max bound:%fx%fx%f\n", &vo->max_bound[0], &vo->max_bound[1], &vo->max_bound[2]);
+	cout << vo->max_bound[0]<< " " << vo->max_bound[1] << " " << vo->max_bound[2] << endl;
+	fscanf(vmodelfile, "Min bound:%fx%fx%f\n", &vo->min_bound[0], &vo->min_bound[1], &vo->min_bound[2]);
+	cout << vo->min_bound[0] << " " << vo->min_bound[1] << " " << vo->min_bound[2] << endl;
+	fscanf(vmodelfile, "Number of child:%d\n", &vo->number_of_child);
+	cout << vo->number_of_child << endl;
+
+	if (vo->number_of_child == 1) {
+		vo->vd = new VoxelData;
+		vo->vd->name = (char*)calloc(sizeof(char) , 20);
+		fscanf(vmodelfile, "Voxel data filename:%s\n", vo->vd->name);
+		cout << vo->vd->name << endl;
+		openVD(filepath, vo->vd);
+		return;
+	}
+	else {
+		(VoxelObject**)vo->child = (VoxelObject**)malloc(sizeof(VoxelObject*)*vo->number_of_child);
+		for (int i = 0; i < vo->number_of_child; i++) {
+			vo->child[i] = new VoxelObject;
+			vo->child[i]->parent = new VoxelObject;
+			vo->child[i]->parent = vo;
+			openVO(filepath, vmodelfile, vo->child[i]);
+		}
+	}
+}
+
+void MainWindow::openVM(const char* filepath)
+{
+	vmodel = new VoxelModel;
+
+	FILE * vmodelfile = fopen(filepath, "r");
 	if (vmodelfile != NULL) {
+		char* str = (char*)malloc(sizeof(char) * 10);
+		char* str1 = (char*)malloc(sizeof(char) * 10);
+		fscanf(vmodelfile, "%s %s\n", str,str1);
+		cout << str << " " << str1 << endl;
+		vmodel->name = (char*)calloc(sizeof(char), 20);
+		fscanf(vmodelfile, "Name:%s\n", vmodel->name);
+		cout << vmodel->name << endl;
+		fscanf(vmodelfile, "Resolution:%dx%dx%d\n", &vmodel->resolution[0], &vmodel->resolution[1], &vmodel->resolution[2]);
+		cout << vmodel->resolution[0] << " " << vmodel->resolution[1] << " " << vmodel->resolution[2] << " " << endl;
+		fscanf(vmodelfile, "Voxelsize:%f:%f:%f\n", &vmodel->voxelsize[0], &vmodel->voxelsize[1], &vmodel->voxelsize[2]);
+		cout << vmodel->voxelsize[0] << " " << vmodel->voxelsize[1] << " " << vmodel->voxelsize[2] << " " << endl;
+		fscanf(vmodelfile, "Number of voxel data:%d\n", &vmodel->number_of_voxel_data);
+		cout << vmodel->number_of_voxel_data << endl;
 
-
-
-
-
-
+		vmodel->root_vobj = new VoxelObject;
+		openVO(filepath, vmodelfile, vmodel->root_vobj);
 	}
 
 	fclose(vmodelfile);
+
+	addInTreeList_VM(vmodel);
+
+	return;
+}
+
+void MainWindow::writeVO(const char* filepath,FILE* vmodelfile,VoxelObject * vo)
+{
+	//Write this object
+	fprintf(vmodelfile, "Name:%s\n", vo->name);
+	fprintf(vmodelfile, "Max bound:%fx%fx%f\n", vo->max_bound[0], vo->max_bound[1], vo->max_bound[2]);
+	fprintf(vmodelfile, "Min bound:%fx%fx%f\n", vo->min_bound[0], vo->min_bound[1], vo->min_bound[2]);
+	fprintf(vmodelfile, "Number of child:%d\n", vo->number_of_child);
+
+	if (vo->number_of_child == 1) {
+		fprintf(vmodelfile,"Voxel data filename:%s\n",vo->vd->name);
+		writeVD(filepath,vo->vd);
+		return;
+	}
+	else {
+		for (int i = 0; i < vo->number_of_child; i++) {
+			writeVO(filepath, vmodelfile, vo->child[i]);
+		}
+	}
+}
+
+void MainWindow::writeVD(const char* filepath, VoxelData * vd)
+{
+	char* str = (char*)malloc(sizeof(char)* (strlen(filepath) + strlen(vd->name) + 5));
+	strcpy(str, filepath);
+	char* i = strrchr(str, '/');
+	str[i - str + 1] = '\0';
+	strcat(str, vd->name);
+	strcat(str, ".vdat");
+	cout << str << endl;
+	FILE* vdatafile = fopen(str, "wb");
+
+	if(vdatafile) {
+		fwrite(vd->resolution, sizeof(int), 3, vdatafile);
+		fwrite(vd->voxelsize, sizeof(float), 3, vdatafile);
+		fwrite(&vd->isbitcompress, sizeof(int), 1, vdatafile);
+		for (int i = 0; i < vd->resolution[0] * vd->resolution[1] * vd->resolution[2]; i++) {
+			fwrite(&vd->rawdata[i].data, sizeof(unsigned char), 1, vdatafile);
+		}
+
+		fclose(vdatafile);
+	}
+
+	free(str);
 
 	return;
 }

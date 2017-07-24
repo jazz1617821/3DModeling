@@ -27,13 +27,17 @@ public:
 	~MainWindow();
 
 private:
-	void makeTreeList();
 	void addInTreeList_VD(MyTreeWidgetItem * parent, VoxelData* vdata);
 	void addInTreeList_VO(MyTreeWidgetItem * parent, VoxelObject* vobject);
 	void addInTreeList_VM(VoxelModel* vmodel);
 
-	void openVD(const char* fileName);
-	void openVM(const char* fileName);
+	void openVD(const char* filepath);
+	void openVD(const char* filepath, VoxelData* vd);
+	void openVO(const char* filepath, FILE * vmodelfile, VoxelObject* vo);
+	void openVM(const char* filepath);
+
+	void writeVO(const char* filepath,FILE* vmodelfile,VoxelObject* vo);
+	void writeVD(const char* filepath,VoxelData* vd);
 
 private slots:
     void on_actionExport_triggered();
