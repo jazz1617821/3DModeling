@@ -5,6 +5,7 @@
 #include "ui_mainwindow.h"
 #include "voxel.h"
 #include "mytreewidgetitem.h"
+#include "mylistwidgetitem.h"
 
 namespace Ui {
 	class MainWindow;
@@ -27,6 +28,8 @@ public:
 	~MainWindow();
 
 private:
+	void addInDataList_VO(VoxelObject * vo);
+
 	void addInTreeList_VD(MyTreeWidgetItem * parent, VoxelData* vdata);
 	void addInTreeList_VO(MyTreeWidgetItem * parent, VoxelObject* vobject);
 	void addInTreeList_VM(VoxelModel* vmodel);
@@ -39,9 +42,16 @@ private:
 	void writeVO(const char* filepath,FILE* vmodelfile,VoxelObject* vo);
 	void writeVD(const char* filepath,VoxelData* vd);
 
+	void setAttribute(VoxelData*);
+	void setAttribute(VoxelObject*);
+	void setAttribute(VoxelModel*);
+
 private slots:
     void on_actionExport_triggered();
     void on_actionOpen_triggered();
+
+	void setAttribute(QTreeWidgetItem *, int);
+	void setAttribute(QListWidgetItem *);
 
 signals:
 	

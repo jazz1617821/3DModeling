@@ -116,6 +116,9 @@
     <ClCompile Include="mytreewidgetitem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="mylistwidgetitem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="mainwindow.h">
@@ -143,6 +146,9 @@
       <Filter>Header Files</Filter>
     </CustomBuild>
     <CustomBuild Include="mytreewidgetitem.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="mylistwidgetitem.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
   </ItemGroup>

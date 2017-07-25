@@ -13,13 +13,31 @@ MainWindow::MainWindow(QWidget *parent)
 	ui->setupUi(this);
 
 	
-
+	connect(ui->voxeltreeWidget, SIGNAL(itemClicked(QTreeWidgetItem *, int)), this, SLOT(setAttribute(QTreeWidgetItem *, int)));
+	connect(ui->datalistWidget, SIGNAL(itemClicked(QListWidgetItem *)), this, SLOT(setAttribute(QListWidgetItem *)));
 
 }
 
 MainWindow::~MainWindow()
 {
 
+}
+
+//Private Fuction
+void MainWindow::addInDataList_VO(VoxelObject * vo) 
+{
+	if (vo->number_of_child == 1) {
+		MyListWidgetItem* itm = new MyListWidgetItem();
+		itm->vd = vo->vd;
+		itm->setText(vo->vd->name);
+		ui->datalistWidget->addItem(itm);
+		return;
+	}
+	else {
+		for (int i = 0; i < vo->number_of_child; i++) {
+			addInDataList_VO(vo->child[i]);
+		}
+	}
 }
 
 void MainWindow::addInTreeList_VD(MyTreeWidgetItem * parent, VoxelData* vdata)
@@ -29,7 +47,6 @@ void MainWindow::addInTreeList_VD(MyTreeWidgetItem * parent, VoxelData* vdata)
 	itm->vd = vdata;
 	parent->addChild(itm);
 }
-
 
 void MainWindow::addInTreeList_VO(MyTreeWidgetItem * parent, VoxelObject* vobject)
 {
@@ -53,195 +70,6 @@ void MainWindow::addInTreeList_VM(VoxelModel* vmodel)
 	itm->setText(0,(QString)vmodel->name);
 	itm->vm = vmodel;
 	addInTreeList_VO(itm, vmodel->root_vobj);
-}
-
-void MainWindow::on_actionOpen_triggered()
-{
-	QString filename = QFileDialog::getOpenFileName(
-		this,
-		tr("Open Voxel Model"),
-		"",
-		tr("Voxel Files (*.vdat *.vm)")
-		);
-
-	QByteArray ba = filename.toLatin1();
-	const char *fileLocationStr = ba.data();
-	printf("File location:%s\n", fileLocationStr);
-
-	const char *str = ba.data();
-	const char *fe;
-
-	fe = strrchr(str, '.');
-	if (!filename.isEmpty()) {
-		if (!strcmp(fe, ".vdat")) {
-			openVD(str);
-		}
-		if (!strcmp(fe, ".vm")) {
-			openVM(str);
-		}
-	}
-}
-
-
-void MainWindow::on_actionExport_triggered()
-{
-	int resolution[3] = { 256,256,256 };
-	float voxelsize[3] = { 1.0,0.5,1.0 };
-	bool isbitcompress = 1;
-	unsigned char* buffer = (unsigned char *)calloc(sizeof(unsigned char), resolution[0] * resolution[1] * resolution[2]);
-
-	for (int i = 0; i < resolution[0] * resolution[1] * resolution[2]; i++) {
-		buffer[i] = rand() % 256;
-	}
-
-	VoxelData* tempData_1 = new VoxelData;
-	tempData_1->name = (char*)malloc(sizeof(char) * 256);
-	strcpy(tempData_1->name, "Data_0");
-	for (int i = 0; i < 3; i++) {
-		tempData_1->resolution[i] = resolution[i];
-		tempData_1->voxelsize[i] = voxelsize[i];
-	}
-	tempData_1->isbitcompress = isbitcompress;
-
-	(Voxel *)tempData_1->rawdata = (Voxel *)calloc(resolution[0] * resolution[1] * resolution[2], sizeof(Voxel));
-
-	for (int i = 0; i < resolution[0] * resolution[1] * resolution[2]; i++) {
-		tempData_1->rawdata[i].data = buffer[i];
-	}
-
-	VoxelData* tempData_2 = new VoxelData;
-	tempData_2->name = (char*)malloc(sizeof(char) * 256);
-	strcpy(tempData_2->name, "Data_1");
-	for (int i = 0; i < 3; i++) {
-		tempData_2->resolution[i] = resolution[i];
-		tempData_2->voxelsize[i] = voxelsize[i];
-	}
-	tempData_2->isbitcompress = isbitcompress;
-
-	(Voxel *)tempData_2->rawdata = (Voxel *)calloc(resolution[0] * resolution[1] * resolution[2], sizeof(Voxel));
-
-	for (int i = 0; i < resolution[0] * resolution[1] * resolution[2]; i++) {
-		tempData_2->rawdata[i].data = buffer[i];
-	}
-
-	VoxelData* tempData_3 = new VoxelData;
-	tempData_3->name = (char*)malloc(sizeof(char) * 256);
-	strcpy(tempData_3->name, "Data_2");
-	for (int i = 0; i < 3; i++) {
-		tempData_3->resolution[i] = resolution[i];
-		tempData_3->voxelsize[i] = voxelsize[i];
-	}
-	tempData_3->isbitcompress = isbitcompress;
-
-	(Voxel *)tempData_3->rawdata = (Voxel *)calloc(resolution[0] * resolution[1] * resolution[2], sizeof(Voxel));
-
-	for (int i = 0; i < resolution[0] * resolution[1] * resolution[2]; i++) {
-		tempData_3->rawdata[i].data = buffer[i];
-	}
-
-	free(buffer);
-
-
-	vmodel = new VoxelModel;
-	vmodel->name = (char*)malloc(sizeof(char) * 256);
-	strcpy(vmodel->name, "Model_0");
-	for (int i = 0; i < 3; i++) {
-		vmodel->resolution[i] = 4096;
-		vmodel->voxelsize[i] = 1;
-	}
-	vmodel->number_of_voxel_data = 3;
-
-	//Creat root object
-	vmodel->root_vobj = new VoxelObject;
-	vmodel->root_vobj->name = (char*)malloc(sizeof(char) * 256);
-	strcpy(vmodel->root_vobj->name, "Object_0");
-	for (int i = 0; i < 3; i++) {
-		vmodel->root_vobj->max_bound[i] = 4096;
-		vmodel->root_vobj->min_bound[i] = 0;
-	}
-	vmodel->root_vobj->number_of_child = 3;
-	
-	(VoxelObject**)vmodel->root_vobj->child = (VoxelObject **)malloc(sizeof(VoxelObject *) * 3);
-
-	VoxelObject * tempobj_1 = new VoxelObject;
-	tempobj_1->name = (char*)malloc(sizeof(char) * 256);
-	strcpy(tempobj_1->name, "Object_1");
-	for (int i = 0; i < 3; i++) {
-		tempobj_1->max_bound[i] = 2048;
-		tempobj_1->min_bound[i] = 0;
-	}
-	tempobj_1->number_of_child = 1;
-	tempobj_1->vd = tempData_1;
-
-	VoxelObject * tempobj_2 = new VoxelObject;
-	tempobj_2->name = (char*)malloc(sizeof(char) * 256);
-	strcpy(tempobj_2->name, "Object_2");
-	for (int i = 0; i < 3; i++) {
-		tempobj_2->max_bound[i] = 4096;
-		tempobj_2->min_bound[i] = 2048;
-	}
-	tempobj_2->number_of_child = 1;
-	tempobj_2->vd = tempData_2;
-
-	VoxelObject * tempobj_3 = new VoxelObject;
-	tempobj_3->name = (char*)malloc(sizeof(char) * 256);
-	strcpy(tempobj_3->name, "Object_3");
-	for (int i = 0; i < 3; i++) {
-		tempobj_3->max_bound[i] = 4096;
-		tempobj_3->min_bound[i] = 0;
-	}
-	tempobj_3->number_of_child = 1;
-	tempobj_3->vd = tempData_3;
-
-	vmodel->root_vobj->child[0] = tempobj_1;
-	vmodel->root_vobj->child[1] = tempobj_2;
-	vmodel->root_vobj->child[2] = tempobj_3;
-
-	
-	QString filename = QFileDialog::getSaveFileName(this, tr("Save File"),
-		"untitled",
-		tr("Model Files (*.vm);; Data Files (*.vdat)"));
-	QByteArray ba = filename.toLatin1();
-	const char *str = ba.data();
-	const char *fe;
-	fe = strrchr(str, '.');
-
-	if (!filename.isEmpty()) {
-		if (!strcmp(fe,".vm")) {
-			//export vmodel
-
-			FILE* vmodelfile = fopen(str, "w");
-
-			//Write vmodel 
-			fprintf(vmodelfile, "Voxel Model:\n");
-			fprintf(vmodelfile, "Name:%s\n", vmodel->name);
-			fprintf(vmodelfile, "Resolution:%dx%dx%d\n",vmodel->resolution[0], vmodel->resolution[1], vmodel->resolution[2]);
-			fprintf(vmodelfile, "Voxelsize:%.2f:%.2f:%.2f\n", vmodel->voxelsize[0], vmodel->voxelsize[1], vmodel->voxelsize[2]);
-			fprintf(vmodelfile, "Number of voxel data:%d\n", vmodel->number_of_voxel_data);
-
-
-
-			//DFS Write Voxel Object
-			writeVO(str,vmodelfile, vmodel->root_vobj);
-
-			//
-			fclose(vmodelfile);
-			return;
-		}
-		else if(!strcmp(fe, ".vdat")) {
-			//export vdata
-
-
-
-		}
-	}
-	else {
-		QMessageBox::information(this, tr("Warning"), "Failed to save the file.");
-	}
-
-
-
-	
 }
 
 void MainWindow::openVD(const char* filepath)
@@ -410,6 +238,8 @@ void MainWindow::openVM(const char* filepath)
 	fclose(vmodelfile);
 
 	addInTreeList_VM(vmodel);
+	addInDataList_VO(vmodel->root_vobj);
+	setAttribute(vmodel);
 
 	return;
 }
@@ -460,3 +290,342 @@ void MainWindow::writeVD(const char* filepath, VoxelData * vd)
 
 	return;
 }
+
+void MainWindow::setAttribute(VoxelData* vd) 
+{
+	ui->attributetableWidget->clear();
+	ui->attributetableWidget->setRowCount(4);
+	ui->attributetableWidget->setColumnCount(4);
+
+	QTableWidgetItem* namelabel = new QTableWidgetItem("Name:");
+	QTableWidgetItem* name = new QTableWidgetItem(QString(vd->name));
+	ui->attributetableWidget->setItem(0, 0, namelabel);
+	ui->attributetableWidget->setItem(0, 1, name);
+	QTableWidgetItem* resolutionlabel = new QTableWidgetItem("Resolution:");
+	QTableWidgetItem* resolution_x = new QTableWidgetItem(QString::number(vd->resolution[0]));
+	QTableWidgetItem* resolution_y = new QTableWidgetItem(QString::number(vd->resolution[1]));
+	QTableWidgetItem* resolution_z = new QTableWidgetItem(QString::number(vd->resolution[2]));
+	ui->attributetableWidget->setItem(1, 0, resolutionlabel);
+	ui->attributetableWidget->setItem(1, 1, resolution_x);
+	ui->attributetableWidget->setItem(1, 2, resolution_y);
+	ui->attributetableWidget->setItem(1, 3, resolution_z);
+	QTableWidgetItem* voxelsizelabel = new QTableWidgetItem("Voxelsize:");
+	QTableWidgetItem* voxelsize_x = new QTableWidgetItem(QString::number(vd->voxelsize[0]));
+	QTableWidgetItem* voxelsize_y = new QTableWidgetItem(QString::number(vd->voxelsize[1]));
+	QTableWidgetItem* voxelsize_z = new QTableWidgetItem(QString::number(vd->voxelsize[2]));
+	ui->attributetableWidget->setItem(2, 0, voxelsizelabel);
+	ui->attributetableWidget->setItem(2, 1, voxelsize_x);
+	ui->attributetableWidget->setItem(2, 2, voxelsize_y);
+	ui->attributetableWidget->setItem(2, 3, voxelsize_z);
+	QTableWidgetItem* bitcompresslabel = new QTableWidgetItem("Bit compressed:");
+	QTableWidgetItem* bitcompress = new QTableWidgetItem(QString::number(vd->isbitcompress));
+	ui->attributetableWidget->setItem(3, 0, bitcompresslabel);
+	ui->attributetableWidget->setItem(3, 1, bitcompress);
+
+	return;
+}
+
+void MainWindow::setAttribute(VoxelObject* vo) 
+{
+	ui->attributetableWidget->clear();
+	if (vo->number_of_child == 1) {
+		ui->attributetableWidget->setRowCount(5);
+	}
+	else {
+		ui->attributetableWidget->setRowCount(4 + vo->number_of_child);
+	}
+	ui->attributetableWidget->setColumnCount(4);
+
+	QTableWidgetItem* namelabel = new QTableWidgetItem("Name:");
+	QTableWidgetItem* name = new QTableWidgetItem(QString(vo->name));
+	ui->attributetableWidget->setItem(0, 0, namelabel);
+	ui->attributetableWidget->setItem(0, 1, name);
+	QTableWidgetItem* max_boundlabel = new QTableWidgetItem("Max bound:");
+	QTableWidgetItem* max_bound_x = new QTableWidgetItem(QString::number(vo->max_bound[0]));
+	QTableWidgetItem* max_bound_y = new QTableWidgetItem(QString::number(vo->max_bound[1]));
+	QTableWidgetItem* max_bound_z = new QTableWidgetItem(QString::number(vo->max_bound[2]));
+	ui->attributetableWidget->setItem(1, 0, max_boundlabel);
+	ui->attributetableWidget->setItem(1, 1, max_bound_x);
+	ui->attributetableWidget->setItem(1, 2, max_bound_y);
+	ui->attributetableWidget->setItem(1, 3, max_bound_z);
+	QTableWidgetItem* min_boundlabel = new QTableWidgetItem("Min bound:");
+	QTableWidgetItem* min_bound_x = new QTableWidgetItem(QString::number(vo->min_bound[0]));
+	QTableWidgetItem* min_bound_y = new QTableWidgetItem(QString::number(vo->min_bound[1]));
+	QTableWidgetItem* min_bound_z = new QTableWidgetItem(QString::number(vo->min_bound[2]));
+	ui->attributetableWidget->setItem(2, 0, min_boundlabel);
+	ui->attributetableWidget->setItem(2, 1, min_bound_x);
+	ui->attributetableWidget->setItem(2, 2, min_bound_y);
+	ui->attributetableWidget->setItem(2, 3, min_bound_z);
+	QTableWidgetItem* number_of_childlabel = new QTableWidgetItem("Number of child:");
+	QTableWidgetItem* number_of_child = new QTableWidgetItem(QString::number(vo->number_of_child));
+	ui->attributetableWidget->setItem(3, 0, number_of_childlabel);
+	ui->attributetableWidget->setItem(3, 1, number_of_child);
+	if (vo->number_of_child == 1) {
+		QTableWidgetItem* voxeldatanamelabel = new QTableWidgetItem("Voxel Data:");
+		QTableWidgetItem* voxeldataname = new QTableWidgetItem(vo->vd->name);
+		ui->attributetableWidget->setItem(4, 0, voxeldatanamelabel);
+		ui->attributetableWidget->setItem(4, 1, voxeldataname);
+	}
+	else {
+		QTableWidgetItem* childnamelabel = new QTableWidgetItem("Child Object:");
+		ui->attributetableWidget->setItem(4, 0, childnamelabel);
+		for (int i = 0; i < vo->number_of_child; i++) {
+			QTableWidgetItem* childname = new QTableWidgetItem(vo->child[i]->name);
+			ui->attributetableWidget->setItem(i + 4, 1, childname);
+		}
+	}
+	return;
+}
+
+void MainWindow::setAttribute(VoxelModel* vm) 
+{
+	ui->attributetableWidget->clear();
+	ui->attributetableWidget->setRowCount(4);
+	ui->attributetableWidget->setColumnCount(4);
+
+	QTableWidgetItem* namelabel = new QTableWidgetItem("Name:");
+	QTableWidgetItem* name = new QTableWidgetItem(QString(vm->name));
+	ui->attributetableWidget->setItem(0, 0, namelabel);
+	ui->attributetableWidget->setItem(0, 1, name);
+	QTableWidgetItem* resolutionlabel = new QTableWidgetItem("Resolution:");
+	QTableWidgetItem* resolution_x = new QTableWidgetItem(QString::number(vm->resolution[0]));
+	QTableWidgetItem* resolution_y = new QTableWidgetItem(QString::number(vm->resolution[1]));
+	QTableWidgetItem* resolution_z = new QTableWidgetItem(QString::number(vm->resolution[2]));
+	ui->attributetableWidget->setItem(1, 0, resolutionlabel);
+	ui->attributetableWidget->setItem(1, 1, resolution_x);
+	ui->attributetableWidget->setItem(1, 2, resolution_y);
+	ui->attributetableWidget->setItem(1, 3, resolution_z);
+	QTableWidgetItem* voxelsizelabel = new QTableWidgetItem("Voxelsize:");
+	QTableWidgetItem* voxelsize_x = new QTableWidgetItem(QString::number(vm->voxelsize[0]));
+	QTableWidgetItem* voxelsize_y = new QTableWidgetItem(QString::number(vm->voxelsize[1]));
+	QTableWidgetItem* voxelsize_z = new QTableWidgetItem(QString::number(vm->voxelsize[2]));
+	ui->attributetableWidget->setItem(2, 0, voxelsizelabel);
+	ui->attributetableWidget->setItem(2, 1, voxelsize_x);
+	ui->attributetableWidget->setItem(2, 2, voxelsize_y);
+	ui->attributetableWidget->setItem(2, 3, voxelsize_z);
+	QTableWidgetItem* number_of_voxel_datalabel = new QTableWidgetItem("Number of voxel data:");
+	QTableWidgetItem* number_of_voxel_data = new QTableWidgetItem(QString::number(vm->number_of_voxel_data));
+	ui->attributetableWidget->setItem(3, 0, number_of_voxel_datalabel);
+	ui->attributetableWidget->setItem(3, 1, number_of_voxel_data);
+
+	return;
+}
+
+//Private Slots
+void MainWindow::on_actionOpen_triggered()
+{
+	QString filename = QFileDialog::getOpenFileName(
+		this,
+		tr("Open Voxel Model"),
+		"",
+		tr("Voxel Files (*.vdat *.vm)")
+		);
+
+	QByteArray ba = filename.toLatin1();
+	const char *fileLocationStr = ba.data();
+	printf("File location:%s\n", fileLocationStr);
+
+	const char *str = ba.data();
+	const char *fe;
+
+	fe = strrchr(str, '.');
+	if (!filename.isEmpty()) {
+		if (!strcmp(fe, ".vdat")) {
+			openVD(str);
+		}
+		if (!strcmp(fe, ".vm")) {
+			openVM(str);
+		}
+	}
+}
+
+void MainWindow::on_actionExport_triggered()
+{
+	/*
+	int resolution[3] = { 256,256,256 };
+	float voxelsize[3] = { 1.0,0.5,1.0 };
+	bool isbitcompress = 1;
+	unsigned char* buffer = (unsigned char *)calloc(sizeof(unsigned char), resolution[0] * resolution[1] * resolution[2]);
+
+	for (int i = 0; i < resolution[0] * resolution[1] * resolution[2]; i++) {
+		buffer[i] = rand() % 256;
+	}
+
+	VoxelData* tempData_1 = new VoxelData;
+	tempData_1->name = (char*)malloc(sizeof(char) * 256);
+	strcpy(tempData_1->name, "Data_0");
+	for (int i = 0; i < 3; i++) {
+		tempData_1->resolution[i] = resolution[i];
+		tempData_1->voxelsize[i] = voxelsize[i];
+	}
+	tempData_1->isbitcompress = isbitcompress;
+
+	(Voxel *)tempData_1->rawdata = (Voxel *)calloc(resolution[0] * resolution[1] * resolution[2], sizeof(Voxel));
+
+	for (int i = 0; i < resolution[0] * resolution[1] * resolution[2]; i++) {
+		tempData_1->rawdata[i].data = buffer[i];
+	}
+
+	VoxelData* tempData_2 = new VoxelData;
+	tempData_2->name = (char*)malloc(sizeof(char) * 256);
+	strcpy(tempData_2->name, "Data_1");
+	for (int i = 0; i < 3; i++) {
+		tempData_2->resolution[i] = resolution[i];
+		tempData_2->voxelsize[i] = voxelsize[i];
+	}
+	tempData_2->isbitcompress = isbitcompress;
+
+	(Voxel *)tempData_2->rawdata = (Voxel *)calloc(resolution[0] * resolution[1] * resolution[2], sizeof(Voxel));
+
+	for (int i = 0; i < resolution[0] * resolution[1] * resolution[2]; i++) {
+		tempData_2->rawdata[i].data = buffer[i];
+	}
+
+	VoxelData* tempData_3 = new VoxelData;
+	tempData_3->name = (char*)malloc(sizeof(char) * 256);
+	strcpy(tempData_3->name, "Data_2");
+	for (int i = 0; i < 3; i++) {
+		tempData_3->resolution[i] = resolution[i];
+		tempData_3->voxelsize[i] = voxelsize[i];
+	}
+	tempData_3->isbitcompress = isbitcompress;
+
+	(Voxel *)tempData_3->rawdata = (Voxel *)calloc(resolution[0] * resolution[1] * resolution[2], sizeof(Voxel));
+
+	for (int i = 0; i < resolution[0] * resolution[1] * resolution[2]; i++) {
+		tempData_3->rawdata[i].data = buffer[i];
+	}
+
+	free(buffer);
+
+
+	vmodel = new VoxelModel;
+	vmodel->name = (char*)malloc(sizeof(char) * 256);
+	strcpy(vmodel->name, "Model_0");
+	for (int i = 0; i < 3; i++) {
+		vmodel->resolution[i] = 4096;
+		vmodel->voxelsize[i] = 1;
+	}
+	vmodel->number_of_voxel_data = 3;
+
+	//Creat root object
+	vmodel->root_vobj = new VoxelObject;
+	vmodel->root_vobj->name = (char*)malloc(sizeof(char) * 256);
+	strcpy(vmodel->root_vobj->name, "Object_0");
+	for (int i = 0; i < 3; i++) {
+		vmodel->root_vobj->max_bound[i] = 4096;
+		vmodel->root_vobj->min_bound[i] = 0;
+	}
+	vmodel->root_vobj->number_of_child = 3;
+
+	(VoxelObject**)vmodel->root_vobj->child = (VoxelObject **)malloc(sizeof(VoxelObject *) * 3);
+
+	VoxelObject * tempobj_1 = new VoxelObject;
+	tempobj_1->name = (char*)malloc(sizeof(char) * 256);
+	strcpy(tempobj_1->name, "Object_1");
+	for (int i = 0; i < 3; i++) {
+		tempobj_1->max_bound[i] = 2048;
+		tempobj_1->min_bound[i] = 0;
+	}
+	tempobj_1->number_of_child = 1;
+	tempobj_1->vd = tempData_1;
+
+	VoxelObject * tempobj_2 = new VoxelObject;
+	tempobj_2->name = (char*)malloc(sizeof(char) * 256);
+	strcpy(tempobj_2->name, "Object_2");
+	for (int i = 0; i < 3; i++) {
+		tempobj_2->max_bound[i] = 4096;
+		tempobj_2->min_bound[i] = 2048;
+	}
+	tempobj_2->number_of_child = 1;
+	tempobj_2->vd = tempData_2;
+
+	VoxelObject * tempobj_3 = new VoxelObject;
+	tempobj_3->name = (char*)malloc(sizeof(char) * 256);
+	strcpy(tempobj_3->name, "Object_3");
+	for (int i = 0; i < 3; i++) {
+		tempobj_3->max_bound[i] = 4096;
+		tempobj_3->min_bound[i] = 0;
+	}
+	tempobj_3->number_of_child = 1;
+	tempobj_3->vd = tempData_3;
+
+	vmodel->root_vobj->child[0] = tempobj_1;
+	vmodel->root_vobj->child[1] = tempobj_2;
+	vmodel->root_vobj->child[2] = tempobj_3;
+
+	*/
+
+	QString filename;
+	const char *str;
+	const char *fe;
+
+	if (vmodel != NULL) {
+		filename = QFileDialog::getSaveFileName(
+			this,
+			tr("Save File"),
+			"untitled",
+			tr("Model Files (*.vm);; Data Files (*.vdat)"));
+		QByteArray ba = filename.toLatin1();
+		str = ba.data();
+		fe = strrchr(str, '.');
+	}
+	else {
+		QMessageBox::information(this, tr("Warning"), "There is no data to export.");
+	}
+
+	if (!filename.isEmpty()) {
+		if (!strcmp(fe, ".vm")) {
+			//export vmodel
+
+			FILE* vmodelfile = fopen(str, "w");
+
+			//Write vmodel 
+			fprintf(vmodelfile, "Voxel Model:\n");
+			fprintf(vmodelfile, "Name:%s\n", vmodel->name);
+			fprintf(vmodelfile, "Resolution:%dx%dx%d\n", vmodel->resolution[0], vmodel->resolution[1], vmodel->resolution[2]);
+			fprintf(vmodelfile, "Voxelsize:%.2f:%.2f:%.2f\n", vmodel->voxelsize[0], vmodel->voxelsize[1], vmodel->voxelsize[2]);
+			fprintf(vmodelfile, "Number of voxel data:%d\n", vmodel->number_of_voxel_data);
+
+
+
+			//DFS Write Voxel Object
+			writeVO(str, vmodelfile, vmodel->root_vobj);
+
+			//
+			fclose(vmodelfile);
+			return;
+		}
+		else if (!strcmp(fe, ".vdat")) {
+			//export vdata
+
+
+
+		}
+	}
+	else {
+		QMessageBox::information(this, tr("Warning"), "Failed to save the file.");
+	}
+}
+
+void MainWindow::setAttribute(QTreeWidgetItem * itm, int i) {
+	if (((MyTreeWidgetItem *)itm)->vd != NULL) {
+		//cout << "I am a Voxel Data." << endl;
+		setAttribute(((MyTreeWidgetItem *)itm)->vd);
+	}
+	else if (((MyTreeWidgetItem *)itm)->vo != NULL) {
+		//cout << "I am a Voxel Object." << endl;
+		setAttribute(((MyTreeWidgetItem *)itm)->vo);
+	}
+	else if (((MyTreeWidgetItem *)itm)->vm != NULL) {
+		//cout << "I am a Voxel Model." << endl;
+		setAttribute(((MyTreeWidgetItem *)itm)->vm);
+	}
+	return;
+}
+
+void MainWindow::setAttribute(QListWidgetItem * itm) {
+	setAttribute(((MyListWidgetItem *)itm)->vd);
+	return;
+}
+//Signals

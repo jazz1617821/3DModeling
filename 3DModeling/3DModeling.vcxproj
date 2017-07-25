@@ -204,6 +204,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mainwindow.cpp" />
     <ClCompile Include="material.cpp" />
+    <ClCompile Include="mylistwidgetitem.cpp" />
     <ClCompile Include="mymath.cpp" />
     <ClCompile Include="mytreewidgetitem.cpp" />
     <ClCompile Include="object.cpp" />
@@ -295,6 +296,32 @@
     <ClInclude Include="light.h" />
     <ClInclude Include="LoadShaders.h" />
     <ClInclude Include="material.h" />
+    <CustomBuild Include="mylistwidgetitem.h">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Command>
+    </CustomBuild>
     <ClInclude Include="mymath.h" />
     <CustomBuild Include="mytreewidgetitem.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
