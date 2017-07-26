@@ -46,6 +46,9 @@ private:
 	void setAttribute(VoxelObject*);
 	void setAttribute(VoxelModel*);
 
+	//signal trigger function
+	void finishLoadVModel();
+
 private slots:
     void on_actionExport_triggered();
     void on_actionOpen_triggered();
@@ -54,7 +57,7 @@ private slots:
 	void setAttribute(QListWidgetItem *);
 
 signals:
-	
+	void sentVModelPtr(VoxelModel*);
 
 };
 

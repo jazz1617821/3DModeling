@@ -12,14 +12,15 @@ MainWindow::MainWindow(QWidget *parent)
 {
 	ui->setupUi(this);
 
-	
 	connect(ui->voxeltreeWidget, SIGNAL(itemClicked(QTreeWidgetItem *, int)), this, SLOT(setAttribute(QTreeWidgetItem *, int)));
 	connect(ui->datalistWidget, SIGNAL(itemClicked(QListWidgetItem *)), this, SLOT(setAttribute(QListWidgetItem *)));
+	connect(this, SIGNAL(sentVModelPtr(VoxelModel*)), ui->viewWidget, SLOT(getVModelPtr(VoxelModel *)));
 
 }
 
 MainWindow::~MainWindow()
 {
+
 
 }
 
@@ -240,6 +241,7 @@ void MainWindow::openVM(const char* filepath)
 	addInTreeList_VM(vmodel);
 	addInDataList_VO(vmodel->root_vobj);
 	setAttribute(vmodel);
+	finishLoadVModel();
 
 	return;
 }
@@ -628,4 +630,9 @@ void MainWindow::setAttribute(QListWidgetItem * itm) {
 	setAttribute(((MyListWidgetItem *)itm)->vd);
 	return;
 }
-//Signals
+
+//Signal trigger function
+void MainWindow::finishLoadVModel() {
+	emit sentVModelPtr(vmodel);
+	return;
+}

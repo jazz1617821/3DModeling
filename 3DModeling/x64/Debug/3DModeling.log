@@ -1,4 +1,4 @@
-﻿已經開始建置於 2017/7/25 下午 11:21:52。
+﻿已經開始建置於 2017/7/26 下午 06:11:15。
      1>節點 2 (Rebuild 目標) 上的專案 "C:\Users\User\Documents\GitHub\3DModeling\3DModeling\3DModeling.vcxproj"。
      1>CustomBuild:
          Moc'ing mainwindow.h...
@@ -81,7 +81,7 @@
      1>threedimesion_viewwidget.obj : warning LNK4217: 本機定義的符號 glewInit 已匯入函式 "protected: virtual void __cdecl ThreeDimesion_ViewWidget::initializeGL(void)" (?initializeGL@ThreeDimesion_ViewWidget@@MEAAXXZ)
      1>x_axis_viewwidget.obj : warning LNK4217: 本機定義的符號 glewInit 已匯入函式 "protected: virtual void __cdecl X_Axis_ViewWidget::mousePressEvent(class QMouseEvent *)" (?mousePressEvent@X_Axis_ViewWidget@@MEAAXPEAVQMouseEvent@@@Z)
      1>y_axis_viewwidget.obj : warning LNK4217: 本機定義的符號 glewInit 已匯入函式 "protected: virtual void __cdecl Y_Axis_ViewWidget::initializeGL(void)" (?initializeGL@Y_Axis_ViewWidget@@MEAAXXZ)
-     1>viewwidget.obj : warning LNK4217: 本機定義的符號 glewInit 已匯入函式 "protected: virtual void __cdecl ViewWidget::initializeGL(void)" (?initializeGL@ViewWidget@@MEAAXXZ)
+     1>viewwidget.obj : warning LNK4217: 本機定義的符號 glewInit 已匯入函式 "protected: virtual void __cdecl ViewWidget::paintGL(void)" (?paintGL@ViewWidget@@MEAAXXZ)
      1>z_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewActiveTexture 已匯入
      1>threedimesion_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewActiveTexture 已匯入
      1>x_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewActiveTexture 已匯入
@@ -101,7 +101,7 @@
      1>threedimesion_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewGenBuffers 已匯入
      1>x_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewGenBuffers 已匯入
      1>y_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewGenBuffers 已匯入
-     1>viewwidget.obj : warning LNK4049: 本機定義的符號 __glewGenBuffers 已匯入
+     1>viewwidget.obj : warning LNK4217: 本機定義的符號 __glewGenBuffers 已匯入函式 __local_stdio_printf_options
      1>z_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewDisableVertexAttribArray 已匯入
      1>threedimesion_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewDisableVertexAttribArray 已匯入
      1>x_axis_viewwidget.obj : warning LNK4049: 本機定義的符號 __glewDisableVertexAttribArray 已匯入
@@ -238,4 +238,4 @@
 
 建置成功。
 
-經過時間 00:00:34.19
+經過時間 00:00:40.52

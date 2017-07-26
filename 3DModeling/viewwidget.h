@@ -5,6 +5,7 @@
 #include <QMouseEvent>
 #include "object.h"
 #include "light.h"
+#include "voxel.h"
 
 class ViewWidget : public QOpenGLWidget {
 	Q_OBJECT
@@ -54,11 +55,15 @@ private:
 	void ssaoLightPassRendering(void);
 	void shadowMappingRendering(void);
 
+private slots:
+	void getVModelPtr(VoxelModel* vmodel);
+
 signals:
 	
 
-	// widgets
 private:
+	//Voxel Model
+	VoxelModel* vmodel;
 
 private:
 	int iconSize;

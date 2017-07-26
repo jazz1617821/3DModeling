@@ -1,5 +1,4 @@
 c:\users\user\documents\github\3dmodeling\3dmodeling\x64\debug\vc140.pdb
-c:\users\user\documents\github\3dmodeling\3dmodeling\x64\debug\z_axis_viewwidget.obj
 c:\users\user\documents\github\3dmodeling\3dmodeling\x64\debug\viewwidget.obj
 c:\users\user\documents\github\3dmodeling\3dmodeling\x64\debug\y_axis_viewwidget.obj
 c:\users\user\documents\github\3dmodeling\3dmodeling\x64\debug\x_axis_viewwidget.obj
@@ -8,6 +7,7 @@ c:\users\user\documents\github\3dmodeling\3dmodeling\x64\debug\threedimesion_vie
 c:\users\user\documents\github\3dmodeling\3dmodeling\x64\debug\object.obj
 c:\users\user\documents\github\3dmodeling\3dmodeling\x64\debug\mytreewidgetitem.obj
 c:\users\user\documents\github\3dmodeling\3dmodeling\x64\debug\mymath.obj
+c:\users\user\documents\github\3dmodeling\3dmodeling\x64\debug\mylistwidgetitem.obj
 c:\users\user\documents\github\3dmodeling\3dmodeling\x64\debug\material.obj
 c:\users\user\documents\github\3dmodeling\3dmodeling\x64\debug\mainwindow.obj
 c:\users\user\documents\github\3dmodeling\3dmodeling\x64\debug\main.obj
@@ -19,16 +19,16 @@ c:\users\user\documents\github\3dmodeling\3dmodeling\x64\debug\moc_x_axis_viewwi
 c:\users\user\documents\github\3dmodeling\3dmodeling\x64\debug\moc_viewwidget.obj
 c:\users\user\documents\github\3dmodeling\3dmodeling\x64\debug\moc_threedimesion_viewwidget.obj
 c:\users\user\documents\github\3dmodeling\3dmodeling\x64\debug\moc_mainwindow.obj
+c:\users\user\documents\github\3dmodeling\3dmodeling\x64\debug\z_axis_viewwidget.obj
 c:\users\user\documents\github\3dmodeling\3dmodeling\x64\debug\qrc_mainwindow.obj
-c:\users\user\documents\github\3dmodeling\3dmodeling\x64\debug\mylistwidgetitem.obj
+c:\users\user\documents\github\3dmodeling\3dmodeling\generatedfiles\ui_mainwindow.h
 c:\users\user\documents\github\3dmodeling\3dmodeling\generatedfiles\debug\moc_threedimesion_viewwidget.cpp
 c:\users\user\documents\github\3dmodeling\3dmodeling\generatedfiles\debug\moc_x_axis_viewwidget.cpp
 c:\users\user\documents\github\3dmodeling\3dmodeling\generatedfiles\debug\moc_z_axis_viewwidget.cpp
 c:\users\user\documents\github\3dmodeling\3dmodeling\generatedfiles\debug\moc_y_axis_viewwidget.cpp
-c:\users\user\documents\github\3dmodeling\3dmodeling\generatedfiles\debug\moc_viewwidget.cpp
 c:\users\user\documents\github\3dmodeling\3dmodeling\generatedfiles\qrc_mainwindow.cpp
-c:\users\user\documents\github\3dmodeling\3dmodeling\generatedfiles\ui_mainwindow.h
 c:\users\user\documents\github\3dmodeling\3dmodeling\generatedfiles\debug\moc_mainwindow.cpp
+c:\users\user\documents\github\3dmodeling\3dmodeling\generatedfiles\debug\moc_viewwidget.cpp
 c:\users\user\documents\github\3dmodeling\x64\debug\3dmodeling.ilk
 c:\users\user\documents\github\3dmodeling\x64\debug\3dmodeling.exe
 c:\users\user\documents\github\3dmodeling\x64\debug\3dmodeling.pdb

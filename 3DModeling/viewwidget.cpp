@@ -1132,3 +1132,12 @@ void ViewWidget::openVolume(const char* fileName)
 	update();
 }
 */
+
+
+//Private slots:
+void ViewWidget::getVModelPtr(VoxelModel* vmodel) {
+	this->vmodel = new VoxelModel;
+	this->vmodel = vmodel;
+
+	return;
+}
