@@ -1,4 +1,4 @@
-﻿已經開始建置於 2017/7/27 下午 04:00:52。
+﻿已經開始建置於 2017/7/27 下午 04:49:00。
      1>節點 2 (Build 目標) 上的專案 "C:\Users\User\Documents\GitHub\3DModeling\3DModeling\3DModeling.vcxproj"。
      1>ClCompile:
          D:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\x86_amd64\CL.exe /c /I.\GeneratedFiles /I. /IC:\Qt\5.7\msvc2015_64\include /I.\GeneratedFiles\Debug /IC:\Qt\5.7\msvc2015_64\include\QtCore /IC:\Qt\5.7\msvc2015_64\include\QtGui /IC:\Qt\5.7\msvc2015_64\include\QtWidgets /IC:\Qt\5.7\msvc2015_64\include\QtOpenGL /Zi /nologo /W1 /WX- /Od /D UNICODE /D WIN32 /D QT_DLL /D QT_CORE_LIB /D QT_GUI_LIB /D QT_WIDGETS_LIB /D QT_OPENGL_LIB /Gm- /EHsc /MDd /GS- /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"x64\Debug\\" /Fd"x64\Debug\vc140.pdb" /Gd /TP /errorReport:prompt viewwidget.cpp
@@ -33,4 +33,4 @@
 
 建置成功。
 
-經過時間 00:00:04.23
+經過時間 00:00:04.01

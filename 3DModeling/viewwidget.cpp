@@ -226,7 +226,7 @@ void ViewWidget::setupOpenGL(void)
 
 	format.setDepthBufferSize(24);
 	format.setStencilBufferSize(8);
-	format.setVersion(4, 0);
+	format.setVersion(4, 3);
 	format.setProfile(QSurfaceFormat::CoreProfile);
 	QSurfaceFormat::setDefaultFormat(format);
 
