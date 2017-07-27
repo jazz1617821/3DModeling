@@ -1,6 +1,19 @@
 #ifndef _VOXEL_H
 #define _VOXEL_H
 
+#define VOX_X_SIZE 0
+#define VOX_Y_SIZE 1
+#define VOX_Z_SIZE 2
+#define VOX_X_RESOLUTION 0
+#define VOX_Y_RESOLUTION 1
+#define VOX_Z_RESOLUTION 2
+
+#define VOX_EMPTY 0
+#define VOX_SURFACE 1
+#define VOX_SOLID 2
+#define VOX_IN_THICK 3
+#define VOX_OUT_THICK 4
+
 typedef struct Voxel
 {
 	unsigned char data;

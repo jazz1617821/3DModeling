@@ -5,7 +5,6 @@
 #include "LoadShaders.h"
 #include "viewwidget.h"
 #include "mymath.h"
-#include "voxelvbo.h"
 
 using namespace std;
 
@@ -227,7 +226,7 @@ void ViewWidget::setupOpenGL(void)
 
 	format.setDepthBufferSize(24);
 	format.setStencilBufferSize(8);
-	format.setVersion(4, 3);
+	format.setVersion(4, 0);
 	format.setProfile(QSurfaceFormat::CoreProfile);
 	QSurfaceFormat::setDefaultFormat(format);
 
@@ -1005,23 +1004,22 @@ void ViewWidget::renderQuad()
 	glBindVertexArray(0);
 }
 
-/*
-void ViewWidget::openVO(const char* fileName)
+void ViewWidget::makeModelVBO(vobj_t* vo)
 {
-	int i;
-	voxelobj_t* obj;
-
-	addVoxelObject(readVOFile(fileName), voa);
-	obj = voa->objects[voa->numObjects - 1];
-	for (i = 0; i < obj->numVoxels; ++i)
-	{
-		addVertexBufferObject(createVoxelVBO(i, obj), vboa);
+	if (vo->number_of_child == 1) {
+		addVertexBufferObject(createVoxelVBO(vo), vboa);
 		setColorVBO(1.2, 1.0, 0.47, 1.0, vboa->vbos[vboa->numVBOs - 1]);
 		bindData(vboa->vbos[vboa->numVBOs - 1]);
+		cout << "Make " << vo->vd->name << " VBO." << endl;
+		return;
 	}
-	update();
+	else {
+		for (int i = 0; i < vo->number_of_child; i++) {
+			makeModelVBO(vo->child[i]);
+		}
+	}
 }
-
+/*
 void ViewWidget::openVolume(const char* fileName)
 {
 	char path[1024] = { '\0' }, buf[1024] = { '\0' }, dataName[1024];
@@ -1133,11 +1131,12 @@ void ViewWidget::openVolume(const char* fileName)
 }
 */
 
-
 //Private slots:
 void ViewWidget::getVModelPtr(VoxelModel* vmodel) {
 	this->vmodel = new VoxelModel;
 	this->vmodel = vmodel;
-
+	cout << this->vmodel->name << endl;
+	makeModelVBO(this->vmodel->root_vobj);
+	update();
 	return;
 }

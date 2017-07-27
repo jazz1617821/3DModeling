@@ -6,6 +6,7 @@
 #include "object.h"
 #include "light.h"
 #include "voxel.h"
+#include "voxelvbo.h"
 
 class ViewWidget : public QOpenGLWidget {
 	Q_OBJECT
@@ -54,6 +55,9 @@ private:
 	void ssaoBlurRendering(void);
 	void ssaoLightPassRendering(void);
 	void shadowMappingRendering(void);
+
+	//make VBO
+	void makeModelVBO(vobj_t*);
 
 private slots:
 	void getVModelPtr(VoxelModel* vmodel);
