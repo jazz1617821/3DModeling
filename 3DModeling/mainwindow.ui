@@ -179,60 +179,17 @@
            </attribute>
            <layout class="QGridLayout" name="gridLayout_7">
             <item row="0" column="0">
-             <layout class="QGridLayout" name="four_edit_viewWidgetLayout">
-              <item row="0" column="0">
-               <widget class="X_Axis_ViewWidget" name="x_axis_viewwidget">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="mouseTracking">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <widget class="ThreeDimesion_ViewWidget" name="threedimesion_viewwidget">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="mouseTracking">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="0">
-               <widget class="Y_Axis_ViewWidget" name="y_axis_viewwidget">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="mouseTracking">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="1">
-               <widget class="Z_Axis_ViewWidget" name="z_axis_viewwidget">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="mouseTracking">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-             </layout>
+             <widget class="QOpenGLWidget" name="editwidget">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="mouseTracking">
+               <bool>true</bool>
+              </property>
+             </widget>
             </item>
             <item row="1" column="0">
              <widget class="QToolBox" name="toolBox">
@@ -297,8 +254,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>458</width>
-                 <height>69</height>
+                 <width>100</width>
+                 <height>30</height>
                 </rect>
                </property>
                <property name="sizePolicy">
@@ -383,26 +340,6 @@
    <class>ViewWidget</class>
    <extends>QOpenGLWidget</extends>
    <header>viewwidget.h</header>
-  </customwidget>
-  <customwidget>
-   <class>X_Axis_ViewWidget</class>
-   <extends>QOpenGLWidget</extends>
-   <header>x_axis_viewwidget.h</header>
-  </customwidget>
-  <customwidget>
-   <class>Y_Axis_ViewWidget</class>
-   <extends>QOpenGLWidget</extends>
-   <header>y_axis_viewwidget.h</header>
-  </customwidget>
-  <customwidget>
-   <class>Z_Axis_ViewWidget</class>
-   <extends>QOpenGLWidget</extends>
-   <header>z_axis_viewwidget.h</header>
-  </customwidget>
-  <customwidget>
-   <class>ThreeDimesion_ViewWidget</class>
-   <extends>QOpenGLWidget</extends>
-   <header>threedimesion_viewwidget.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
