@@ -1,10 +1,16 @@
 #define _USE_MATH_DEFINES
+#include "editwidget.h"
 #include <iostream>
 #include <math.h>
 #include <time.h>
 #include "LoadShaders.h"
-#include "editwidget.h"
 #include "mymath.h"
+
+#define THREE_DIMENSION_WINDOW 0
+#define X_WINDOW 1
+#define Y_WINDOW 2
+#define Z_WINDOW 3
+#define FOUR_WINDOWS 4
 
 using namespace std;
 
@@ -25,11 +31,17 @@ EditWidget::EditWidget(QWidget * parent) : QOpenGLWidget(parent)
 	viewTheta = radians(60);
 	viewRadius = 400.0;
 	fovy = 45.0;
+	left = -25;
+	right = 25;
+	bottom = -25;
+	top = 25;
 	nearClip = 0.1;
 	farClip = 1000.0;
 	fixView();
 
 	sceneID = 0;
+
+	windowmodeID = THREE_DIMENSION_WINDOW;
 
 	// light
 	setGLitAmbient(&globalLight, 0.3, 0.3, 0.3, 1.0);
@@ -370,7 +382,7 @@ void EditWidget::configureGBufferShader(void)
 
 }
 
-void EditWidget::renderScene(void)
+void EditWidget::renderScene(int times)
 {
 	int i;
 
@@ -379,14 +391,14 @@ void EditWidget::renderScene(void)
 		if (i == 0) {
 			glDisable(GL_CLIP_DISTANCE0);
 		}
-		drawData(vboa->vbos[i], RENDER_POLYGON);
+		drawData(vboa->vbos[i], RENDER_POLYGON, times);
 		if (i == 0) {
 			glEnable(GL_CLIP_DISTANCE0);
 		}
 	}
 }
 
-void EditWidget::renderBbox(void)
+void EditWidget::renderBbox(int times)
 {
 	int i;
 
@@ -397,7 +409,7 @@ void EditWidget::renderBbox(void)
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 			glEnable(GL_LINE_SMOOTH);
 			glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
-			drawBbox(vboa->vbos[i], RENDER_WIREFRAME);
+			drawBbox(vboa->vbos[i], RENDER_WIREFRAME, times);
 			glDisable(GL_BLEND);
 		}
 	}
@@ -414,20 +426,20 @@ void EditWidget::setViewingMatrix(void)
 	identifyMat4fv(modelMat);						// model matrix
 	transposeMat4fv(modelMat, mat);
 	glUniformMatrix4fv(0, 1, false, mat);
-	lookAt(eye, lok, vup, viewMat);					// view matrix
-	transposeMat4fv(viewMat, mat);
+	lookAt(eye, lok, vup, perspective_viewMat);					// view matrix
+	transposeMat4fv(perspective_viewMat, mat);
 	glUniformMatrix4fv(1, 1, false, mat);
-	multMat4fv(viewMat, modelMat, mvMat);			// modelview matrix
+	multMat4fv(perspective_viewMat, modelMat, mvMat);			// modelview matrix
 	transposeMat4fv(mvMat, mat);
 	glUniformMatrix4fv(3, 1, false, mat);
 	normalM(mvMat, normalMat);						// normal matrix
 	transposeMat4fv(normalMat, mat);
 	glUniformMatrix4fv(5, 1, false, mat);
 	aspect = this->width() / (float)this->height();	// projection matrix
-	perspective(fovy, aspect, nearClip, farClip, projectionMat);
-	transposeMat4fv(projectionMat, mat);
+	perspective(fovy, aspect, nearClip, farClip, perspectiveMat);
+	transposeMat4fv(perspectiveMat, mat);
 	glUniformMatrix4fv(2, 1, false, mat);
-	multMat4fv(projectionMat, viewMat, mvpMat);
+	multMat4fv(perspectiveMat, perspective_viewMat, mvpMat);
 	multMat4fv(mvpMat, modelMat, mvpMat);
 	transposeMat4fv(mvpMat, mat);
 	glUniformMatrix4fv(4, 1, false, mat);
@@ -446,7 +458,6 @@ void EditWidget::setLighting(void)
 	loc = glGetUniformLocation(program[0], "lightSpecular0");
 	glUniform4fv(loc, 1, light0.specular);
 }
-
 
 void EditWidget::setMaterial(vbo_t obj)
 {
@@ -485,28 +496,96 @@ void EditWidget::fixView(void)
 	eye[1] = lok[1] + viewRadius * cos(viewTheta);
 	eye[2] = lok[2] + viewRadius * sin(viewPhi) * sin(viewTheta);
 
-	lookAt(eye, lok, vup, viewMat);
+	lookAt(eye, lok, vup, perspective_viewMat);
 }
 
 
-void EditWidget::updateViewing(void)
+void EditWidget::updateViewing(int times)
 {
 	float mat[16];
 
-	multMat4fv(viewMat, modelMat, mvMat);
-	normalM(mvMat, normalMat);
-	multMat4fv(projectionMat, mvMat, mvpMat);
+	switch (windowmodeID) {
+	case THREE_DIMENSION_WINDOW:
+		multMat4fv(perspective_viewMat, modelMat, mvMat);
+		normalM(mvMat, normalMat);
+		multMat4fv(perspectiveMat, mvMat, mvpMat);
 
-	transposeMat4fv(modelMat, mat);
-	glUniformMatrix4fv(0, 1, false, mat);
-	transposeMat4fv(viewMat, mat);
-	glUniformMatrix4fv(1, 1, false, mat);
-	transposeMat4fv(normalMat, mat);
-	glUniformMatrix4fv(5, 1, false, mat);
-	transposeMat4fv(mvMat, mat);
-	glUniformMatrix4fv(3, 1, false, mat);
-	transposeMat4fv(mvpMat, mat);
-	glUniformMatrix4fv(4, 1, false, mat);
+		transposeMat4fv(modelMat, mat);
+		glUniformMatrix4fv(0, 1, false, mat);
+		transposeMat4fv(perspective_viewMat, mat);
+		glUniformMatrix4fv(1, 1, false, mat);
+		transposeMat4fv(normalMat, mat);
+		glUniformMatrix4fv(5, 1, false, mat);
+		transposeMat4fv(mvMat, mat);
+		glUniformMatrix4fv(3, 1, false, mat);
+		transposeMat4fv(mvpMat, mat);
+		glUniformMatrix4fv(4, 1, false, mat);
+		break;
+	case X_WINDOW:
+		multMat4fv(x_ortho_viewMat, modelMat, mvMat);
+		normalM(mvMat, normalMat);
+		multMat4fv(x_orthoMat, mvMat, mvpMat);
+
+		transposeMat4fv(modelMat, mat);
+		glUniformMatrix4fv(0, 1, false, mat);
+		transposeMat4fv(x_ortho_viewMat, mat);
+		glUniformMatrix4fv(1, 1, false, mat);
+		transposeMat4fv(normalMat, mat);
+		glUniformMatrix4fv(5, 1, false, mat);
+		transposeMat4fv(mvMat, mat);
+		glUniformMatrix4fv(3, 1, false, mat);
+		transposeMat4fv(mvpMat, mat);
+		glUniformMatrix4fv(4, 1, false, mat);
+		break;
+	case Y_WINDOW:
+		multMat4fv(y_ortho_viewMat, modelMat, mvMat);
+		normalM(mvMat, normalMat);
+		multMat4fv(y_orthoMat, mvMat, mvpMat);
+
+		transposeMat4fv(modelMat, mat);
+		glUniformMatrix4fv(0, 1, false, mat);
+		transposeMat4fv(y_ortho_viewMat, mat);
+		glUniformMatrix4fv(1, 1, false, mat);
+		transposeMat4fv(normalMat, mat);
+		glUniformMatrix4fv(5, 1, false, mat);
+		transposeMat4fv(mvMat, mat);
+		glUniformMatrix4fv(3, 1, false, mat);
+		transposeMat4fv(mvpMat, mat);
+		glUniformMatrix4fv(4, 1, false, mat);
+		break;
+	case Z_WINDOW:
+		multMat4fv(z_ortho_viewMat, modelMat, mvMat);
+		normalM(mvMat, normalMat);
+		multMat4fv(z_orthoMat, mvMat, mvpMat);
+
+		transposeMat4fv(modelMat, mat);
+		glUniformMatrix4fv(0, 1, false, mat);
+		transposeMat4fv(z_ortho_viewMat, mat);
+		glUniformMatrix4fv(1, 1, false, mat);
+		transposeMat4fv(normalMat, mat);
+		glUniformMatrix4fv(5, 1, false, mat);
+		transposeMat4fv(mvMat, mat);
+		glUniformMatrix4fv(3, 1, false, mat);
+		transposeMat4fv(mvpMat, mat);
+		glUniformMatrix4fv(4, 1, false, mat);
+		break;
+	case FOUR_WINDOWS:
+		switch (times) {
+		case 0:
+			break;
+		case 1:
+			break;
+		case 2:
+			break;
+		case 3:
+			break;
+		default:
+			break;
+		}
+		break;
+	default:
+		break;
+	}
 }
 
 void EditWidget::bindData(vbo_t* vbo)
@@ -539,7 +618,7 @@ void EditWidget::bindData(vbo_t* vbo)
 	}
 }
 
-void EditWidget::drawData(vbo_t* const vbo, int mode)
+void EditWidget::drawData(vbo_t* const vbo, int mode,int times)
 {
 	int i;
 	float rotMat[16];
@@ -549,7 +628,7 @@ void EditWidget::drawData(vbo_t* const vbo, int mode)
 	if (mode == RENDER_PICKING) {
 		if (vbo->enableBuffers[FACE]) {
 			glUseProgram(program[2]);
-			updateViewing();
+			updateViewing(times);
 			setLighting();
 			glBindBuffer(GL_ARRAY_BUFFER, vbo->buffers[VERTEX]);
 			glVertexAttribPointer(VERTEX, vbo->dataSize[VERTEX], GL_FLOAT, GL_FALSE, 0, NULL);
@@ -562,7 +641,7 @@ void EditWidget::drawData(vbo_t* const vbo, int mode)
 	}
 	else if (mode == RENDER_WIREFRAME) {
 		glUseProgram(program[3]);
-		updateViewing();
+		updateViewing(times);
 		setLighting();
 		glBindBuffer(GL_ARRAY_BUFFER, vbo->buffers[VERTEX]);
 		glVertexAttribPointer(VERTEX, vbo->dataSize[VERTEX], GL_FLOAT, GL_FALSE, 0, NULL);
@@ -574,7 +653,7 @@ void EditWidget::drawData(vbo_t* const vbo, int mode)
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	}
 	else {
-		updateViewing();
+		updateViewing(times);
 		setLighting();
 		setMaterial(*vbo);
 		float screenSize[2];
@@ -612,7 +691,7 @@ void EditWidget::drawData(vbo_t* const vbo, int mode)
 	}
 }
 
-void EditWidget::drawBbox(vbo_t* const vbo, int mode)
+void EditWidget::drawBbox(vbo_t* const vbo, int mode,int times)
 {
 	int i;
 	float rotMat[16], color[4];
@@ -623,7 +702,7 @@ void EditWidget::drawBbox(vbo_t* const vbo, int mode)
 	if (mode == RENDER_POLYGON) {
 		if (vbo->bbox->enableBuffers[VERTEX]) {
 			glUseProgram(program[3]);
-			updateViewing();
+			updateViewing(times);
 			setLighting();
 			setMaterial(*vbo);
 			for (i = 0; i < 4; ++i)
@@ -644,7 +723,7 @@ void EditWidget::drawBbox(vbo_t* const vbo, int mode)
 	if (mode == RENDER_WIREFRAME) {
 		if (vbo->bbox->enableBuffers[WIREFRAME]) {
 			glUseProgram(program[3]);
-			updateViewing();
+			updateViewing(times);
 			setLighting();
 			color[0] = 0.0;
 			color[1] = 1.0;
@@ -664,7 +743,7 @@ void EditWidget::drawBbox(vbo_t* const vbo, int mode)
 	if (mode == RENDER_PICKING) {
 		if (vbo->bbox->enableBuffers[FACE]) {
 			glUseProgram(program[2]);
-			updateViewing();
+			updateViewing(times);
 			setLighting();
 			glBindBuffer(GL_ARRAY_BUFFER, vbo->bbox->buffers[VERTEX]);
 			glVertexAttribPointer(VERTEX, vbo->bbox->dataSize[VERTEX], GL_FLOAT, GL_FALSE, 0, NULL);
@@ -689,7 +768,7 @@ void EditWidget::gBufferRendering(void)
 	glBindFramebuffer(GL_FRAMEBUFFER, gBuffer);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glUseProgram(program[4]);
-	renderScene();
+	renderScene(0);
 	glBindFramebuffer(GL_FRAMEBUFFER, this->defaultFramebufferObject());
 }
 
@@ -775,7 +854,7 @@ void EditWidget::shadowMappingRendering(void)
 	glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
 	glClear(GL_DEPTH_BUFFER_BIT);
 	configureShadowMapping();
-	renderScene();
+	renderScene(0);
 	glBindFramebuffer(GL_FRAMEBUFFER, this->defaultFramebufferObject());
 
 	// 2. then render scene as normal with shadow mapping (using depth map)
@@ -800,9 +879,9 @@ void EditWidget::paintGL(void)
 	float mat[16], color[4];
 
 	// ssao
-	gBufferRendering();
-	ssaoTextureRendering();
-	ssaoBlurRendering();
+	//gBufferRendering();
+	//ssaoTextureRendering();
+	//ssaoBlurRendering();
 	//ssaoLightPassRendering();
 
 	// render shadow map
@@ -810,7 +889,6 @@ void EditWidget::paintGL(void)
 	shadowMappingRendering();
 
 	glUseProgram(program[0]);
-	glViewport(0, 0, this->width(), this->height());
 	glClearColor(0.66, 0.66, 0.66, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glUniform1i(glGetUniformLocation(program[0], "shadowMap"), 0);
@@ -821,9 +899,32 @@ void EditWidget::paintGL(void)
 	glBindTexture(GL_TEXTURE_2D, ssaoColorBufferBlur);
 	transposeMat4fv(lightSpaceMat, mat);
 	glUniformMatrix4fv(6, 1, GL_FALSE, mat);
-	//updateViewing();
-	renderScene();
-	renderBbox();
+
+
+	if (windowmodeID != FOUR_WINDOWS) {
+		glViewport(0, 0, this->width(), this->height());
+		renderScene(0);
+		renderBbox(0);
+	}
+	else {
+		for (int i = 0; i < 4; i++) {
+			if (i == 0) {
+				glViewport(0, 0, this->width() / 3, this->height() / 3);
+			}
+			else if (i == 1) {
+				glViewport(0, this->height() / 3, this->width() / 3, (this->height() * 2) / 3);
+			}
+			else if (i == 2) {
+				glViewport(0, this->height() * 2 / 3, this->width() / 3, this->height());
+			}
+			else {
+				glViewport(this->width() / 3, 0, this->width(), this->height());
+			}
+			renderScene(i);
+			renderBbox(i);
+		}
+	}
+	
 
 	glBindFramebuffer(GL_READ_FRAMEBUFFER, multiSampleFBO);
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, this->defaultFramebufferObject());
@@ -882,8 +983,8 @@ void EditWidget::resizeGL(int width, int height)
 
 	glViewport(0, 0, width, height);
 	float aspect = width / (float)height;
-	perspective(fovy, aspect, nearClip, farClip, projectionMat);
-	transposeMat4fv(projectionMat, mat);
+	perspective(fovy, aspect, nearClip, farClip, perspectiveMat);
+	transposeMat4fv(perspectiveMat, mat);
 	glUniformMatrix4fv(2, 1, false, mat);
 
 
@@ -919,9 +1020,9 @@ void EditWidget::mousePressEvent(QMouseEvent *e)
 
 void EditWidget::mouseMoveEvent(QMouseEvent *e)
 {
-	float u[3] = { viewMat[0], viewMat[1], viewMat[2] };
-	float v[3] = { viewMat[4], viewMat[5], viewMat[6] };
-	float w[3] = { viewMat[8], viewMat[9], viewMat[10] };
+	float u[3] = { perspective_viewMat[0], perspective_viewMat[1], perspective_viewMat[2] };
+	float v[3] = { perspective_viewMat[4], perspective_viewMat[5], perspective_viewMat[6] };
+	float w[3] = { perspective_viewMat[8], perspective_viewMat[9], perspective_viewMat[10] };
 	float trans[3], transMat[16], boxCenter[3], param[4], projPnt[3], dir[3], tmp;
 	int offsetX = (e->x() - oldPosX);
 	int offsetY = -(e->y() - oldPosY);

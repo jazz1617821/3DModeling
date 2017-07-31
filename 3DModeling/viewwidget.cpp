@@ -1,9 +1,9 @@
 #define _USE_MATH_DEFINES
+#include "viewwidget.h"
 #include <iostream>
 #include <math.h>
 #include <time.h>
 #include "LoadShaders.h"
-#include "viewwidget.h"
 #include "mymath.h"
 
 using namespace std;
@@ -1019,6 +1019,7 @@ void ViewWidget::makeModelVBO(vobj_t* vo)
 		}
 	}
 }
+
 /*
 void ViewWidget::openVolume(const char* fileName)
 {

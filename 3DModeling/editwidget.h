@@ -31,12 +31,12 @@ private:
 	void setLighting(void);
 	void setMaterial(vbo_t obj);
 	void fixView(void);
-	void updateViewing(void);
+	void updateViewing(int);
 	void bindData(vbo_t* pObj);
-	void drawData(vbo_t* const pObj, int mode);
-	void drawBbox(vbo_t* const pObj, int mode);
-	void renderScene(void);
-	void renderBbox(void);
+	void drawData(vbo_t* const pObj, int mode,int times);
+	void drawBbox(vbo_t* const pObj, int mode,int times);
+	void renderScene(int);
+	void renderBbox(int);
 
 	// shadow mapping
 	void genShadowMapping(void);
@@ -85,6 +85,10 @@ private:
 	float viewTheta;
 	float viewRadius;
 	float fovy;
+	float left;
+	float right;
+	float bottom;
+	float top;
 	float nearClip;
 	float farClip;
 	float curRot[16];
@@ -93,14 +97,23 @@ private:
 	// scene id
 	int sceneID;
 
+	//windows mode id
+	int windowmodeID;
+
 	// lights
 	lit_t light0;
 	glit_t globalLight;
 
 	// matrices
 	float modelMat[16];
-	float viewMat[16];
-	float projectionMat[16];
+	float perspective_viewMat[16];
+	float x_ortho_viewMat[16];
+	float y_ortho_viewMat[16];
+	float z_ortho_viewMat[16];
+	float perspectiveMat[16];
+	float x_orthoMat[16];
+	float y_orthoMat[16];
+	float z_orthoMat[16];
 	float mvMat[16];
 	float mvpMat[16];
 	float normalMat[16];

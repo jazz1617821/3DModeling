@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.7.0
+** Created by: Qt User Interface Compiler version 5.7.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -20,7 +20,6 @@
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
-#include <QtWidgets/QOpenGLWidget>
 #include <QtWidgets/QRadioButton>
 #include <QtWidgets/QSplitter>
 #include <QtWidgets/QTabWidget>
@@ -28,6 +27,7 @@
 #include <QtWidgets/QToolBox>
 #include <QtWidgets/QTreeWidget>
 #include <QtWidgets/QWidget>
+#include "editwidget.h"
 #include "viewwidget.h"
 
 QT_BEGIN_NAMESPACE
@@ -59,7 +59,6 @@ public:
     ViewWidget *viewWidget;
     QWidget *editWidgetLayout;
     QGridLayout *gridLayout_7;
-    QOpenGLWidget *editwidget;
     QToolBox *toolBox;
     QWidget *ioWidget;
     QGridLayout *gridLayout_4;
@@ -67,6 +66,7 @@ public:
     QRadioButton *radioButton_2;
     QWidget *morphologicalWidget;
     QWidget *modellogicalWidget;
+    EditWidget *editwidget;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QMenu *menuHelp;
@@ -198,14 +198,6 @@ public:
         gridLayout_7->setSpacing(6);
         gridLayout_7->setContentsMargins(11, 11, 11, 11);
         gridLayout_7->setObjectName(QStringLiteral("gridLayout_7"));
-        editwidget = new QOpenGLWidget(editWidgetLayout);
-        editwidget->setObjectName(QStringLiteral("editwidget"));
-        sizePolicy.setHeightForWidth(editwidget->sizePolicy().hasHeightForWidth());
-        editwidget->setSizePolicy(sizePolicy);
-        editwidget->setMouseTracking(true);
-
-        gridLayout_7->addWidget(editwidget, 0, 0, 1, 1);
-
         toolBox = new QToolBox(editWidgetLayout);
         toolBox->setObjectName(QStringLiteral("toolBox"));
         QSizePolicy sizePolicy3(QSizePolicy::Expanding, QSizePolicy::Maximum);
@@ -237,7 +229,7 @@ public:
         toolBox->addItem(ioWidget, QStringLiteral("Insert , Delete"));
         morphologicalWidget = new QWidget();
         morphologicalWidget->setObjectName(QStringLiteral("morphologicalWidget"));
-        morphologicalWidget->setGeometry(QRect(0, 0, 100, 30));
+        morphologicalWidget->setGeometry(QRect(0, 0, 98, 28));
         sizePolicy.setHeightForWidth(morphologicalWidget->sizePolicy().hasHeightForWidth());
         morphologicalWidget->setSizePolicy(sizePolicy);
         toolBox->addItem(morphologicalWidget, QStringLiteral("Morphological"));
@@ -249,6 +241,14 @@ public:
         toolBox->addItem(modellogicalWidget, QStringLiteral("Model logical"));
 
         gridLayout_7->addWidget(toolBox, 1, 0, 1, 1);
+
+        editwidget = new EditWidget(editWidgetLayout);
+        editwidget->setObjectName(QStringLiteral("editwidget"));
+        sizePolicy.setHeightForWidth(editwidget->sizePolicy().hasHeightForWidth());
+        editwidget->setSizePolicy(sizePolicy);
+        editwidget->setMouseTracking(true);
+
+        gridLayout_7->addWidget(editwidget, 0, 0, 1, 1);
 
         view_tabWidget->addTab(editWidgetLayout, QString());
 
@@ -285,21 +285,21 @@ public:
 
     void retranslateUi(QMainWindow *MainWindow)
     {
-        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "mainwindow", 0));
-        actionExport->setText(QApplication::translate("MainWindow", "Export", 0));
-        actionOpen->setText(QApplication::translate("MainWindow", "Open", 0));
-        tabWidget->setTabText(tabWidget->indexOf(widget), QApplication::translate("MainWindow", "Voxel Model", 0));
-        tabWidget->setTabText(tabWidget->indexOf(widget1), QApplication::translate("MainWindow", "Voxel Data", 0));
-        AttributeLabel->setText(QApplication::translate("MainWindow", "Attributes", 0));
-        view_tabWidget->setTabText(view_tabWidget->indexOf(viewWidgetLayout), QApplication::translate("MainWindow", "View Model", 0));
-        radioButton->setText(QApplication::translate("MainWindow", "RadioButton", 0));
-        radioButton_2->setText(QApplication::translate("MainWindow", "RadioButton", 0));
-        toolBox->setItemText(toolBox->indexOf(ioWidget), QApplication::translate("MainWindow", "Insert , Delete", 0));
-        toolBox->setItemText(toolBox->indexOf(morphologicalWidget), QApplication::translate("MainWindow", "Morphological", 0));
-        toolBox->setItemText(toolBox->indexOf(modellogicalWidget), QApplication::translate("MainWindow", "Model logical", 0));
-        view_tabWidget->setTabText(view_tabWidget->indexOf(editWidgetLayout), QApplication::translate("MainWindow", "Edit Model", 0));
-        menuFile->setTitle(QApplication::translate("MainWindow", "File", 0));
-        menuHelp->setTitle(QApplication::translate("MainWindow", "Help", 0));
+        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "mainwindow", Q_NULLPTR));
+        actionExport->setText(QApplication::translate("MainWindow", "Export", Q_NULLPTR));
+        actionOpen->setText(QApplication::translate("MainWindow", "Open", Q_NULLPTR));
+        tabWidget->setTabText(tabWidget->indexOf(widget), QApplication::translate("MainWindow", "Voxel Model", Q_NULLPTR));
+        tabWidget->setTabText(tabWidget->indexOf(widget1), QApplication::translate("MainWindow", "Voxel Data", Q_NULLPTR));
+        AttributeLabel->setText(QApplication::translate("MainWindow", "Attributes", Q_NULLPTR));
+        view_tabWidget->setTabText(view_tabWidget->indexOf(viewWidgetLayout), QApplication::translate("MainWindow", "View Model", Q_NULLPTR));
+        radioButton->setText(QApplication::translate("MainWindow", "RadioButton", Q_NULLPTR));
+        radioButton_2->setText(QApplication::translate("MainWindow", "RadioButton", Q_NULLPTR));
+        toolBox->setItemText(toolBox->indexOf(ioWidget), QApplication::translate("MainWindow", "Insert , Delete", Q_NULLPTR));
+        toolBox->setItemText(toolBox->indexOf(morphologicalWidget), QApplication::translate("MainWindow", "Morphological", Q_NULLPTR));
+        toolBox->setItemText(toolBox->indexOf(modellogicalWidget), QApplication::translate("MainWindow", "Model logical", Q_NULLPTR));
+        view_tabWidget->setTabText(view_tabWidget->indexOf(editWidgetLayout), QApplication::translate("MainWindow", "Edit Model", Q_NULLPTR));
+        menuFile->setTitle(QApplication::translate("MainWindow", "File", Q_NULLPTR));
+        menuHelp->setTitle(QApplication::translate("MainWindow", "Help", Q_NULLPTR));
     } // retranslateUi
 
 };
