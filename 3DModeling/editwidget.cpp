@@ -902,7 +902,7 @@ void EditWidget::paintGL(void)
 
 
 	if (windowmodeID != FOUR_WINDOWS) {
-		glViewport(0, 0, this->width(), this->height());
+		glViewport(0, 0, this->width()/2, this->height()/2);
 		renderScene(0);
 		renderBbox(0);
 	}
