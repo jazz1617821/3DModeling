@@ -14,8 +14,8 @@ MainWindow::MainWindow(QWidget *parent)
 
 	connect(ui->voxeltreeWidget, SIGNAL(itemClicked(QTreeWidgetItem *, int)), this, SLOT(setAttribute(QTreeWidgetItem *, int)));
 	connect(ui->datalistWidget, SIGNAL(itemClicked(QListWidgetItem *)), this, SLOT(setAttribute(QListWidgetItem *)));
-	connect(this, SIGNAL(sentVModelPtr(VoxelModel*)), ui->viewWidget, SLOT(getVModelPtr(VoxelModel *)));
-
+	connect(this, SIGNAL(sentVModelPtr(vmodel_t*)), ui->viewWidget, SLOT(getVModelPtr(vmodel_t *)));
+	connect(this, SIGNAL(sentVDataPtr(vdata_t*)), ui->editWidget, SLOT(getVDataPtr(vdata_t *)));
 }
 
 MainWindow::~MainWindow()
@@ -25,7 +25,7 @@ MainWindow::~MainWindow()
 }
 
 //Private Fuction
-void MainWindow::addInDataList_VO(VoxelObject * vo) 
+void MainWindow::addInDataList_VO(vobj_t * vo) 
 {
 	if (vo->number_of_child == 1) {
 		MyListWidgetItem* itm = new MyListWidgetItem();
@@ -41,7 +41,7 @@ void MainWindow::addInDataList_VO(VoxelObject * vo)
 	}
 }
 
-void MainWindow::addInTreeList_VD(MyTreeWidgetItem * parent, VoxelData* vdata)
+void MainWindow::addInTreeList_VD(MyTreeWidgetItem * parent, vdata_t* vdata)
 {
 	MyTreeWidgetItem * itm = new MyTreeWidgetItem();
 	itm->setText(0, (QString)vdata->name);
@@ -49,7 +49,7 @@ void MainWindow::addInTreeList_VD(MyTreeWidgetItem * parent, VoxelData* vdata)
 	parent->addChild(itm);
 }
 
-void MainWindow::addInTreeList_VO(MyTreeWidgetItem * parent, VoxelObject* vobject)
+void MainWindow::addInTreeList_VO(MyTreeWidgetItem * parent, vobj_t* vobject)
 {
 	MyTreeWidgetItem * itm = new MyTreeWidgetItem();
 	itm->setText(0, (QString)vobject->name);
@@ -65,7 +65,7 @@ void MainWindow::addInTreeList_VO(MyTreeWidgetItem * parent, VoxelObject* vobjec
 	}
 }
 
-void MainWindow::addInTreeList_VM(VoxelModel* vmodel)
+void MainWindow::addInTreeList_VM(vmodel_t* vmodel)
 {
 	MyTreeWidgetItem * itm = new MyTreeWidgetItem(ui->voxeltreeWidget);
 	itm->setText(0,(QString)vmodel->name);
@@ -149,7 +149,7 @@ void MainWindow::openVD(const char* filepath)
 	return;
 }
 
-void MainWindow::openVD(const char * filepath, VoxelData * vd)
+void MainWindow::openVD(const char * filepath, vdata_t * vd)
 {
 	char* str = (char*)malloc(sizeof(char)* (strlen(filepath) + strlen(vd->name) + 5));
 	strcpy(str, filepath);
@@ -181,7 +181,7 @@ void MainWindow::openVD(const char * filepath, VoxelData * vd)
 	return;
 }
 
-void MainWindow::openVO(const char* filepath,FILE * vmodelfile, VoxelObject* vo)
+void MainWindow::openVO(const char* filepath,FILE * vmodelfile, vobj_t* vo)
 {
 	(char*)vo->name = (char*)calloc(sizeof(char) , 20);
 	fscanf(vmodelfile, "Name:%s\n", vo->name);
@@ -214,7 +214,7 @@ void MainWindow::openVO(const char* filepath,FILE * vmodelfile, VoxelObject* vo)
 
 void MainWindow::openVM(const char* filepath)
 {
-	vmodel = new VoxelModel;
+	vmodel = new vmodel_t;
 
 	FILE * vmodelfile = fopen(filepath, "r");
 	if (vmodelfile != NULL) {
@@ -232,7 +232,7 @@ void MainWindow::openVM(const char* filepath)
 		fscanf(vmodelfile, "Number of voxel data:%d\n", &vmodel->number_of_voxel_data);
 		cout << vmodel->number_of_voxel_data << endl;
 
-		vmodel->root_vobj = new VoxelObject;
+		vmodel->root_vobj = new vobj_t;
 		openVO(filepath, vmodelfile, vmodel->root_vobj);
 	}
 
@@ -266,7 +266,7 @@ void MainWindow::writeVO(const char* filepath,FILE* vmodelfile,VoxelObject * vo)
 	}
 }
 
-void MainWindow::writeVD(const char* filepath, VoxelData * vd)
+void MainWindow::writeVD(const char* filepath, vdata_t * vd)
 {
 	char* str = (char*)malloc(sizeof(char)* (strlen(filepath) + strlen(vd->name) + 5));
 	strcpy(str, filepath);
@@ -293,7 +293,7 @@ void MainWindow::writeVD(const char* filepath, VoxelData * vd)
 	return;
 }
 
-void MainWindow::setAttribute(VoxelData* vd) 
+void MainWindow::setAttribute(vdata_t* vd) 
 {
 	ui->attributetableWidget->clear();
 	ui->attributetableWidget->setRowCount(4);
@@ -327,7 +327,7 @@ void MainWindow::setAttribute(VoxelData* vd)
 	return;
 }
 
-void MainWindow::setAttribute(VoxelObject* vo) 
+void MainWindow::setAttribute(vobj_t* vo) 
 {
 	ui->attributetableWidget->clear();
 	if (vo->number_of_child == 1) {
@@ -379,7 +379,7 @@ void MainWindow::setAttribute(VoxelObject* vo)
 	return;
 }
 
-void MainWindow::setAttribute(VoxelModel* vm) 
+void MainWindow::setAttribute(vmodel_t* vm) 
 {
 	ui->attributetableWidget->clear();
 	ui->attributetableWidget->setRowCount(4);
@@ -611,6 +611,7 @@ void MainWindow::on_actionExport_triggered()
 }
 
 void MainWindow::setAttribute(QTreeWidgetItem * itm, int i) {
+	ui->view_tabWidget->setCurrentWidget(ui->viewWidgetLayout);
 	if (((MyTreeWidgetItem *)itm)->vd != NULL) {
 		//cout << "I am a Voxel Data." << endl;
 		setAttribute(((MyTreeWidgetItem *)itm)->vd);
@@ -628,6 +629,8 @@ void MainWindow::setAttribute(QTreeWidgetItem * itm, int i) {
 
 void MainWindow::setAttribute(QListWidgetItem * itm) {
 	setAttribute(((MyListWidgetItem *)itm)->vd);
+	ui->view_tabWidget->setCurrentWidget(ui->editWidgetLayout);
+	emit sentVDataPtr(((MyListWidgetItem *)itm)->vd);
 	return;
 }
 

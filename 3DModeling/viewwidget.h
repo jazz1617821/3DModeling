@@ -60,7 +60,7 @@ private:
 	void makeModelVBO(vobj_t*);
 
 private slots:
-	void getVModelPtr(VoxelModel* vmodel);
+	void getVModelPtr(vmodel_t* vmodel);
 
 signals:
 	

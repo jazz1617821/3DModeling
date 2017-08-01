@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'viewwidget.h'
 **
-** Created by: The Qt Meta Object Compiler version 67 (Qt 5.7.1)
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.7.0)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
@@ -12,7 +12,7 @@
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'viewwidget.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
-#error "This file was generated using the moc from 5.7.1. It"
+#error "This file was generated using the moc from 5.7.0. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
@@ -20,7 +20,7 @@
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_ViewWidget_t {
     QByteArrayData data[5];
-    char stringdata0[44];
+    char stringdata0[42];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -32,11 +32,11 @@ static const qt_meta_stringdata_ViewWidget_t qt_meta_stringdata_ViewWidget = {
 QT_MOC_LITERAL(0, 0, 10), // "ViewWidget"
 QT_MOC_LITERAL(1, 11, 12), // "getVModelPtr"
 QT_MOC_LITERAL(2, 24, 0), // ""
-QT_MOC_LITERAL(3, 25, 11), // "VoxelModel*"
-QT_MOC_LITERAL(4, 37, 6) // "vmodel"
+QT_MOC_LITERAL(3, 25, 9), // "vmodel_t*"
+QT_MOC_LITERAL(4, 35, 6) // "vmodel"
 
     },
-    "ViewWidget\0getVModelPtr\0\0VoxelModel*\0"
+    "ViewWidget\0getVModelPtr\0\0vmodel_t*\0"
     "vmodel"
 };
 #undef QT_MOC_LITERAL
@@ -69,7 +69,7 @@ void ViewWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         ViewWidget *_t = static_cast<ViewWidget *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->getVModelPtr((*reinterpret_cast< VoxelModel*(*)>(_a[1]))); break;
+        case 0: _t->getVModelPtr((*reinterpret_cast< vmodel_t*(*)>(_a[1]))); break;
         default: ;
         }
     }

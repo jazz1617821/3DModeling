@@ -6,9 +6,6 @@
 
 
 vbo_t* createVoxelVBO(vobj_t* vo);
-/*
-vbo_t* createVoxelClipPlain(vbo_t* vbo, float clip[4], int voxIdx, vdata_t* obj);
-void updateVoxelClipPlain(vbo_t* vbo, float clip[4], int voxIdx, vdata_t* obj);
-*/
+vbo_t* createVoxelVBO(vdata_t* vd);
 
 #endif // _VOXELVBO_H

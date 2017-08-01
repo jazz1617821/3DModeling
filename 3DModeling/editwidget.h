@@ -57,17 +57,17 @@ private:
 	void shadowMappingRendering(void);
 
 	//make VBO
-	void makeModelVBO(vobj_t*);
+	void makevDataVBO(vdata_t*);
 
 	private slots:
-	void getVModelPtr(VoxelModel* vmodel);
+	void getVDataPtr(vdata_t* vdata);
 
 signals:
 
 
 private:
 	//Voxel Model
-	VoxelModel* vmodel;
+	VoxelData* vdata;
 
 private:
 	int iconSize;

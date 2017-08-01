@@ -30,21 +30,21 @@ public:
 private:
 	void addInDataList_VO(VoxelObject * vo);
 
-	void addInTreeList_VD(MyTreeWidgetItem * parent, VoxelData* vdata);
-	void addInTreeList_VO(MyTreeWidgetItem * parent, VoxelObject* vobject);
+	void addInTreeList_VD(MyTreeWidgetItem * parent, vdata_t* vdata);
+	void addInTreeList_VO(MyTreeWidgetItem * parent, vobj_t* vobject);
 	void addInTreeList_VM(VoxelModel* vmodel);
 
 	void openVD(const char* filepath);
-	void openVD(const char* filepath, VoxelData* vd);
-	void openVO(const char* filepath, FILE * vmodelfile, VoxelObject* vo);
+	void openVD(const char* filepath, vdata_t* vd);
+	void openVO(const char* filepath, FILE * vmodelfile, vobj_t* vo);
 	void openVM(const char* filepath);
 
-	void writeVO(const char* filepath,FILE* vmodelfile,VoxelObject* vo);
-	void writeVD(const char* filepath,VoxelData* vd);
+	void writeVO(const char* filepath,FILE* vmodelfile, vobj_t* vo);
+	void writeVD(const char* filepath, vdata_t* vd);
 
-	void setAttribute(VoxelData*);
-	void setAttribute(VoxelObject*);
-	void setAttribute(VoxelModel*);
+	void setAttribute(vdata_t*);
+	void setAttribute(vobj_t*);
+	void setAttribute(vmodel_t*);
 
 	//signal trigger function
 	void finishLoadVModel();
@@ -57,7 +57,8 @@ private slots:
 	void setAttribute(QListWidgetItem *);
 
 signals:
-	void sentVModelPtr(VoxelModel*);
+	void sentVModelPtr(vmodel_t*);
+	void sentVDataPtr(vdata_t*);
 
 };
 

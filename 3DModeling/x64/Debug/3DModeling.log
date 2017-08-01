@@ -1,128 +1,84 @@
-﻿已經開始建置於 2017/7/31 下午 05:30:49。
-     1>節點 2 (Rebuild 目標) 上的專案 "C:\Users\User\Documents\GitHub\3DModeling\3DModeling\3DModeling.vcxproj"。
-     1>CustomBuild:
-         Moc'ing mainwindow.h...
-         Uic'ing mainwindow.ui...
-     1>C:\Users\User\Documents\GitHub\3DModeling\3DModeling\mainwindow.ui : warning : The name 'widget' (QWidget) is already in use, defaulting to 'widget1'.
-         Moc'ing editwidget.h...
-         Moc'ing viewwidget.h...
-         Rcc'ing mainwindow.qrc...
-     1>RCC : warning : No resources in 'C:\Users\User\Documents\GitHub\3DModeling\3DModeling\mainwindow.qrc'.
-         
-       ClCompile:
-         D:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\x86_amd64\CL.exe /c /I.\GeneratedFiles /I. /IC:\Qt\5.7\msvc2015_64\include /I.\GeneratedFiles\Debug /IC:\Qt\5.7\msvc2015_64\include\QtCore /IC:\Qt\5.7\msvc2015_64\include\QtGui /IC:\Qt\5.7\msvc2015_64\include\QtWidgets /IC:\Qt\5.7\msvc2015_64\include\QtOpenGL /Zi /nologo /W1 /WX- /Od /D UNICODE /D WIN32 /D QT_DLL /D QT_CORE_LIB /D QT_GUI_LIB /D QT_WIDGETS_LIB /D QT_OPENGL_LIB /Gm- /EHsc /MDd /GS- /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"x64\Debug\\" /Fd"x64\Debug\vc140.pdb" /Gd /TP /errorReport:prompt editwidget.cpp GeneratedFiles\Debug\moc_editwidget.cpp GeneratedFiles\Debug\moc_mainwindow.cpp GeneratedFiles\Debug\moc_viewwidget.cpp light.cpp LoadShaders.cpp main.cpp mainwindow.cpp material.cpp mylistwidgetitem.cpp mymath.cpp mytreewidgetitem.cpp object.cpp voxelvbo.cpp viewwidget.cpp
-         editwidget.cpp
-     1>editwidget.cpp(837): warning C4838: 從 'double' 到 'float' 的轉換必須是縮小轉換
-         moc_editwidget.cpp
-         moc_mainwindow.cpp
-         moc_viewwidget.cpp
-         light.cpp
-         LoadShaders.cpp
-         main.cpp
-         mainwindow.cpp
-         material.cpp
-     1>material.cpp(62): warning C4838: 從 'double' 到 'float' 的轉換必須是縮小轉換
-     1>material.cpp(90): warning C4838: 從 'double' 到 'float' 的轉換必須是縮小轉換
-     1>material.cpp(118): warning C4838: 從 'double' 到 'float' 的轉換必須是縮小轉換
-     1>material.cpp(146): warning C4838: 從 'double' 到 'float' 的轉換必須是縮小轉換
-         mylistwidgetitem.cpp
-         mymath.cpp
-         mytreewidgetitem.cpp
-         object.cpp
-     1>object.cpp(204): warning C4838: 從 'int' 到 'float' 的轉換必須是縮小轉換
-         voxelvbo.cpp
-         viewwidget.cpp
-     1>viewwidget.cpp(758): warning C4838: 從 'double' 到 'float' 的轉換必須是縮小轉換
-         正在產生程式碼...
-         D:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\x86_amd64\CL.exe /c /I.\GeneratedFiles /I. /IC:\Qt\5.7\msvc2015_64\include /I.\GeneratedFiles\Debug /IC:\Qt\5.7\msvc2015_64\include\QtCore /IC:\Qt\5.7\msvc2015_64\include\QtGui /IC:\Qt\5.7\msvc2015_64\include\QtWidgets /IC:\Qt\5.7\msvc2015_64\include\QtOpenGL /Zi /nologo /W1 /WX- /Od /D UNICODE /D WIN32 /D QT_DLL /D QT_CORE_LIB /D QT_GUI_LIB /D QT_WIDGETS_LIB /D QT_OPENGL_LIB /Gm- /EHsc /MDd /GS- /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"x64\Debug\\" /Fd"x64\Debug\vc140.pdb" /Gd /TP /errorReport:prompt GeneratedFiles\qrc_mainwindow.cpp
-         qrc_mainwindow.cpp
-       ResourceCompile:
-         C:\Program Files (x86)\Windows Kits\8.1\bin\x86\rc.exe /l"0x0409" /nologo /fo"x64\Debug\3DModeling.res" 3DModeling.rc 
-       Link:
-         D:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\User\Documents\GitHub\3DModeling\x64\Debug\\3DModeling.exe" /NOLOGO /LIBPATH:C:\Qt\5.7\msvc2015_64\lib qtmaind.lib Qt5Cored.lib Qt5Guid.lib Qt5Widgetsd.lib glew32s.lib Qt5OpenGLd.lib opengl32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"C:\Users\User\Documents\GitHub\3DModeling\x64\Debug\3DModeling.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\User\Documents\GitHub\3DModeling\x64\Debug\3DModeling.lib" /MACHINE:X64 x64\Debug\3DModeling.res
-         x64\Debug\editwidget.obj
-         x64\Debug\moc_editwidget.obj
-         x64\Debug\moc_mainwindow.obj
-         x64\Debug\moc_viewwidget.obj
-         x64\Debug\qrc_mainwindow.obj
-         x64\Debug\light.obj
-         x64\Debug\LoadShaders.obj
-         x64\Debug\main.obj
-         x64\Debug\mainwindow.obj
-         x64\Debug\material.obj
-         x64\Debug\mylistwidgetitem.obj
-         x64\Debug\mymath.obj
-         x64\Debug\mytreewidgetitem.obj
-         x64\Debug\object.obj
-         x64\Debug\voxelvbo.obj
-         x64\Debug\viewwidget.obj
-     1>LINK : warning LNK4098: 預設的程式庫 'LIBCMT' 與其他使用的程式庫衝突，請使用 /NODEFAULTLIB:library
-     1>editwidget.obj : warning LNK4217: 本機定義的符號 glewInit 已匯入函式 "protected: virtual void __cdecl EditWidget::initializeGL(void)" (?initializeGL@EditWidget@@MEAAXXZ)
-     1>viewwidget.obj : warning LNK4217: 本機定義的符號 glewInit 已匯入函式 "protected: virtual void __cdecl ViewWidget::initializeGL(void)" (?initializeGL@ViewWidget@@MEAAXXZ)
-     1>editwidget.obj : warning LNK4049: 本機定義的符號 __glewActiveTexture 已匯入
-     1>viewwidget.obj : warning LNK4049: 本機定義的符號 __glewActiveTexture 已匯入
-     1>editwidget.obj : warning LNK4049: 本機定義的符號 __glewBindBuffer 已匯入
-     1>viewwidget.obj : warning LNK4049: 本機定義的符號 __glewBindBuffer 已匯入
-     1>editwidget.obj : warning LNK4049: 本機定義的符號 __glewBufferData 已匯入
-     1>viewwidget.obj : warning LNK4049: 本機定義的符號 __glewBufferData 已匯入
-     1>editwidget.obj : warning LNK4049: 本機定義的符號 __glewGenBuffers 已匯入
-     1>viewwidget.obj : warning LNK4049: 本機定義的符號 __glewGenBuffers 已匯入
-     1>editwidget.obj : warning LNK4049: 本機定義的符號 __glewDisableVertexAttribArray 已匯入
-     1>viewwidget.obj : warning LNK4049: 本機定義的符號 __glewDisableVertexAttribArray 已匯入
-     1>editwidget.obj : warning LNK4049: 本機定義的符號 __glewDrawBuffers 已匯入
-     1>viewwidget.obj : warning LNK4049: 本機定義的符號 __glewDrawBuffers 已匯入
-     1>editwidget.obj : warning LNK4049: 本機定義的符號 __glewEnableVertexAttribArray 已匯入
-     1>viewwidget.obj : warning LNK4049: 本機定義的符號 __glewEnableVertexAttribArray 已匯入
-     1>editwidget.obj : warning LNK4049: 本機定義的符號 __glewGetUniformLocation 已匯入
-     1>viewwidget.obj : warning LNK4049: 本機定義的符號 __glewGetUniformLocation 已匯入
-     1>editwidget.obj : warning LNK4049: 本機定義的符號 __glewUniform1f 已匯入
-     1>viewwidget.obj : warning LNK4049: 本機定義的符號 __glewUniform1f 已匯入
-     1>editwidget.obj : warning LNK4049: 本機定義的符號 __glewUniform1i 已匯入
-     1>viewwidget.obj : warning LNK4049: 本機定義的符號 __glewUniform1i 已匯入
-     1>editwidget.obj : warning LNK4049: 本機定義的符號 __glewUniform2fv 已匯入
-     1>viewwidget.obj : warning LNK4049: 本機定義的符號 __glewUniform2fv 已匯入
-     1>editwidget.obj : warning LNK4049: 本機定義的符號 __glewUniform3fv 已匯入
-     1>viewwidget.obj : warning LNK4049: 本機定義的符號 __glewUniform3fv 已匯入
-     1>editwidget.obj : warning LNK4049: 本機定義的符號 __glewUniform4f 已匯入
-     1>viewwidget.obj : warning LNK4049: 本機定義的符號 __glewUniform4f 已匯入
-     1>editwidget.obj : warning LNK4049: 本機定義的符號 __glewUniform4fv 已匯入
-     1>viewwidget.obj : warning LNK4049: 本機定義的符號 __glewUniform4fv 已匯入
-     1>editwidget.obj : warning LNK4049: 本機定義的符號 __glewUniformMatrix4fv 已匯入
-     1>viewwidget.obj : warning LNK4049: 本機定義的符號 __glewUniformMatrix4fv 已匯入
-     1>editwidget.obj : warning LNK4049: 本機定義的符號 __glewUseProgram 已匯入
-     1>viewwidget.obj : warning LNK4049: 本機定義的符號 __glewUseProgram 已匯入
-     1>editwidget.obj : warning LNK4049: 本機定義的符號 __glewVertexAttribPointer 已匯入
-     1>viewwidget.obj : warning LNK4049: 本機定義的符號 __glewVertexAttribPointer 已匯入
-     1>editwidget.obj : warning LNK4049: 本機定義的符號 __glewBindFramebuffer 已匯入
-     1>viewwidget.obj : warning LNK4049: 本機定義的符號 __glewBindFramebuffer 已匯入
-     1>editwidget.obj : warning LNK4049: 本機定義的符號 __glewBindRenderbuffer 已匯入
-     1>viewwidget.obj : warning LNK4049: 本機定義的符號 __glewBindRenderbuffer 已匯入
-     1>editwidget.obj : warning LNK4049: 本機定義的符號 __glewBlitFramebuffer 已匯入
-     1>viewwidget.obj : warning LNK4049: 本機定義的符號 __glewBlitFramebuffer 已匯入
-     1>editwidget.obj : warning LNK4049: 本機定義的符號 __glewCheckFramebufferStatus 已匯入
-     1>viewwidget.obj : warning LNK4049: 本機定義的符號 __glewCheckFramebufferStatus 已匯入
-     1>editwidget.obj : warning LNK4049: 本機定義的符號 __glewFramebufferRenderbuffer 已匯入
-     1>viewwidget.obj : warning LNK4049: 本機定義的符號 __glewFramebufferRenderbuffer 已匯入
-     1>editwidget.obj : warning LNK4049: 本機定義的符號 __glewFramebufferTexture2D 已匯入
-     1>viewwidget.obj : warning LNK4049: 本機定義的符號 __glewFramebufferTexture2D 已匯入
-     1>editwidget.obj : warning LNK4049: 本機定義的符號 __glewGenFramebuffers 已匯入
-     1>viewwidget.obj : warning LNK4049: 本機定義的符號 __glewGenFramebuffers 已匯入
-     1>editwidget.obj : warning LNK4049: 本機定義的符號 __glewGenRenderbuffers 已匯入
-     1>viewwidget.obj : warning LNK4049: 本機定義的符號 __glewGenRenderbuffers 已匯入
-     1>editwidget.obj : warning LNK4049: 本機定義的符號 __glewRenderbufferStorage 已匯入
-     1>viewwidget.obj : warning LNK4049: 本機定義的符號 __glewRenderbufferStorage 已匯入
-     1>editwidget.obj : warning LNK4049: 本機定義的符號 __glewRenderbufferStorageMultisample 已匯入
-     1>viewwidget.obj : warning LNK4049: 本機定義的符號 __glewRenderbufferStorageMultisample 已匯入
-     1>editwidget.obj : warning LNK4049: 本機定義的符號 __glewTexImage2DMultisample 已匯入
-     1>viewwidget.obj : warning LNK4049: 本機定義的符號 __glewTexImage2DMultisample 已匯入
-     1>editwidget.obj : warning LNK4049: 本機定義的符號 __glewBindVertexArray 已匯入
-     1>viewwidget.obj : warning LNK4049: 本機定義的符號 __glewBindVertexArray 已匯入
-     1>editwidget.obj : warning LNK4049: 本機定義的符號 __glewGenVertexArrays 已匯入
-     1>viewwidget.obj : warning LNK4049: 本機定義的符號 __glewGenVertexArrays 已匯入
-     1>glew32s.lib(glew.obj) : warning LNK4099: 找不到 PDB 'vc120.pdb' (有 'glew32s.lib(glew.obj)' 或位於 'C:\Users\User\Documents\GitHub\3DModeling\x64\Debug\vc120.pdb')，當做沒有偵錯資訊，連結物件
-         3DModeling.vcxproj -> C:\Users\User\Documents\GitHub\3DModeling\x64\Debug\3DModeling.exe
-     1>專案 "C:\Users\User\Documents\GitHub\3DModeling\3DModeling\3DModeling.vcxproj" (Rebuild 目標) 建置完成。
-
-建置成功。
-
-經過時間 00:00:23.92
+﻿  Moc'ing mainwindow.h...
+  Uic'ing mainwindow.ui...
+C:\Users\jazz1\Documents\Github\3DModeling\3DModeling\mainwindow.ui : warning : The name 'widget' (QWidget) is already in use, defaulting to 'widget1'.
+  Moc'ing editwidget.h...
+  Moc'ing viewwidget.h...
+  Rcc'ing mainwindow.qrc...
+RCC : warning : No resources in 'C:\Users\jazz1\Documents\Github\3DModeling\3DModeling\mainwindow.qrc'.
+  
+  editwidget.cpp
+  moc_editwidget.cpp
+  moc_mainwindow.cpp
+  moc_viewwidget.cpp
+  light.cpp
+  LoadShaders.cpp
+  main.cpp
+  mainwindow.cpp
+  material.cpp
+material.cpp(62): warning C4838: 從 'double' 到 'float' 的轉換必須是縮小轉換
+material.cpp(90): warning C4838: 從 'double' 到 'float' 的轉換必須是縮小轉換
+material.cpp(118): warning C4838: 從 'double' 到 'float' 的轉換必須是縮小轉換
+material.cpp(146): warning C4838: 從 'double' 到 'float' 的轉換必須是縮小轉換
+  mylistwidgetitem.cpp
+  mymath.cpp
+  mytreewidgetitem.cpp
+  object.cpp
+object.cpp(204): warning C4838: 從 'int' 到 'float' 的轉換必須是縮小轉換
+  voxelvbo.cpp
+  viewwidget.cpp
+viewwidget.cpp(758): warning C4838: 從 'double' 到 'float' 的轉換必須是縮小轉換
+  正在產生程式碼...
+  qrc_mainwindow.cpp
+LINK : warning LNK4098: 預設的程式庫 'LIBCMT' 與其他使用的程式庫衝突，請使用 /NODEFAULTLIB:library
+editwidget.obj : warning LNK4217: 本機定義的符號 glewInit 已匯入函式 "protected: virtual void __cdecl EditWidget::initializeGL(void)" (?initializeGL@EditWidget@@MEAAXXZ)
+viewwidget.obj : warning LNK4049: 本機定義的符號 glewInit 已匯入
+editwidget.obj : warning LNK4049: 本機定義的符號 __glewActiveTexture 已匯入
+viewwidget.obj : warning LNK4049: 本機定義的符號 __glewActiveTexture 已匯入
+editwidget.obj : warning LNK4049: 本機定義的符號 __glewBindBuffer 已匯入
+viewwidget.obj : warning LNK4049: 本機定義的符號 __glewBindBuffer 已匯入
+editwidget.obj : warning LNK4049: 本機定義的符號 __glewBufferData 已匯入
+viewwidget.obj : warning LNK4049: 本機定義的符號 __glewBufferData 已匯入
+editwidget.obj : warning LNK4049: 本機定義的符號 __glewGenBuffers 已匯入
+viewwidget.obj : warning LNK4049: 本機定義的符號 __glewGenBuffers 已匯入
+editwidget.obj : warning LNK4049: 本機定義的符號 __glewDisableVertexAttribArray 已匯入
+viewwidget.obj : warning LNK4049: 本機定義的符號 __glewDisableVertexAttribArray 已匯入
+editwidget.obj : warning LNK4049: 本機定義的符號 __glewEnableVertexAttribArray 已匯入
+viewwidget.obj : warning LNK4049: 本機定義的符號 __glewEnableVertexAttribArray 已匯入
+editwidget.obj : warning LNK4049: 本機定義的符號 __glewGetUniformLocation 已匯入
+viewwidget.obj : warning LNK4049: 本機定義的符號 __glewGetUniformLocation 已匯入
+editwidget.obj : warning LNK4049: 本機定義的符號 __glewUniform1f 已匯入
+viewwidget.obj : warning LNK4049: 本機定義的符號 __glewUniform1f 已匯入
+editwidget.obj : warning LNK4049: 本機定義的符號 __glewUniform1i 已匯入
+viewwidget.obj : warning LNK4049: 本機定義的符號 __glewUniform1i 已匯入
+editwidget.obj : warning LNK4049: 本機定義的符號 __glewUniform2fv 已匯入
+viewwidget.obj : warning LNK4049: 本機定義的符號 __glewUniform2fv 已匯入
+editwidget.obj : warning LNK4049: 本機定義的符號 __glewUniform4f 已匯入
+viewwidget.obj : warning LNK4049: 本機定義的符號 __glewUniform4f 已匯入
+editwidget.obj : warning LNK4049: 本機定義的符號 __glewUniform4fv 已匯入
+viewwidget.obj : warning LNK4049: 本機定義的符號 __glewUniform4fv 已匯入
+editwidget.obj : warning LNK4049: 本機定義的符號 __glewUniformMatrix4fv 已匯入
+viewwidget.obj : warning LNK4049: 本機定義的符號 __glewUniformMatrix4fv 已匯入
+editwidget.obj : warning LNK4049: 本機定義的符號 __glewUseProgram 已匯入
+viewwidget.obj : warning LNK4049: 本機定義的符號 __glewUseProgram 已匯入
+editwidget.obj : warning LNK4049: 本機定義的符號 __glewVertexAttribPointer 已匯入
+viewwidget.obj : warning LNK4049: 本機定義的符號 __glewVertexAttribPointer 已匯入
+editwidget.obj : warning LNK4049: 本機定義的符號 __glewBindFramebuffer 已匯入
+viewwidget.obj : warning LNK4049: 本機定義的符號 __glewBindFramebuffer 已匯入
+editwidget.obj : warning LNK4049: 本機定義的符號 __glewBlitFramebuffer 已匯入
+viewwidget.obj : warning LNK4049: 本機定義的符號 __glewBlitFramebuffer 已匯入
+viewwidget.obj : warning LNK4049: 本機定義的符號 __glewDrawBuffers 已匯入
+viewwidget.obj : warning LNK4049: 本機定義的符號 __glewUniform3fv 已匯入
+viewwidget.obj : warning LNK4049: 本機定義的符號 __glewBindRenderbuffer 已匯入
+viewwidget.obj : warning LNK4049: 本機定義的符號 __glewCheckFramebufferStatus 已匯入
+viewwidget.obj : warning LNK4049: 本機定義的符號 __glewFramebufferRenderbuffer 已匯入
+viewwidget.obj : warning LNK4049: 本機定義的符號 __glewFramebufferTexture2D 已匯入
+viewwidget.obj : warning LNK4049: 本機定義的符號 __glewGenFramebuffers 已匯入
+viewwidget.obj : warning LNK4049: 本機定義的符號 __glewGenRenderbuffers 已匯入
+viewwidget.obj : warning LNK4049: 本機定義的符號 __glewRenderbufferStorage 已匯入
+viewwidget.obj : warning LNK4049: 本機定義的符號 __glewRenderbufferStorageMultisample 已匯入
+viewwidget.obj : warning LNK4049: 本機定義的符號 __glewTexImage2DMultisample 已匯入
+viewwidget.obj : warning LNK4049: 本機定義的符號 __glewBindVertexArray 已匯入
+viewwidget.obj : warning LNK4049: 本機定義的符號 __glewGenVertexArrays 已匯入
+glew32s.lib(glew.obj) : warning LNK4099: 找不到 PDB 'vc120.pdb' (有 'glew32s.lib(glew.obj)' 或位於 'C:\Users\jazz1\Documents\Github\3DModeling\x64\Debug\vc120.pdb')，當做沒有偵錯資訊，連結物件
+  3DModeling.vcxproj -> C:\Users\jazz1\Documents\Github\3DModeling\x64\Debug\3DModeling.exe
+  3DModeling.vcxproj -> C:\Users\jazz1\Documents\Github\3DModeling\x64\Debug\3DModeling.pdb (Full PDB)

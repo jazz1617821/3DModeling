@@ -50,18 +50,6 @@ EditWidget::EditWidget(QWidget * parent) : QOpenGLWidget(parent)
 	setLitDiffuse(&light0, 0.4, 0.4, 0.4, 1.0);
 	setLitSpecular(&light0, 0.45, 0.45, 0.45, 1.0);
 
-	// ssao
-	kernelSize = 64;
-	noiseSize = 4.0;
-	kernelRadius = 1.0;
-	quadVAO = 0;
-	ssaoKernel = (GLfloat*)calloc(kernelSize * 3, sizeof(GLfloat));
-	ssaoNoise = (GLfloat*)calloc(noiseSize * noiseSize * 3, sizeof(GLfloat));
-
-
-	// shadow mapping
-	shadowWidth = 4096;
-	shadowHeight = 4096;
 
 	vboa = newVertexBufferObjectArray();
 
@@ -72,164 +60,7 @@ EditWidget::EditWidget(QWidget * parent) : QOpenGLWidget(parent)
 
 EditWidget::~EditWidget()
 {
-	free(ssaoKernel);
-	free(ssaoNoise);
-}
 
-void EditWidget::genSSAO(void)
-{
-	// Set samplers
-	glUseProgram(program[7]);
-	glUniform1i(glGetUniformLocation(program[7], "gPositionDepth"), 0);
-	glUniform1i(glGetUniformLocation(program[7], "gNormal"), 1);
-	glUniform1i(glGetUniformLocation(program[7], "gAlbedo"), 2);
-	glUniform1i(glGetUniformLocation(program[7], "ssao"), 3);
-	glUseProgram(program[5]);
-	glUniform1i(glGetUniformLocation(program[5], "gPositionDepth"), 0);
-	glUniform1i(glGetUniformLocation(program[5], "gNormal"), 1);
-	glUniform1i(glGetUniformLocation(program[5], "texNoise"), 2);
-
-	// Set up G-Buffer
-	// 3 textures:
-	// 1. Positions + depth (RGBA)
-	// 2. Color (RGB) 
-	// 3. Normals (RGB) 
-	glGenFramebuffers(1, &gBuffer);
-	glBindFramebuffer(GL_FRAMEBUFFER, gBuffer);
-	// - Position + linear depth color buffer
-	glGenTextures(1, &gPositionDepth);
-	glBindTexture(GL_TEXTURE_2D, gPositionDepth);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, this->width(), this->height(), 0, GL_RGB, GL_FLOAT, NULL);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, gPositionDepth, 0);
-	// - Normal color buffer
-	glGenTextures(1, &gNormal);
-	glBindTexture(GL_TEXTURE_2D, gNormal);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, this->width(), this->height(), 0, GL_RGB, GL_FLOAT, NULL);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, gNormal, 0);
-	// - Albedo color buffer
-	glGenTextures(1, &gAlbedo);
-	glBindTexture(GL_TEXTURE_2D, gAlbedo);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, this->width(), this->height(), 0, GL_RGBA, GL_FLOAT, NULL);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT2, GL_TEXTURE_2D, gAlbedo, 0);
-	// - Tell OpenGL which color attachments we'll use (of this framebuffer) for rendering 
-	GLuint attachments[3] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2 };
-	glDrawBuffers(3, attachments);
-	// - Create and attach depth buffer (renderbuffer)
-	glGenRenderbuffers(1, &rboDepth);
-	glBindRenderbuffer(GL_RENDERBUFFER, rboDepth);
-	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, this->width(), this->height());
-	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, rboDepth);
-	// - Finally check if framebuffer is complete
-	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
-		fprintf(stderr, "GBuffer Framebuffer not complete!\n");
-	}
-
-	// Also create framebuffer to hold SSAO processing stage 
-	glGenFramebuffers(1, &ssaoFBO);
-	glGenFramebuffers(1, &ssaoBlurFBO);
-	glBindFramebuffer(GL_FRAMEBUFFER, ssaoFBO);
-
-	// - SSAO color buffer
-	glGenTextures(1, &ssaoColorBuffer);
-	glBindTexture(GL_TEXTURE_2D, ssaoColorBuffer);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, this->width(), this->height(), 0, GL_RGB, GL_FLOAT, NULL);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, ssaoColorBuffer, 0);
-	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
-		fprintf(stderr, "SSAO Framebuffer not complete!");
-	}
-	// - and blur stage
-	glBindFramebuffer(GL_FRAMEBUFFER, ssaoBlurFBO);
-	glGenTextures(1, &ssaoColorBufferBlur);
-	glBindTexture(GL_TEXTURE_2D, ssaoColorBufferBlur);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, this->width(), this->height(), 0, GL_RGB, GL_FLOAT, NULL);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, ssaoColorBufferBlur, 0);
-	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
-		fprintf(stderr, "SSAO Blur Framebuffer not complete!");
-	}
-	glBindFramebuffer(GL_FRAMEBUFFER, this->defaultFramebufferObject());
-
-	int i;
-	float factor, scale, sample[3];
-	// Sample kernel
-
-	for (i = 0; i < kernelSize; ++i)
-	{
-		sample[0] = randomF(2.0) - 1;
-		sample[1] = randomF(2.0) - 1;
-		sample[2] = randomF(1.0);
-		normalize3fv(sample);
-		factor = randomF(1.0);
-		mult3x1fv(sample, factor, sample);
-		scale = i / (float)kernelSize;
-
-		// Scale samples s.t. they're more aligned to center of kernel
-		scale = lerp(0.1f, 1.0f, scale * scale);
-		mult3x1fv(sample, scale, sample);
-		ssaoKernel[i * 3] = sample[0];
-		ssaoKernel[i * 3 + 1] = sample[1];
-		ssaoKernel[i * 3 + 2] = sample[2];
-	}
-
-	// Noise texture
-	for (i = 0; i < 16; i++)
-	{
-		ssaoNoise[i * 3] = randomF(2.0) - 1.0;
-		ssaoNoise[i * 3 + 1] = randomF(2.0) - 1.0;
-		ssaoNoise[i * 3 + 2] = 0.0;
-	}
-
-	glGenTextures(1, &noiseTexture);
-	glBindTexture(GL_TEXTURE_2D, noiseTexture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, noiseSize, noiseSize, 0, GL_RGB, GL_FLOAT, &ssaoNoise[0]);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-}
-
-void EditWidget::genShadowMapping(void)
-{
-	glGenFramebuffers(1, &depthMapFBO);
-	glGenTextures(1, &depthMap);
-	glBindTexture(GL_TEXTURE_2D, depthMap);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT,
-		shadowWidth, shadowHeight, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-
-	glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthMap, 0);
-	glDrawBuffer(GL_NONE);
-	glReadBuffer(GL_NONE);
-	glBindFramebuffer(GL_FRAMEBUFFER, this->defaultFramebufferObject());
-
-	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
-		printf("FBO error\n");
-	}
-}
-
-void EditWidget::genMultiSampling(void)
-{
-	glGenTextures(1, &multiSampleTex);
-	glGenFramebuffers(1, &multiSampleFBO);
-	glGenRenderbuffers(1, &multiSampleColorBuffer);
-	glGenRenderbuffers(1, &multiSampleDepthBuffer);
-
-	glEnable(GL_MULTISAMPLE);
 }
 
 void EditWidget::setupOpenGL(void)
@@ -288,34 +119,7 @@ void EditWidget::initializeGL(void)
 	};
 	program[3] = LoadShaders(simpleShaders);
 
-	ShaderInfo deferredShaders[] = {
-		{ GL_VERTEX_SHADER, "shaders\\ssao_geometry.vert" },
-		{ GL_FRAGMENT_SHADER, "shaders\\ssao_geometry.frag" },
-		{ GL_NONE, NULL }
-	};
-	program[4] = LoadShaders(deferredShaders);
-
-	ShaderInfo ssaoShaders[] = {
-		{ GL_VERTEX_SHADER, "shaders\\ssao.vert" },
-		{ GL_FRAGMENT_SHADER, "shaders\\ssao.frag" },
-		{ GL_NONE, NULL }
-	};
-	program[5] = LoadShaders(ssaoShaders);
-
-	ShaderInfo ssaoBlurShaders[] = {
-		{ GL_VERTEX_SHADER, "shaders\\ssao_blur.vert" },
-		{ GL_FRAGMENT_SHADER, "shaders\\ssao_blur.frag" },
-		{ GL_NONE, NULL }
-	};
-	program[6] = LoadShaders(ssaoBlurShaders);
-
-	ShaderInfo ssaoLightPassShaders[] = {
-		{ GL_VERTEX_SHADER, "shaders\\lightpass.vert" },
-		{ GL_FRAGMENT_SHADER, "shaders\\lightpass.frag" },
-		{ GL_NONE, NULL }
-	};
-	program[7] = LoadShaders(ssaoLightPassShaders);
-
+	
 	// use shader program
 	glUseProgram(program[0]);
 
@@ -335,51 +139,9 @@ void EditWidget::initializeGL(void)
 	// check assignment error
 	//CheckGLErrors();
 
-	// create gound plane
-	vbo_t* ground;
-	ground = newPlane(200, 200, 1);
-	addVertexBufferObject(ground, vboa);
-	setMatAmbient(ground->material, .19225, .19225, .19225, 1.0);
-	setMatDiffuse(ground->material, .50754, .50754, .50754, 1.0);
-	setMatSpecular(ground->material, .508273, .508273, .508273, 1.0);
-	setMatShininess(ground->material, .4 * 128.0);
-	rotateX(90.0, mat);
-	translate(-100, -100, 0, ground->modelMat);
-	multMat4fv(mat, ground->modelMat, ground->modelMat);
-	bindData(ground);
-
-	// ssao
-	genSSAO();
-
-	// FBO depth map
-	genShadowMapping();
-
-	// multiple sample FBO
-	genMultiSampling();
 
 	// enable clip plane
 	glEnable(GL_CLIP_DISTANCE0);
-}
-
-void EditWidget::configureShadowMapping(void)
-{
-	float nearPlane = 1.0, farPlane = 500.0, mat[16], view[16], proj[16];
-	float lit[] = { light0.position[0], light0.position[1], light0.position[2] };
-	normalize3fv(lit);
-	float lightPos[] = { lit[0] * 200, lit[1] * 200, lit[2] * 200 };
-	float lightLok[] = { 0, 0, 0 };
-	float lightVup[] = { 0, 1, 0 };
-
-	ortho(-300.0, 300.0, -300.0, 300.0, nearPlane, farPlane, proj);
-	lookAt(lightPos, lightLok, lightVup, view);
-	multMat4fv(proj, view, lightSpaceMat);
-	transposeMat4fv(lightSpaceMat, mat);
-	glUniformMatrix4fv(6, 1, GL_FALSE, mat);
-}
-
-void EditWidget::configureGBufferShader(void)
-{
-
 }
 
 void EditWidget::renderScene(int times)
@@ -772,121 +534,9 @@ void EditWidget::gBufferRendering(void)
 	glBindFramebuffer(GL_FRAMEBUFFER, this->defaultFramebufferObject());
 }
 
-void EditWidget::ssaoTextureRendering(void)
-{
-	glBindFramebuffer(GL_FRAMEBUFFER, ssaoFBO);
-	glClear(GL_COLOR_BUFFER_BIT);
-	glUseProgram(program[5]);
-	float screenSize[2];
-	screenSize[0] = this->width();
-	screenSize[1] = this->height();
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, gPositionDepth);
-	glActiveTexture(GL_TEXTURE1);
-	glBindTexture(GL_TEXTURE_2D, gNormal);
-	glActiveTexture(GL_TEXTURE2);
-	glBindTexture(GL_TEXTURE_2D, noiseTexture);
-	glUniform1i(glGetUniformLocation(program[5], "noiseSize"), noiseSize);
-	glUniform1i(glGetUniformLocation(program[5], "kernelSize"), kernelSize);
-	glUniform1f(glGetUniformLocation(program[5], "radius"), kernelRadius);
-	glUniform2fv(glGetUniformLocation(program[5], "screenSize"), 1, screenSize);
-	// Send kernel + rotation 
-	char str[100] = { '\0' }, idx[10];
-	for (GLuint i = 0; i < kernelSize; ++i)
-	{
-		strcpy(str, "samples[");
-		sprintf(idx, "%d", i);
-		strcat(str, idx);
-		strcat(str, "]");
-		glUniform3fv(glGetUniformLocation(program[5], str), 1, ssaoKernel + i * 3);
-	}
-	setViewingMatrix();
-	renderQuad();
-	glBindFramebuffer(GL_FRAMEBUFFER, this->defaultFramebufferObject());
-}
-
-void EditWidget::ssaoBlurRendering(void)
-{
-	// 3. Blur SSAO texture to remove noise
-	glBindFramebuffer(GL_FRAMEBUFFER, ssaoBlurFBO);
-	glClear(GL_COLOR_BUFFER_BIT);
-	glUseProgram(program[6]);
-	glUniform1i(glGetUniformLocation(program[6], "noiseSize"), noiseSize);
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, ssaoColorBuffer);
-	renderQuad();
-	glBindFramebuffer(GL_FRAMEBUFFER, this->defaultFramebufferObject());
-}
-
-void EditWidget::ssaoLightPassRendering(void)
-{
-	// 4. Lighting Pass: traditional deferred Blinn-Phong lighting now with added screen-space ambient occlusion
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glUseProgram(program[7]);
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, gPositionDepth);
-	glActiveTexture(GL_TEXTURE1);
-	glBindTexture(GL_TEXTURE_2D, gNormal);
-	glActiveTexture(GL_TEXTURE2);
-	glBindTexture(GL_TEXTURE_2D, gAlbedo);
-	glActiveTexture(GL_TEXTURE3); // Add extra SSAO texture to lighting pass
-	glBindTexture(GL_TEXTURE_2D, ssaoColorBufferBlur);
-	// Also send light relevant uniforms
-	// Lights
-	float lightPos[3] = { 2.0, 4.0, -2.0 };
-	float lightColor[3] = { 0.7, 0.7, 0.7 };
-	glUniform3fv(glGetUniformLocation(program[7], "light.Position"), 1, lightPos);
-	glUniform3fv(glGetUniformLocation(program[7], "light.Color"), 1, lightColor);
-	// Update attenuation parameters
-	const GLfloat constant = 1.0; // Note that we don't send this to the shader, we assume it is always 1.0 (in our case)
-	const GLfloat linear = 0.09;
-	const GLfloat quadratic = 0.032;
-	glUniform1f(glGetUniformLocation(program[7], "light.Linear"), linear);
-	glUniform1f(glGetUniformLocation(program[7], "light.Quadratic"), quadratic);
-	renderQuad();
-}
-
-void EditWidget::shadowMappingRendering(void)
-{
-	// 1. first render to depth map
-	glUseProgram(program[1]);
-	glViewport(0, 0, shadowWidth, shadowHeight);
-	glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
-	glClear(GL_DEPTH_BUFFER_BIT);
-	configureShadowMapping();
-	renderScene(0);
-	glBindFramebuffer(GL_FRAMEBUFFER, this->defaultFramebufferObject());
-
-	// 2. then render scene as normal with shadow mapping (using depth map)
-	glUseProgram(program[0]);
-
-	glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, multiSampleTex);
-	glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, 16, GL_RGBA, this->width(), this->height(), GL_TRUE);
-	glBindFramebuffer(GL_FRAMEBUFFER, multiSampleFBO);
-	glBindRenderbuffer(GL_RENDERBUFFER, multiSampleColorBuffer);
-	glRenderbufferStorageMultisample(GL_RENDERBUFFER, 16, GL_RGBA8, this->width(), this->height());
-	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, multiSampleColorBuffer);
-	glBindRenderbuffer(GL_RENDERBUFFER, multiSampleDepthBuffer);
-	glRenderbufferStorageMultisample(GL_RENDERBUFFER, 16, GL_DEPTH24_STENCIL8, this->width(), this->height());
-	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, multiSampleDepthBuffer);
-	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, multiSampleDepthBuffer);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D_MULTISAMPLE, multiSampleTex, 0);
-
-}
-
 void EditWidget::paintGL(void)
 {
 	float mat[16], color[4];
-
-	// ssao
-	//gBufferRendering();
-	//ssaoTextureRendering();
-	//ssaoBlurRendering();
-	//ssaoLightPassRendering();
-
-	// render shadow map
-
-	shadowMappingRendering();
 
 	glUseProgram(program[0]);
 	glClearColor(0.66, 0.66, 0.66, 1.0);
@@ -931,50 +581,6 @@ void EditWidget::paintGL(void)
 	glDrawBuffer(GL_BACK);
 	glBlitFramebuffer(0, 0, this->width(), this->height(), 0, 0, this->width(), this->height(), GL_COLOR_BUFFER_BIT, GL_NEAREST);
 
-}
-
-void EditWidget::resizeSSAO(void)
-{
-	glBindFramebuffer(GL_FRAMEBUFFER, gBuffer);
-	// - Position + linear depth color buffer
-	glBindTexture(GL_TEXTURE_2D, gPositionDepth);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, this->width(), this->height(), 0, GL_RGB, GL_FLOAT, NULL);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	// - Normal color buffer
-	glBindTexture(GL_TEXTURE_2D, gNormal);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, this->width(), this->height(), 0, GL_RGB, GL_FLOAT, NULL);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	// - Albedo color buffer
-	glBindTexture(GL_TEXTURE_2D, gAlbedo);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, this->width(), this->height(), 0, GL_RGBA, GL_FLOAT, NULL);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-
-	// - Depth buffer (renderbuffer)
-	glBindRenderbuffer(GL_RENDERBUFFER, rboDepth);
-	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, this->width(), this->height());
-	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, rboDepth);
-
-	glBindFramebuffer(GL_FRAMEBUFFER, ssaoFBO);
-
-	// - SSAO color buffer
-	glBindTexture(GL_TEXTURE_2D, ssaoColorBuffer);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, this->width(), this->height(), 0, GL_RGB, GL_FLOAT, NULL);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-
-	// - and blur stage
-	glBindFramebuffer(GL_FRAMEBUFFER, ssaoBlurFBO);
-	glBindTexture(GL_TEXTURE_2D, ssaoColorBufferBlur);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, this->width(), this->height(), 0, GL_RGB, GL_FLOAT, NULL);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-
-	glBindFramebuffer(GL_FRAMEBUFFER, this->defaultFramebufferObject());
 }
 
 void EditWidget::resizeGL(int width, int height)
@@ -1074,170 +680,20 @@ void EditWidget::wheelEvent(QWheelEvent *e)
 	update();
 }
 
-
-// RenderQuad() Renders a 1x1 quad in NDC, best used for framebuffer color targets
-// and post-processing effects.
-
-void EditWidget::renderQuad()
+void EditWidget::makevDataVBO(vdata_t* vd)
 {
-	if (quadVAO == 0)
-	{
-		GLfloat quadVertices[] = {
-			// Positions        // Texture Coords
-			-1.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-			-1.0f, -1.0f, 0.0f, 0.0f, 0.0f,
-			1.0f, 1.0f, 0.0f, 1.0f, 1.0f,
-			1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
-		};
-		// Setup plane VAO
-		glGenVertexArrays(1, &quadVAO);
-		glGenBuffers(1, &quadVBO);
-		glBindVertexArray(quadVAO);
-		glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), &quadVertices, GL_STATIC_DRAW);
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (GLvoid*)0);
-		glEnableVertexAttribArray(2);
-		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
-	}
-	glBindVertexArray(quadVAO);
-	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-	glBindVertexArray(0);
+	addVertexBufferObject(createVoxelVBO(vd), vboa);
+	setColorVBO(1.2, 1.0, 0.47, 1.0, vboa->vbos[vboa->numVBOs - 1]);
+	bindData(vboa->vbos[vboa->numVBOs - 1]);
+	cout << "Make " << vd->name << " VBO." << endl;
 }
-
-void EditWidget::makeModelVBO(vobj_t* vo)
-{
-	if (vo->number_of_child == 1) {
-		addVertexBufferObject(createVoxelVBO(vo), vboa);
-		setColorVBO(1.2, 1.0, 0.47, 1.0, vboa->vbos[vboa->numVBOs - 1]);
-		bindData(vboa->vbos[vboa->numVBOs - 1]);
-		cout << "Make " << vo->vd->name << " VBO." << endl;
-		return;
-	}
-	else {
-		for (int i = 0; i < vo->number_of_child; i++) {
-			makeModelVBO(vo->child[i]);
-		}
-	}
-}
-/*
-void EditWidget::openVolume(const char* fileName)
-{
-char path[1024] = { '\0' }, buf[1024] = { '\0' }, dataName[1024];
-const char* ptr;
-unsigned char* data;
-int i, j, k, indexZup, indexYup, resolution[3];
-voxelobj_t* obj;
-voxel_t* vox;
-vbo_t* vbo;
-FILE* fp;
-
-fp = fopen(fileName, "r");
-if (fp == NULL) {
-fprintf(stderr, "Fail to open file...\n");
-return;
-}
-
-// create voxel object
-obj = (voxelobj_t*)calloc(1, sizeof(voxelobj_t));
-obj->numVoxels = 1;
-obj->voxelSize[0] = obj->voxelSize[1] = obj->voxelSize[2] = 1.0;
-obj->voxels = (voxel_t**)calloc(1, sizeof(voxel_t*));
-
-// get path
-strcpy(buf, fileName);
-ptr = strrchr(buf, '/');
-strncpy(path, buf, (int)(ptr - buf + 1));
-
-// get fileName;
-fscanf(fp, "raw-file=%s\n", buf);
-strcpy(dataName, buf);
-
-fscanf(fp, "resolution=%dx%dx%d\n", &resolution[0],
-&resolution[1],
-&resolution[2]);
-
-fclose(fp);
-
-strcpy(buf, dataName);
-ptr = strtok(buf, ".");
-strcpy(obj->name, ptr);
-// read raw data
-data = (unsigned char*)calloc(resolution[0] *
-resolution[1] *
-resolution[2],
-sizeof(unsigned char));
-
-memset(buf, '\0', 1024);
-strcpy(buf, path);
-strcat(buf, dataName);
-fp = fopen(buf, "rb");
-if (fp == NULL) {
-fprintf(stderr, "Fail to open file...\n");
-return;
-}
-fread(data,
-sizeof(unsigned char),
-resolution[0] * resolution[1] * resolution[2],
-fp);
-fclose(fp);
-
-// create voxel data
-vox = (voxel_t*)calloc(1, sizeof(voxel_t));
-strcpy(vox->name, obj->name);
-obj->resolution[0] = vox->resolution[0] = resolution[0];
-obj->resolution[1] = vox->resolution[1] = resolution[2];
-obj->resolution[2] = vox->resolution[2] = resolution[1];
-vox->data = (unsigned char*)calloc(vox->resolution[0] *
-vox->resolution[1] *
-vox->resolution[2],
-sizeof(unsigned char));
-
-// set data
-vox->minBound[0] = vox->minBound[1] = vox->minBound[2] = 0;
-vox->maxBound[0] = vox->resolution[0];
-vox->maxBound[1] = vox->resolution[1];
-vox->maxBound[2] = vox->resolution[2];
-
-for (i = 0; i < resolution[2]; ++i)
-{
-for (j = 0; j < resolution[1]; ++j)
-{
-for (k = 0; k < resolution[0]; ++k)
-{
-indexZup = k + j * resolution[0] + i * resolution[0] * resolution[1];
-indexYup = k + i * vox->resolution[0] + j * vox->resolution[0] * vox->resolution[1];
-vox->data[indexYup] = data[indexZup];
-}
-}
-}
-free(data);
-
-obj->voxels[0] = vox;
-addVoxelObject(obj, voa);
-
-// origin = (0, 0, 0)
-memset(vox->bbox.min, 0, 3 * sizeof(float));
-
-vox->bbox.max[0] = vox->resolution[0];
-vox->bbox.max[1] = vox->resolution[1];
-vox->bbox.max[2] = vox->resolution[2];
-
-vbo = createVoxelVBO(0, obj);
-addVertexBufferObject(vbo, vboa);
-setColorVBO(1.2, 1.0, 0.47, 1.0, vbo);
-bindData(vbo);
-
-update();
-}
-*/
 
 //Private slots:
-void EditWidget::getVModelPtr(VoxelModel* vmodel) {
-	this->vmodel = new VoxelModel;
-	this->vmodel = vmodel;
-	cout << this->vmodel->name << endl;
-	makeModelVBO(this->vmodel->root_vobj);
+void EditWidget::getVDataPtr(vdata_t* vdata) {
+	this->vdata = new VoxelData;
+	this->vdata = vdata;
+	cout << this->vdata->name << endl;
+	makevDataVBO(this->vdata);
 	update();
 	return;
 }

@@ -1020,124 +1020,12 @@ void ViewWidget::makeModelVBO(vobj_t* vo)
 	}
 }
 
-/*
-void ViewWidget::openVolume(const char* fileName)
-{
-	char path[1024] = { '\0' }, buf[1024] = { '\0' }, dataName[1024];
-	const char* ptr;
-	unsigned char* data;
-	int i, j, k, indexZup, indexYup, resolution[3];
-	voxelobj_t* obj;
-	voxel_t* vox;
-	vbo_t* vbo;
-	FILE* fp;
-
-	fp = fopen(fileName, "r");
-	if (fp == NULL) {
-		fprintf(stderr, "Fail to open file...\n");
-		return;
-	}
-
-	// create voxel object
-	obj = (voxelobj_t*)calloc(1, sizeof(voxelobj_t));
-	obj->numVoxels = 1;
-	obj->voxelSize[0] = obj->voxelSize[1] = obj->voxelSize[2] = 1.0;
-	obj->voxels = (voxel_t**)calloc(1, sizeof(voxel_t*));
-
-	// get path
-	strcpy(buf, fileName);
-	ptr = strrchr(buf, '/');
-	strncpy(path, buf, (int)(ptr - buf + 1));
-
-	// get fileName;
-	fscanf(fp, "raw-file=%s\n", buf);
-	strcpy(dataName, buf);
-
-	fscanf(fp, "resolution=%dx%dx%d\n", &resolution[0],
-		&resolution[1],
-		&resolution[2]);
-
-	fclose(fp);
-
-	strcpy(buf, dataName);
-	ptr = strtok(buf, ".");
-	strcpy(obj->name, ptr);
-	// read raw data
-	data = (unsigned char*)calloc(resolution[0] *
-		resolution[1] *
-		resolution[2],
-		sizeof(unsigned char));
-
-	memset(buf, '\0', 1024);
-	strcpy(buf, path);
-	strcat(buf, dataName);
-	fp = fopen(buf, "rb");
-	if (fp == NULL) {
-		fprintf(stderr, "Fail to open file...\n");
-		return;
-	}
-	fread(data,
-		sizeof(unsigned char),
-		resolution[0] * resolution[1] * resolution[2],
-		fp);
-	fclose(fp);
-
-	// create voxel data
-	vox = (voxel_t*)calloc(1, sizeof(voxel_t));
-	strcpy(vox->name, obj->name);
-	obj->resolution[0] = vox->resolution[0] = resolution[0];
-	obj->resolution[1] = vox->resolution[1] = resolution[2];
-	obj->resolution[2] = vox->resolution[2] = resolution[1];
-	vox->data = (unsigned char*)calloc(vox->resolution[0] *
-		vox->resolution[1] *
-		vox->resolution[2],
-		sizeof(unsigned char));
-
-	// set data
-	vox->minBound[0] = vox->minBound[1] = vox->minBound[2] = 0;
-	vox->maxBound[0] = vox->resolution[0];
-	vox->maxBound[1] = vox->resolution[1];
-	vox->maxBound[2] = vox->resolution[2];
-
-	for (i = 0; i < resolution[2]; ++i)
-	{
-		for (j = 0; j < resolution[1]; ++j)
-		{
-			for (k = 0; k < resolution[0]; ++k)
-			{
-				indexZup = k + j * resolution[0] + i * resolution[0] * resolution[1];
-				indexYup = k + i * vox->resolution[0] + j * vox->resolution[0] * vox->resolution[1];
-				vox->data[indexYup] = data[indexZup];
-			}
-		}
-	}
-	free(data);
-
-	obj->voxels[0] = vox;
-	addVoxelObject(obj, voa);
-
-	// origin = (0, 0, 0)
-	memset(vox->bbox.min, 0, 3 * sizeof(float));
-
-	vox->bbox.max[0] = vox->resolution[0];
-	vox->bbox.max[1] = vox->resolution[1];
-	vox->bbox.max[2] = vox->resolution[2];
-
-	vbo = createVoxelVBO(0, obj);
-	addVertexBufferObject(vbo, vboa);
-	setColorVBO(1.2, 1.0, 0.47, 1.0, vbo);
-	bindData(vbo);
-
-	update();
-}
-*/
-
 //Private slots:
-void ViewWidget::getVModelPtr(VoxelModel* vmodel) {
+void ViewWidget::getVModelPtr(vmodel_t* vmodel) {
 	this->vmodel = new VoxelModel;
 	this->vmodel = vmodel;
 	cout << this->vmodel->name << endl;
-	makeModelVBO(this->vmodel->root_vobj);
+	//makeModelVBO(this->vmodel->root_vobj);
 	update();
 	return;
 }

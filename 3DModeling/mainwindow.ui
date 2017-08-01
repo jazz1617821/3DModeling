@@ -73,6 +73,12 @@
            <layout class="QGridLayout" name="gridLayout_5">
             <item row="0" column="0">
              <widget class="QTreeWidget" name="voxeltreeWidget">
+              <property name="columnCount">
+               <number>1</number>
+              </property>
+              <attribute name="headerVisible">
+               <bool>false</bool>
+              </attribute>
               <column>
                <property name="text">
                 <string notr="true">1</string>
@@ -241,8 +247,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>98</width>
-                 <height>28</height>
+                 <width>100</width>
+                 <height>30</height>
                 </rect>
                </property>
                <property name="sizePolicy">
@@ -277,7 +283,7 @@
              </widget>
             </item>
             <item row="0" column="0">
-             <widget class="EditWidget" name="editwidget">
+             <widget class="EditWidget" name="editWidget">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                 <horstretch>0</horstretch>
