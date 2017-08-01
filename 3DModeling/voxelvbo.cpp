@@ -35,7 +35,7 @@ vbo_t* createVoxelVBO(vobj_t* vo)
 			{
 				index = k + j * vd->resolution[X] + i * vd->resolution[X] * vd->resolution[Y];
 				if (vd->rawdata[index].data == VOX_EMPTY) continue;
-				(k + 1 < vd->resolution[X] && vd->rawdata[index].data) ?
+				(k + 1 < vd->resolution[X] && vd->rawdata[index + 1].data) ?
 					0 : numFaces++;
 				(k > 1 && vd->rawdata[index - 1].data) ?
 					0 : numFaces++;

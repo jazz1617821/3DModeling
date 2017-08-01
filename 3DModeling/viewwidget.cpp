@@ -52,10 +52,6 @@ ViewWidget::ViewWidget(QWidget * parent) : QOpenGLWidget(parent)
 	shadowHeight = 4096;
 
 	vboa = newVertexBufferObjectArray();
-
-	//  set opengl version and profile
-	//setupOpenGL();
-
 }
 
 ViewWidget::~ViewWidget()
@@ -1007,10 +1003,10 @@ void ViewWidget::renderQuad()
 void ViewWidget::makeModelVBO(vobj_t* vo)
 {
 	if (vo->number_of_child == 1) {
+		cout << "Make " << vo->vd->name << " VBO." << endl;
 		addVertexBufferObject(createVoxelVBO(vo), vboa);
 		setColorVBO(1.2, 1.0, 0.47, 1.0, vboa->vbos[vboa->numVBOs - 1]);
 		bindData(vboa->vbos[vboa->numVBOs - 1]);
-		cout << "Make " << vo->vd->name << " VBO." << endl;
 		return;
 	}
 	else {
@@ -1025,7 +1021,7 @@ void ViewWidget::getVModelPtr(vmodel_t* vmodel) {
 	this->vmodel = new VoxelModel;
 	this->vmodel = vmodel;
 	cout << this->vmodel->name << endl;
-	//makeModelVBO(this->vmodel->root_vobj);
+	makeModelVBO(this->vmodel->root_vobj);
 	update();
 	return;
 }

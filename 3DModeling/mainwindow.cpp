@@ -276,15 +276,24 @@ void MainWindow::writeVD(const char* filepath, vdata_t * vd)
 	strcat(str, ".vdat");
 	cout << str << endl;
 	FILE* vdatafile = fopen(str, "wb");
-
+	
 	if(vdatafile) {
+		/*
+		fprintf(vdatafile, "Name:%s\n", vd->name);
+		fprintf(vdatafile, "Resolution:%dx%dx%d\n", vd->resolution[0], vd->resolution[1], vd->resolution[2]);
+		fprintf(vdatafile, "Voxelsize:%.2fx%.2fx%.2f\n", vd->voxelsize[0], vd->voxelsize[1], vd->voxelsize[2]);
+		fprintf(vdatafile, "Bit:%d\n", vd->isbitcompress);
+		for (int i = 0; i < vd->resolution[0] * vd->resolution[1] * vd->resolution[2]; i++) {
+			fprintf(vdatafile, "%c", vd->rawdata[i].data);
+		}*/
+
 		fwrite(vd->resolution, sizeof(int), 3, vdatafile);
 		fwrite(vd->voxelsize, sizeof(float), 3, vdatafile);
 		fwrite(&vd->isbitcompress, sizeof(int), 1, vdatafile);
 		for (int i = 0; i < vd->resolution[0] * vd->resolution[1] * vd->resolution[2]; i++) {
 			fwrite(&vd->rawdata[i].data, sizeof(unsigned char), 1, vdatafile);
 		}
-
+		cout << "Finish write " << vd->name << endl;
 		fclose(vdatafile);
 	}
 
@@ -443,14 +452,14 @@ void MainWindow::on_actionOpen_triggered()
 
 void MainWindow::on_actionExport_triggered()
 {
-	/*
+	
 	int resolution[3] = { 256,256,256 };
 	float voxelsize[3] = { 1.0,0.5,1.0 };
 	bool isbitcompress = 1;
 	unsigned char* buffer = (unsigned char *)calloc(sizeof(unsigned char), resolution[0] * resolution[1] * resolution[2]);
 
-	for (int i = 0; i < resolution[0] * resolution[1] * resolution[2]; i++) {
-		buffer[i] = rand() % 256;
+	for (int i = 0; i < 1000; i++) {
+		buffer[(rand() % 256) + (rand() % 256) * 256 + (rand() % 256) * 256 * 256] = 1;
 	}
 
 	VoxelData* tempData_1 = new VoxelData;
@@ -555,8 +564,8 @@ void MainWindow::on_actionExport_triggered()
 	vmodel->root_vobj->child[0] = tempobj_1;
 	vmodel->root_vobj->child[1] = tempobj_2;
 	vmodel->root_vobj->child[2] = tempobj_3;
-
-	*/
+	
+	
 
 	QString filename;
 	const char *str;
@@ -571,42 +580,42 @@ void MainWindow::on_actionExport_triggered()
 		QByteArray ba = filename.toLatin1();
 		str = ba.data();
 		fe = strrchr(str, '.');
+
+		if (!filename.isEmpty()) {
+			if (!strcmp(fe, ".vm")) {
+				//export vmodel
+
+				FILE* vmodelfile = fopen(str, "w");
+
+				//Write vmodel 
+				fprintf(vmodelfile, "Voxel Model:\n");
+				fprintf(vmodelfile, "Name:%s\n", vmodel->name);
+				fprintf(vmodelfile, "Resolution:%dx%dx%d\n", vmodel->resolution[0], vmodel->resolution[1], vmodel->resolution[2]);
+				fprintf(vmodelfile, "Voxelsize:%.2f:%.2f:%.2f\n", vmodel->voxelsize[0], vmodel->voxelsize[1], vmodel->voxelsize[2]);
+				fprintf(vmodelfile, "Number of voxel data:%d\n", vmodel->number_of_voxel_data);
+
+
+
+				//DFS Write Voxel Object
+				writeVO(str, vmodelfile, vmodel->root_vobj);
+
+				//
+				fclose(vmodelfile);
+				return;
+			}
+			else if (!strcmp(fe, ".vdat")) {
+				//export vdata
+
+
+
+			}
+		}
+		else {
+			QMessageBox::information(this, tr("Warning"), "Failed to save the file.");
+		}
 	}
 	else {
 		QMessageBox::information(this, tr("Warning"), "There is no data to export.");
-	}
-
-	if (!filename.isEmpty()) {
-		if (!strcmp(fe, ".vm")) {
-			//export vmodel
-
-			FILE* vmodelfile = fopen(str, "w");
-
-			//Write vmodel 
-			fprintf(vmodelfile, "Voxel Model:\n");
-			fprintf(vmodelfile, "Name:%s\n", vmodel->name);
-			fprintf(vmodelfile, "Resolution:%dx%dx%d\n", vmodel->resolution[0], vmodel->resolution[1], vmodel->resolution[2]);
-			fprintf(vmodelfile, "Voxelsize:%.2f:%.2f:%.2f\n", vmodel->voxelsize[0], vmodel->voxelsize[1], vmodel->voxelsize[2]);
-			fprintf(vmodelfile, "Number of voxel data:%d\n", vmodel->number_of_voxel_data);
-
-
-
-			//DFS Write Voxel Object
-			writeVO(str, vmodelfile, vmodel->root_vobj);
-
-			//
-			fclose(vmodelfile);
-			return;
-		}
-		else if (!strcmp(fe, ".vdat")) {
-			//export vdata
-
-
-
-		}
-	}
-	else {
-		QMessageBox::information(this, tr("Warning"), "Failed to save the file.");
 	}
 }
 

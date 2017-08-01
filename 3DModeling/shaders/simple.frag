@@ -1,6 +1,6 @@
-#version 430 core
+#version 120 core
 
-layout(location = 11) uniform vec4 color;
+uniform vec4 color;
 
 out vec4 fragColor;
 

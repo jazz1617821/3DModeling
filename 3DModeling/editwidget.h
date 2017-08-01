@@ -28,33 +28,12 @@ protected:
 private:
 	void setupOpenGL(void);
 	void setViewingMatrix(void);
-	void setLighting(void);
-	void setMaterial(vbo_t obj);
 	void fixView(void);
 	void updateViewing(int);
 	void bindData(vbo_t* pObj);
-	void drawData(vbo_t* const pObj, int mode,int times);
-	void drawBbox(vbo_t* const pObj, int mode,int times);
-	void renderScene(int);
-	void renderBbox(int);
-
-	// shadow mapping
-	void genShadowMapping(void);
-	void configureShadowMapping(void);
-	void renderQuad(void);
-
-	// multi-sampling
-	void genMultiSampling(void);
-
-	// ssao
-	void genSSAO(void);
-	void resizeSSAO(void);
-	void configureGBufferShader(void);
-	void gBufferRendering(void);
-	void ssaoTextureRendering(void);
-	void ssaoBlurRendering(void);
-	void ssaoLightPassRendering(void);
-	void shadowMappingRendering(void);
+	void make_view(int);
+	void make_projection(int);
+	void drawVBO();
 
 	//make VBO
 	void makevDataVBO(vdata_t*);
@@ -66,16 +45,25 @@ signals:
 
 
 private:
-	//Voxel Model
+	//Voxel Data
 	VoxelData* vdata;
+	int numFacesVoxel;
 
 private:
-	int iconSize;
 
 	// camera
-	float eye[3];
-	float lok[3];
-	float vup[3];
+	float perspective_eye[3];
+	float perspective_lok[3];
+	float perspective_vup[3];
+	float x_ortho_eye[3];
+	float x_ortho_lok[3];
+	float x_ortho_vup[3];
+	float y_ortho_eye[3];
+	float y_ortho_lok[3];
+	float y_ortho_vup[3];
+	float z_ortho_eye[3];
+	float z_ortho_lok[3];
+	float z_ortho_vup[3];
 	float u[3];
 	float v[3];
 	float w[3];
@@ -85,10 +73,10 @@ private:
 	float viewTheta;
 	float viewRadius;
 	float fovy;
-	float left;
-	float right;
-	float bottom;
-	float top;
+	float aspect;
+	float x_ortho_width;
+	float y_ortho_width;
+	float z_ortho_width;
 	float nearClip;
 	float farClip;
 	float curRot[16];
@@ -120,50 +108,11 @@ private:
 
 	float lightSpaceMat[16];
 
-	// shadow
-	GLuint depthMapFBO;
-	GLuint shadowWidth;
-	GLuint shadowHeight;
-	GLuint depthMap;
-
-	// multi-sampling
-	GLuint multiSampleTex;
-	GLuint multiSampleFBO;
-	GLuint multiSampleColorBuffer;
-	GLuint multiSampleDepthBuffer;
-
-	// ssao
-	GLuint kernelSize;
-	GLuint noiseSize;
-	GLfloat kernelRadius;
-	GLfloat *ssaoKernel;
-	GLfloat *ssaoNoise;
-	GLuint quadVAO;
-	GLuint quadVBO;
-
-	GLuint gBuffer;
-	GLuint gPositionDepth;
-	GLuint gNormal;
-	GLuint gAlbedo;
-	GLuint rboDepth;
-	GLuint noiseTexture;
-	GLuint ssaoFBO;
-	GLuint ssaoBlurFBO;
-	GLuint ssaoColorBuffer;
-	GLuint ssaoColorBufferBlur;
-
-
 	// object uniform location
 	GLuint colorLoc;
 
-	// light uniform location
-	GLint lightLoc0;
-
-	// flag uniform location
-	GLint wireframe;
-
 	// shader program
-	GLuint program[10];
+	GLuint program[1];
 
 	// mouse controll
 	int oldPosX;
@@ -171,6 +120,6 @@ private:
 	int selectedPosX;
 	int selectedPoxY;
 
-	// vbo array
-	vboa_t* vboa;
+	GLuint triangleVBO;
+	GLuint lineVBO;
 };
