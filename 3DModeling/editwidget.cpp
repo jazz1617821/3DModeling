@@ -21,19 +21,19 @@ EditWidget::EditWidget(QWidget * parent) : QOpenGLWidget(parent)
 	setupOpenGL();
 
 	//perspective view matrix init
-	perspective_eye[0] = 0; perspective_eye[1] = 0; perspective_eye[2] = -1;
+	perspective_eye[0] = 0; perspective_eye[1] = 0; perspective_eye[2] = 1;
 	perspective_lok[0] = 0; perspective_lok[1] = 0; perspective_lok[2] = 0;
 	perspective_vup[0] = 0, perspective_vup[1] = 1, perspective_vup[2] = 0;
 	//x paralle view matrix init
-	x_ortho_eye[0] = 1; x_ortho_eye[1] = 0; x_ortho_eye[2] = 0;
+	x_ortho_eye[0] = 400; x_ortho_eye[1] = 0; x_ortho_eye[2] = 0;
 	x_ortho_lok[0] = 0; x_ortho_lok[1] = 0; x_ortho_lok[2] = 0;
 	x_ortho_vup[0] = 0, x_ortho_vup[1] = 1, x_ortho_vup[2] = 0;
 	//y paralle view matrix init
-	y_ortho_eye[0] = 0; y_ortho_eye[1] = 1; y_ortho_eye[2] = -1;
+	y_ortho_eye[0] = 0; y_ortho_eye[1] = 400; y_ortho_eye[2] = 0;
 	y_ortho_lok[0] = 0; y_ortho_lok[1] = 0; y_ortho_lok[2] = 0;
 	y_ortho_vup[0] = 0, y_ortho_vup[1] = 0, y_ortho_vup[2] = 1;
 	//z paralle view matrix init
-	z_ortho_eye[0] = 0; z_ortho_eye[1] = 0; z_ortho_eye[2] = -1;
+	z_ortho_eye[0] = 0; z_ortho_eye[1] = 0; z_ortho_eye[2] = 400;
 	z_ortho_lok[0] = 0; z_ortho_lok[1] = 0; z_ortho_lok[2] = 0;
 	z_ortho_vup[0] = 0, z_ortho_vup[1] = 1, z_ortho_vup[2] = 0;
 
@@ -41,7 +41,7 @@ EditWidget::EditWidget(QWidget * parent) : QOpenGLWidget(parent)
 	viewRot[0] = 0; viewRot[1] = 0; viewRot[2] = 0;
 	viewPhi = radians(0);
 	viewTheta = radians(60);
-	viewRadius = 400.0;
+	viewRadius = 400;
 	fovy = 45.0;
 	aspect = this->width()/(float)(this->height());
 	x_ortho_width = 50;
@@ -51,8 +51,9 @@ EditWidget::EditWidget(QWidget * parent) : QOpenGLWidget(parent)
 	farClip = 1000.0;
 	fixView();
 
-	windowmodeID = THREE_DIMENSION_WINDOW;
-
+	windowmodeID = FOUR_WINDOWS;
+	vbo = NULL;
+	ground = NULL;
 	vdata = NULL;
 }
 
@@ -83,7 +84,6 @@ void EditWidget::initializeGL(void)
 		exit(EXIT_FAILURE);
 	}
 
-	setupOpenGL();
 
 	// load shaders
 
@@ -102,10 +102,41 @@ void EditWidget::initializeGL(void)
 	// color varibles
 	colorLoc = glGetUniformLocation(program[0], "color");
 
+	// create gound plane
+	ground = newPlane(200, 200, 1);
+	setMatAmbient(ground->material, .19225, .19225, .19225, 1.0);
+	setMatDiffuse(ground->material, .50754, .50754, .50754, 1.0);
+	setMatSpecular(ground->material, .508273, .508273, .508273, 1.0);
+	setMatShininess(ground->material, .4 * 128.0);
+	rotateX(90.0, mat);
+	translate(-100, -100, 0, ground->modelMat);
+	multMat4fv(mat, ground->modelMat, ground->modelMat);
+	bindData(ground);
+
+	// create x_ortho ground 
+ 	ground = newPlane(256, 256, 1);
+	setMatAmbient(ground->material, .19225, .19225, .19225, 1.0);
+	setMatDiffuse(ground->material, .50754, .50754, .50754, 1.0);
+	setMatSpecular(ground->material, .508273, .508273, .508273, 1.0);
+	setMatShininess(ground->material, .4 * 128.0);
+	rotateX(90.0, mat);
+	translate(-100, -100, 0, ground->modelMat);
+	multMat4fv(mat, ground->modelMat, ground->modelMat);
+	bindData(ground);
+
+	/* Allocate and assign a Vertex Array Object to our handle */
+	glGenVertexArrays(1, &vao);
+
+	/* Bind our Vertex Array Object as the current used object */
+	glBindVertexArray(vao);
+
+	/* Enable attribute index 0 as being used */
+	glEnableVertexAttribArray(0);
+
 	glEnable(GL_DEPTH_TEST);
 
 	// enable clip plane
-	glEnable(GL_CLIP_DISTANCE0);
+	//glEnable(GL_CLIP_DISTANCE0);
 	//printf("%s\n", glGetString(GL_VERSION));
 }
 
@@ -136,7 +167,7 @@ void EditWidget::updateViewing(int mode)
 
 	switch (mode) {
 	case THREE_DIMENSION_WINDOW:
-		identifyMat4fv(modelMat);
+		//identifyMat4fv(modelMat);
 		multMat4fv(perspective_viewMat, modelMat, mvMat);
 		multMat4fv(perspectiveMat, mvMat, mvpMat);
 
@@ -206,12 +237,38 @@ void EditWidget::bindData(vbo_t* vbo)
 	}
 }
 
+void EditWidget::drawData(vbo_t* const vbo, int mode)
+{
+	int i;
+	float rotMat[16];
+
+	copyMat4fv(vbo->modelMat, modelMat);
+	
+	updateViewing(mode);
+	for (i = 0; i < NUM_ATTRIBS; ++i)
+	{
+		if (vbo->enableBuffers[i]) {
+			glBindBuffer(GL_ARRAY_BUFFER, vbo->buffers[i]);
+			glVertexAttribPointer(i, vbo->dataSize[i], GL_FLOAT, GL_FALSE, 0, NULL);
+			glEnableVertexAttribArray(i);
+			//printf("bind: %d\n", CheckGLErrors());
+		}
+	}
+	glDrawArrays(GL_TRIANGLES, 0, vbo->numVertices);
+
+	for (i = 0; i < NUM_ATTRIBS; ++i)
+	{
+		if (vbo->enableBuffers[i]) {
+			glDisableVertexAttribArray(i);
+		}
+	}
+}
+
 void EditWidget::make_view(int mode) {
 	switch (mode) {
 	case THREE_DIMENSION_WINDOW:	 /* Perspective */
 		lookAt(perspective_eye, perspective_lok, perspective_vup, perspective_viewMat);
 		break;
-
 	case X_WINDOW:       /* X direction parallel viewing */
 		lookAt(x_ortho_eye, x_ortho_lok, x_ortho_vup, x_ortho_viewMat);
 		break;
@@ -241,91 +298,180 @@ void EditWidget::make_projection(int mode) {
 	}
 }
 
-void EditWidget::drawVBO() {
-	glBindBuffer(GL_ARRAY_BUFFER, triangleVBO);
-	glVertexPointer(3, GL_FLOAT, 0, NULL);
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glDrawArrays(GL_TRIANGLES, 0, numFacesVoxel * 108);
-}
-
 void EditWidget::paintGL(void)
 {
 	float mat[16], color[4];
 
-	color[0] = 1.0;
-	color[1] = 0.0;
-	color[2] = 0.0;
-	color[3] = 1.0;
-
-
 	glUseProgram(program[0]);
-	glClearColor(0.0, 0.0, 0.0, 1.0);
+	glClearColor(0.66, 0.66, 0.66, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	switch (windowmodeID) {
 	case FOUR_WINDOWS:
 		make_view(X_WINDOW);
 		make_projection(X_WINDOW);
-		updateViewing(X_WINDOW);
-		glViewport(0, 0, (float)this->width() / 2, (float)this->height() / 2);
-		//draw_scene();
+		glViewport(0, 0, this->width() / 2, this->height() / 2);
+		glUniform4fv(colorLoc, 1, color);
+		if (vbo != NULL) {
+			color[0] = 1.0;
+			color[1] = 1.0;
+			color[2] = 1.0;
+			color[3] = 1.0;
+			glUniform4fv(colorLoc, 1, color);
+			drawData(vbo, X_WINDOW);
+		}
+		color[0] = 0.5;
+		color[1] = 0.5;
+		color[2] = 0.5;
+		color[3] = 1.0;
+		glUniform4fv(colorLoc, 1, color);
+		drawData(ground, X_WINDOW);
 
 		make_view(Y_WINDOW);
 		make_projection(Y_WINDOW);
-		updateViewing(Y_WINDOW);
-		glViewport(0, (float)this->height() / 2, (float)this->width() / 2, (float)this->height() / 2);
-		//draw_scene();
+		glViewport(0, this->height() / 2, this->width() / 2, this->height() / 2);
+		glUniform4fv(colorLoc, 1, color);
+		if (vbo != NULL) {
+			color[0] = 1.0;
+			color[1] = 1.0;
+			color[2] = 1.0;
+			color[3] = 1.0;
+			glUniform4fv(colorLoc, 1, color);
+			drawData(vbo, Y_WINDOW);
+		}
+		color[0] = 0.5;
+		color[1] = 0.5;
+		color[2] = 0.5;
+		color[3] = 1.0;
+		glUniform4fv(colorLoc, 1, color);
+		drawData(ground, Y_WINDOW);
 
 		make_view(Z_WINDOW);
 		make_projection(Z_WINDOW);
-		updateViewing(Z_WINDOW);
-		glViewport((float)this->width() / 2, 0, (float)this->width() / 2, (float)this->height() / 2);
-		//draw_scene();
+		glViewport(this->width() / 2, 0, this->width() / 2, this->height() / 2);
+		glUniform4fv(colorLoc, 1, color);
+		if (vbo != NULL) {
+			color[0] = 1.0;
+			color[1] = 1.0;
+			color[2] = 1.0;
+			color[3] = 1.0;
+			glUniform4fv(colorLoc, 1, color);
+			drawData(vbo, Z_WINDOW);
+		}
+		color[0] = 0.5;
+		color[1] = 0.5;
+		color[2] = 0.5;
+		color[3] = 1.0;
+		glUniform4fv(colorLoc, 1, color);
+		drawData(ground, Z_WINDOW);
 
 		make_view(THREE_DIMENSION_WINDOW);
 		make_projection(THREE_DIMENSION_WINDOW);
-		updateViewing(THREE_DIMENSION_WINDOW);
-		glViewport((float)this->width() / 2, (float)this->height() / 2, (float)this->width() / 2, (float)this->height() / 2);
-		//draw_scene();
+		glViewport(this->width() / 2, this->height() / 2, this->width() / 2, this->height() / 2);
+		glUniform4fv(colorLoc, 1, color);
+		if (vbo != NULL) {
+			color[0] = 1.0;
+			color[1] = 1.0;
+			color[2] = 1.0;
+			color[3] = 1.0;
+			glUniform4fv(colorLoc, 1, color);
+			drawData(vbo, THREE_DIMENSION_WINDOW);
+		}
+		color[0] = 0.5;
+		color[1] = 0.5;
+		color[2] = 0.5;
+		color[3] = 1.0;
+		glUniform4fv(colorLoc, 1, color);
+		drawData(ground, THREE_DIMENSION_WINDOW);
+
 		break;
 
 	case X_WINDOW:
-		glViewport(0, 0, (float)this->width(), (float)this->height());
 		make_view(X_WINDOW);
 		make_projection(X_WINDOW);
-		updateViewing(X_WINDOW);
-		//draw_scene();
+		glViewport(0, 0, this->width(), this->height());
+		glUniform4fv(colorLoc, 1, color);
+		if (vbo != NULL) {
+			color[0] = 1.0;
+			color[1] = 1.0;
+			color[2] = 1.0;
+			color[3] = 1.0;
+			glUniform4fv(colorLoc, 1, color);
+			drawData(vbo, X_WINDOW);
+		}
+		color[0] = 0.5;
+		color[1] = 0.5;
+		color[2] = 0.5;
+		color[3] = 1.0;
+		glUniform4fv(colorLoc, 1, color);
+		drawData(ground, X_WINDOW);
+
 		break;
 	case Y_WINDOW:
-		glViewport(0, 0, (float)this->width(), (float)this->height());
 		make_view(Y_WINDOW);
 		make_projection(Y_WINDOW);
-		updateViewing(Y_WINDOW);
-		//draw_scene();
+		glViewport(0, 0, this->width(), this->height());
+		glUniform4fv(colorLoc, 1, color);
+		if (vbo != NULL) {
+			color[0] = 1.0;
+			color[1] = 1.0;
+			color[2] = 1.0;
+			color[3] = 1.0;
+			glUniform4fv(colorLoc, 1, color);
+			drawData(vbo, Y_WINDOW);
+		}
+		color[0] = 0.5;
+		color[1] = 0.5;
+		color[2] = 0.5;
+		color[3] = 1.0;
+		glUniform4fv(colorLoc, 1, color);
+		drawData(ground, Y_WINDOW);
+
 		break;
 	case Z_WINDOW:
-		glViewport(0, 0, (float)this->width(), (float)this->height());
 		make_view(Z_WINDOW);
 		make_projection(Z_WINDOW);
-		updateViewing(Z_WINDOW);
-		//draw_scene();
+		glViewport(0, 0, this->width(), this->height());
+		glUniform4fv(colorLoc, 1, color);
+		if (vbo != NULL) {
+			color[0] = 1.0;
+			color[1] = 1.0;
+			color[2] = 1.0;
+			color[3] = 1.0;
+			glUniform4fv(colorLoc, 1, color);
+			drawData(vbo, Z_WINDOW);
+		}
+		color[0] = 0.5;
+		color[1] = 0.5;
+		color[2] = 0.5;
+		color[3] = 1.0;
+		glUniform4fv(colorLoc, 1, color);
+		drawData(ground, Z_WINDOW);
+
 		break;
 	case THREE_DIMENSION_WINDOW:
-		glViewport(0, 0, (float)this->width(), (float)this->height());
 		make_view(THREE_DIMENSION_WINDOW);
 		make_projection(THREE_DIMENSION_WINDOW);
-		updateViewing(THREE_DIMENSION_WINDOW);
+		glViewport(0, 0, this->width(), this->height());
 
-		glUniform4fv(colorLoc, 1, color);
-		if (vdata != NULL) {
-			drawVBO();
+		if (vbo != NULL) {
+			color[0] = 1.0;
+			color[1] = 1.0;
+			color[2] = 1.0;
+			color[3] = 1.0;
+			glUniform4fv(colorLoc, 1, color);
+			drawData(vbo, THREE_DIMENSION_WINDOW);
 		}
-		
+		color[0] = 0.5;
+		color[1] = 0.5;
+		color[2] = 0.5;
+		color[3] = 1.0;
+		glUniform4fv(colorLoc, 1, color);
+		drawData(ground, THREE_DIMENSION_WINDOW);
 
-		//draw_scene();
+
 		break;
 	}
-
 }
 
 void EditWidget::resizeGL(int width, int height)
@@ -369,6 +515,21 @@ void EditWidget::mousePressEvent(QMouseEvent *e)
 	update();
 }
 
+void EditWidget::cameramMove(float* eyeVec,float * lokVec, float * viewMat, int offsetX, int offsetY)
+{
+	float u[3] = { viewMat[0], viewMat[1], viewMat[2] };
+	float v[3] = { viewMat[4], viewMat[5], viewMat[6] };
+	float w[3] = { viewMat[8], viewMat[9], viewMat[10] };
+
+	lokVec[0] += sqrt(viewRadius) * (u[0] * offsetX * 0.01 + v[0] * offsetY * 0.01);
+	lokVec[1] += sqrt(viewRadius) * (u[1] * offsetX * 0.01 + v[1] * offsetY * 0.01);
+	lokVec[2] += sqrt(viewRadius) * (u[2] * offsetX * 0.01 + v[2] * offsetY * 0.01);
+
+	eyeVec[0] += sqrt(viewRadius) * (u[0] * offsetX * 0.01 + v[0] * offsetY * 0.01);
+	eyeVec[1] += sqrt(viewRadius) * (u[1] * offsetX * 0.01 + v[1] * offsetY * 0.01);
+	eyeVec[2] += sqrt(viewRadius) * (u[2] * offsetX * 0.01 + v[2] * offsetY * 0.01);
+}
+
 void EditWidget::mouseMoveEvent(QMouseEvent *e)
 {
 	float u[3] = { perspective_viewMat[0], perspective_viewMat[1], perspective_viewMat[2] };
@@ -385,9 +546,40 @@ void EditWidget::mouseMoveEvent(QMouseEvent *e)
 	case Qt::LeftButton:
 		break;
 	case Qt::MiddleButton:
-		perspective_lok[0] -= sqrt(viewRadius) * (u[0] * offsetX * 0.01 + v[0] * offsetY * 0.01);
-		perspective_lok[1] -= sqrt(viewRadius) * (u[1] * offsetX * 0.01 + v[1] * offsetY * 0.01);
-		perspective_lok[2] -= sqrt(viewRadius) * (u[2] * offsetX * 0.01 + v[2] * offsetY * 0.01);
+		switch (windowmodeID) {
+		case FOUR_WINDOWS:
+		if (e->x() < this->width() / 2 && e->y() > this->height() / 2) {		//mouse in x ortho window
+			cameramMove(x_ortho_eye, x_ortho_lok, x_ortho_viewMat, offsetX, offsetY);
+		}
+		else if (e->x() < this->width() / 2 && e->y() < this->height() / 2) {	//mouse in y ortho window
+			cameramMove(y_ortho_eye, y_ortho_lok, y_ortho_viewMat, offsetX, offsetY);
+		}
+		else if (e->x() > this->width() / 2 && e->y() > this->height() / 2) {	//mouse in z ortho window
+			cameramMove(z_ortho_eye, z_ortho_lok, z_ortho_viewMat, offsetX, offsetY);
+		}
+		else if (e->x() > this->width() / 2 && e->y() < this->height() / 2) {		//mouse in three dimension window
+			perspective_lok[0] -= sqrt(viewRadius) * (u[0] * offsetX * 0.01 + v[0] * offsetY * 0.01);
+			perspective_lok[1] -= sqrt(viewRadius) * (u[1] * offsetX * 0.01 + v[1] * offsetY * 0.01);
+			perspective_lok[2] -= sqrt(viewRadius) * (u[2] * offsetX * 0.01 + v[2] * offsetY * 0.01);
+		}
+		break;
+		case THREE_DIMENSION_WINDOW:
+			perspective_lok[0] -= sqrt(viewRadius) * (u[0] * offsetX * 0.01 + v[0] * offsetY * 0.01);
+			perspective_lok[1] -= sqrt(viewRadius) * (u[1] * offsetX * 0.01 + v[1] * offsetY * 0.01);
+			perspective_lok[2] -= sqrt(viewRadius) * (u[2] * offsetX * 0.01 + v[2] * offsetY * 0.01);
+		break;
+		case X_WINDOW:
+			cameramMove(x_ortho_eye, x_ortho_lok, x_ortho_viewMat, offsetX, offsetY);
+		break;
+		case Y_WINDOW:
+			cameramMove(y_ortho_eye, y_ortho_lok, y_ortho_viewMat, offsetX, offsetY);
+		break;
+		case Z_WINDOW:
+			cameramMove(z_ortho_eye, z_ortho_lok, z_ortho_viewMat, offsetX, offsetY);
+		break;
+		default:
+		break;
+		}
 		break;
 	case Qt::RightButton:
 		viewTheta += offsetY * 0.01;
@@ -414,152 +606,78 @@ void EditWidget::keyPressEvent(QKeyEvent *e)
 
 	key = e->key();
 
+	if (e->key() == '0') {
+		windowmodeID = FOUR_WINDOWS;
+		cout << "FOUR_WINDOWS" << endl;
+	}
+	else if (e->key() == '1') {
+		windowmodeID = X_WINDOW;
+		cout << "X_WINDOW" << endl;
+	}
+	else if (e->key() == '3') {
+		windowmodeID = Z_WINDOW;
+		cout << "Z_WINDOW" << endl;
+	}
+	else if (e->key() == '7') {
+		windowmodeID = Y_WINDOW;
+		cout << "Y_WINDOW" << endl;
+	}
+	else if (e->key() == '9') {
+		windowmodeID = THREE_DIMENSION_WINDOW;
+		cout << "THREE_DIMENSION_WINDOW" << endl;
+	}
+
+
 	printf("%c _ %d\n", key, key);
 	update();
 }
 
 void EditWidget::wheelEvent(QWheelEvent *e)
 {
-	viewRadius -= viewRadius * e->delta() / 250;
-	fixView();
+	switch (windowmodeID) {
+	case FOUR_WINDOWS:
+		if (e->x() < this->width() / 2 && e->y() > this->height() / 2) {		//mouse in x ortho window
+			x_ortho_width -= x_ortho_width * e->delta() / 250;
+		}
+		else if (e->x() < this->width() / 2 && e->y() < this->height() / 2) {	//mouse in y ortho window
+			y_ortho_width -= y_ortho_width * e->delta() / 250;
+		}
+		else if (e->x() > this->width() / 2 && e->y() > this->height() / 2) {	//mouse in z ortho window
+			z_ortho_width -= z_ortho_width * e->delta() / 250;
+		}
+		else if (e->x() > this->width() / 2 && e->y() < this->height() / 2) {	//mouse in three dimension window
+			viewRadius -= viewRadius * e->delta() / 250;
+			fixView();
+		}
+		break;
+	case THREE_DIMENSION_WINDOW:
+		viewRadius -= viewRadius * e->delta() / 250;
+		fixView();
+		break;
+	case X_WINDOW:
+			
+		break;
+	case Y_WINDOW:
+			
+		break;
+	case Z_WINDOW:
+			
+		break;
+	default:
+		break;
+	}
 	update();
 }
 
 void EditWidget::makevDataVBO(vdata_t* vd)
 {
 	cout << "Make " << vd->name << " VBO." << endl;
-	int neighbor[6][3] = {
-		{ 1,0,0 },
-		{ -1,0,0 },
-		{ 0,1,0 },
-		{ 0,-1,0 },
-		{ 0,0,1 },
-		{ 0,0,-1 }
-	};
-	float point[8][3] = {
-		{ 0.0,0.0,0.0 },
-		{ 1.0,0.0,0.0 },
-		{ 1.0,1.0,0.0 },
-		{ 0.0,1.0,0.0 },
-		{ 0.0,0.0,-1.0 },
-		{ 1.0,0.0,-1.0 },
-		{ 1.0,1.0,-1.0 },
-		{ 0.0,1.0,-1.0 }
-	};
-	int triangle[12][3] = {
-		{ 0,1,3 },
-		{ 1,2,3 },
-		{ 1,5,2 },
-		{ 5,6,2 },
-		{ 5,4,6 },
-		{ 4,7,6 },
-		{ 4,0,7 },
-		{ 0,3,7 },
-		{ 7,3,2 },
-		{ 2,6,7 },
-		{ 4,5,1 },
-		{ 1,0,4 }
-	};
-	int line[18][2] = {
-		{ 0,1 },
-		{ 1,2 },
-		{ 2,3 },
-		{ 3,0 },
-		{ 4,5 },
-		{ 5,6 },
-		{ 6,7 },
-		{ 7,4 },
-		{ 0,4 },
-		{ 1,5 },
-		{ 2,6 },
-		{ 3,7 },
-		{ 3,1 },
-		{ 2,5 },
-		{ 6,4 },
-		{ 7,0 },
-		{ 7,2 },
-		{ 1,4 }
-	};
+	vbo = new vbo_t;
+	vbo = createVoxelVBO(vd);
+	setColorVBO(1.2, 1.0, 0.47, 1.0, vbo);
+	bindData(vbo);
 	
-	// count drawing faces
-	numFacesVoxel = 0;
-	for (int z = 0; z < vd->resolution[2]; ++z)
-	{
-		for (int y = 0; y < vd->resolution[1]; ++y)
-		{
-			for (int x = 0; x < vd->resolution[0]; ++x)
-			{
-				int index = x + y * vd->resolution[0] + z * vd->resolution[0] * vd->resolution[1];
-				if (vd->rawdata[index].data == VOX_EMPTY) continue;
-				if (x + 1 < vd->resolution[0] && vd->rawdata[index].data != VOX_EMPTY ||
-					x > 1 && vd->rawdata[index - 1].data != VOX_EMPTY ||
-					y + 1 < vd->resolution[1] && vd->rawdata[index + vd->resolution[0]].data != VOX_EMPTY ||
-					y > 1 && vd->rawdata[index - vd->resolution[0]].data != VOX_EMPTY ||
-					z + 1 < vd->resolution[2] && vd->rawdata[index + vd->resolution[0] * vd->resolution[1]].data != VOX_EMPTY ||
-					z > 1 && vd->rawdata[index - vd->resolution[0] * vd->resolution[1]].data != VOX_EMPTY) {
-					numFacesVoxel++;
-				}
-			}
-		}
-	}
-	cout << numFacesVoxel << endl;
-
-	float* triangleBuffer = (float*)calloc(numFacesVoxel * 108 , sizeof(float));
-	float* lineBuffer = (float*)calloc(numFacesVoxel * 108 , sizeof(float));
-
-	int n = 0;
-	for (int z = 0; z < vd->resolution[2]; ++z)
-	{
-		for (int y = 0; y < vd->resolution[1]; ++y)
-		{
-			for (int x = 0; x < vd->resolution[0]; ++x)
-			{
-				int flag = 0;
-				int index = x + y * vd->resolution[0] + z * vd->resolution[0] * vd->resolution[1];
-				if (vd->rawdata[index].data == VOX_EMPTY) continue;
-				if (x + 1 < vd->resolution[0] && vd->rawdata[index].data != VOX_EMPTY ||
-					x > 1 && vd->rawdata[index - 1].data != VOX_EMPTY ||
-					y + 1 < vd->resolution[1] && vd->rawdata[index + vd->resolution[0]].data != VOX_EMPTY ||
-					y > 1 && vd->rawdata[index - vd->resolution[0]].data != VOX_EMPTY ||
-					z + 1 < vd->resolution[2] && vd->rawdata[index + vd->resolution[0] * vd->resolution[1]].data != VOX_EMPTY ||
-					z > 1 && vd->rawdata[index - vd->resolution[0] * vd->resolution[1]].data != VOX_EMPTY) {
-					flag = 1;
-				}
-				if (flag == 1) {
-					//triangle
-					for (int i = 0; i < 12; i++) {
-						for (int j = 0; j < 3; j++) {
-							triangleBuffer[n * 108 + i * 9 + j * 3 + 0] = (x - vd->resolution[0] / 2 + point[triangle[i][j]][0])*vd->voxelsize[0];
-							triangleBuffer[n * 108 + i * 9 + j * 3 + 1] = (y - vd->resolution[1] / 2 + point[triangle[i][j]][1])*vd->voxelsize[1];
-							triangleBuffer[n * 108 + i * 9 + j * 3 + 2] = (z - vd->resolution[2] / 2 + point[triangle[i][j]][2])*vd->voxelsize[2];
-						}
-					}
-					//line
-					for (int a = 0; a < 18; a++) {
-						for (int b = 0; b < 2; b++) {
-							lineBuffer[n * 108 + a * 6 + b * 2 + 0] = (x - vd->resolution[0] / 2 + point[line[a][b]][0])*vd->voxelsize[0];
-							lineBuffer[n * 108 + a * 6 + b * 2 + 1] = (y - vd->resolution[1] / 2 + point[line[a][b]][1])*vd->voxelsize[1];
-							lineBuffer[n * 108 + a * 6 + b * 2 + 2] = (z - vd->resolution[2] / 2 + point[line[a][b]][2])*vd->voxelsize[2];
-						}
-					}
-					n++;
-				}
-			}
-		}
-	}
-
-	glGenBuffers(1, &triangleVBO);
-	glGenBuffers(1, &lineVBO);
-
-	glBindBuffer(GL_ARRAY_BUFFER, triangleVBO);
-	glBindBuffer(GL_ARRAY_BUFFER, lineVBO);
-
-	glBufferData(GL_ARRAY_BUFFER, numFacesVoxel * 108 * sizeof(float), triangleBuffer, GL_STATIC_DRAW);
-	glBufferData(GL_ARRAY_BUFFER, numFacesVoxel * 108 * sizeof(float), lineBuffer, GL_STATIC_DRAW);
-
-
-	free(triangleBuffer);
-	free(lineBuffer);
+	return;
 }
 
 //Private slots:

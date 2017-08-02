@@ -450,7 +450,7 @@ void MainWindow::on_actionOpen_triggered()
 	}
 }
 
-void MainWindow::on_actionExport_triggered()
+void MainWindow::on_actionSave_triggered()
 {
 	
 	int resolution[3] = { 256,256,256 };

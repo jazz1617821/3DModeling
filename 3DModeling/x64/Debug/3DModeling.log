@@ -1,29 +1,79 @@
-﻿已經開始建置於 2017/8/1 下午 11:26:06。
-     1>節點 2 (Build 目標) 上的專案 "C:\Users\User\Documents\GitHub\3DModeling\3DModeling\3DModeling.vcxproj"。
-     1>ClCompile:
-         D:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\x86_amd64\CL.exe /c /I.\GeneratedFiles /I. /IC:\Qt\5.7\msvc2015_64\include /I.\GeneratedFiles\Debug /IC:\Qt\5.7\msvc2015_64\include\QtCore /IC:\Qt\5.7\msvc2015_64\include\QtGui /IC:\Qt\5.7\msvc2015_64\include\QtWidgets /IC:\Qt\5.7\msvc2015_64\include\QtOpenGL /Zi /nologo /W1 /WX- /Od /D UNICODE /D WIN32 /D QT_DLL /D QT_CORE_LIB /D QT_GUI_LIB /D QT_WIDGETS_LIB /D QT_OPENGL_LIB /Gm- /EHsc /MDd /GS- /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"x64\Debug\\" /Fd"x64\Debug\vc140.pdb" /Gd /TP /errorReport:prompt editwidget.cpp
-         editwidget.cpp
-       Link:
-         D:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\User\Documents\GitHub\3DModeling\x64\Debug\\3DModeling.exe" /NOLOGO /LIBPATH:C:\Qt\5.7\msvc2015_64\lib qtmaind.lib Qt5Cored.lib Qt5Guid.lib Qt5Widgetsd.lib glew32s.lib Qt5OpenGLd.lib opengl32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"C:\Users\User\Documents\GitHub\3DModeling\x64\Debug\3DModeling.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\User\Documents\GitHub\3DModeling\x64\Debug\3DModeling.lib" /MACHINE:X64 x64\Debug\3DModeling.res
-         x64\Debug\editwidget.obj
-         x64\Debug\moc_editwidget.obj
-         x64\Debug\moc_mainwindow.obj
-         x64\Debug\moc_viewwidget.obj
-         x64\Debug\qrc_mainwindow.obj
-         x64\Debug\light.obj
-         x64\Debug\LoadShaders.obj
-         x64\Debug\main.obj
-         x64\Debug\mainwindow.obj
-         x64\Debug\material.obj
-         x64\Debug\mylistwidgetitem.obj
-         x64\Debug\mymath.obj
-         x64\Debug\mytreewidgetitem.obj
-         x64\Debug\object.obj
-         x64\Debug\voxelvbo.obj
-         x64\Debug\viewwidget.obj
-         3DModeling.vcxproj -> C:\Users\User\Documents\GitHub\3DModeling\x64\Debug\3DModeling.exe
-     1>專案 "C:\Users\User\Documents\GitHub\3DModeling\3DModeling\3DModeling.vcxproj" (Build 目標) 建置完成。
-
-建置成功。
-
-經過時間 00:00:02.70
+﻿  Moc'ing mainwindow.h...
+  Uic'ing mainwindow.ui...
+C:\Users\graphicBFG\Desktop\3DModeling-master\3DModeling\mainwindow.ui : warning : The name 'widget' (QWidget) is already in use, defaulting to 'widget1'.
+  Moc'ing editwidget.h...
+  Moc'ing viewwidget.h...
+  Rcc'ing mainwindow.qrc...
+RCC : warning : No resources in 'C:\Users\graphicBFG\Desktop\3DModeling-master\3DModeling\mainwindow.qrc'.
+  
+  editwidget.cpp
+  moc_editwidget.cpp
+  moc_mainwindow.cpp
+  moc_viewwidget.cpp
+  light.cpp
+  LoadShaders.cpp
+  main.cpp
+  mainwindow.cpp
+  material.cpp
+material.cpp(62): warning C4838: conversion from 'double' to 'float' requires a narrowing conversion
+material.cpp(90): warning C4838: conversion from 'double' to 'float' requires a narrowing conversion
+material.cpp(118): warning C4838: conversion from 'double' to 'float' requires a narrowing conversion
+material.cpp(146): warning C4838: conversion from 'double' to 'float' requires a narrowing conversion
+  mylistwidgetitem.cpp
+  mymath.cpp
+  mytreewidgetitem.cpp
+  object.cpp
+object.cpp(204): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
+  voxelvbo.cpp
+  viewwidget.cpp
+viewwidget.cpp(754): warning C4838: conversion from 'double' to 'float' requires a narrowing conversion
+  Generating Code...
+  qrc_mainwindow.cpp
+LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
+editwidget.obj : warning LNK4217: locally defined symbol glewInit imported in function "protected: virtual void __cdecl EditWidget::initializeGL(void)" (?initializeGL@EditWidget@@MEAAXXZ)
+viewwidget.obj : warning LNK4049: locally defined symbol glewInit imported
+editwidget.obj : warning LNK4049: locally defined symbol __glewBindBuffer imported
+viewwidget.obj : warning LNK4049: locally defined symbol __glewBindBuffer imported
+editwidget.obj : warning LNK4049: locally defined symbol __glewBufferData imported
+viewwidget.obj : warning LNK4049: locally defined symbol __glewBufferData imported
+editwidget.obj : warning LNK4049: locally defined symbol __glewGenBuffers imported
+viewwidget.obj : warning LNK4049: locally defined symbol __glewGenBuffers imported
+editwidget.obj : warning LNK4049: locally defined symbol __glewDisableVertexAttribArray imported
+viewwidget.obj : warning LNK4049: locally defined symbol __glewDisableVertexAttribArray imported
+editwidget.obj : warning LNK4049: locally defined symbol __glewEnableVertexAttribArray imported
+viewwidget.obj : warning LNK4049: locally defined symbol __glewEnableVertexAttribArray imported
+editwidget.obj : warning LNK4049: locally defined symbol __glewGetUniformLocation imported
+viewwidget.obj : warning LNK4049: locally defined symbol __glewGetUniformLocation imported
+editwidget.obj : warning LNK4049: locally defined symbol __glewUniform4fv imported
+viewwidget.obj : warning LNK4049: locally defined symbol __glewUniform4fv imported
+editwidget.obj : warning LNK4049: locally defined symbol __glewUniformMatrix4fv imported
+viewwidget.obj : warning LNK4049: locally defined symbol __glewUniformMatrix4fv imported
+editwidget.obj : warning LNK4049: locally defined symbol __glewUseProgram imported
+viewwidget.obj : warning LNK4049: locally defined symbol __glewUseProgram imported
+editwidget.obj : warning LNK4049: locally defined symbol __glewVertexAttribPointer imported
+viewwidget.obj : warning LNK4049: locally defined symbol __glewVertexAttribPointer imported
+editwidget.obj : warning LNK4049: locally defined symbol __glewBindVertexArray imported
+viewwidget.obj : warning LNK4049: locally defined symbol __glewBindVertexArray imported
+editwidget.obj : warning LNK4049: locally defined symbol __glewGenVertexArrays imported
+viewwidget.obj : warning LNK4049: locally defined symbol __glewGenVertexArrays imported
+viewwidget.obj : warning LNK4049: locally defined symbol __glewActiveTexture imported
+viewwidget.obj : warning LNK4049: locally defined symbol __glewDrawBuffers imported
+viewwidget.obj : warning LNK4049: locally defined symbol __glewUniform1f imported
+viewwidget.obj : warning LNK4049: locally defined symbol __glewUniform1i imported
+viewwidget.obj : warning LNK4049: locally defined symbol __glewUniform2fv imported
+viewwidget.obj : warning LNK4049: locally defined symbol __glewUniform3fv imported
+viewwidget.obj : warning LNK4049: locally defined symbol __glewUniform4f imported
+viewwidget.obj : warning LNK4049: locally defined symbol __glewBindFramebuffer imported
+viewwidget.obj : warning LNK4049: locally defined symbol __glewBindRenderbuffer imported
+viewwidget.obj : warning LNK4049: locally defined symbol __glewBlitFramebuffer imported
+viewwidget.obj : warning LNK4049: locally defined symbol __glewCheckFramebufferStatus imported
+viewwidget.obj : warning LNK4049: locally defined symbol __glewFramebufferRenderbuffer imported
+viewwidget.obj : warning LNK4049: locally defined symbol __glewFramebufferTexture2D imported
+viewwidget.obj : warning LNK4049: locally defined symbol __glewGenFramebuffers imported
+viewwidget.obj : warning LNK4049: locally defined symbol __glewGenRenderbuffers imported
+viewwidget.obj : warning LNK4049: locally defined symbol __glewRenderbufferStorage imported
+viewwidget.obj : warning LNK4049: locally defined symbol __glewRenderbufferStorageMultisample imported
+viewwidget.obj : warning LNK4049: locally defined symbol __glewTexImage2DMultisample imported
+glew32s.lib(glew.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'glew32s.lib(glew.obj)' or at 'C:\Users\graphicBFG\Desktop\3DModeling-master\x64\Debug\vc120.pdb'; linking object as if no debug info
+  3DModeling.vcxproj -> C:\Users\graphicBFG\Desktop\3DModeling-master\x64\Debug\3DModeling.exe
+  3DModeling.vcxproj -> C:\Users\graphicBFG\Desktop\3DModeling-master\x64\Debug\3DModeling.pdb (Full PDB)

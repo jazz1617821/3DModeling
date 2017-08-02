@@ -20,6 +20,7 @@ protected:
 	void paintGL(void);
 	void resizeGL(int width, int height);
 	void mousePressEvent(QMouseEvent *e);
+	void cameramMove(float* eyeVec,float* lokVec, float* viewMat, int offsetX, int offsetY);
 	void mouseMoveEvent(QMouseEvent *e);
 	void mouseReleaseEvent(QMouseEvent *e);
 	void keyPressEvent(QKeyEvent *e);
@@ -27,13 +28,12 @@ protected:
 
 private:
 	void setupOpenGL(void);
-	void setViewingMatrix(void);
 	void fixView(void);
 	void updateViewing(int);
 	void bindData(vbo_t* pObj);
+	void drawData(vbo_t * const vbo, int mode);
 	void make_view(int);
 	void make_projection(int);
-	void drawVBO();
 
 	//make VBO
 	void makevDataVBO(vdata_t*);
@@ -120,6 +120,11 @@ private:
 	int selectedPosX;
 	int selectedPoxY;
 
-	GLuint triangleVBO;
-	GLuint lineVBO;
+	vbo_t* vbo;
+	vbo_t* ground;
+	vbo_t* ground_x;
+	vbo_t* ground_y;
+	vbo_t* ground_z;
+
+	GLuint vao;
 };

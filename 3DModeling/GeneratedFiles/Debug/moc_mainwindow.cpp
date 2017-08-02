@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mainwindow.h'
 **
-** Created by: The Qt Meta Object Compiler version 67 (Qt 5.7.1)
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.6.2)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
@@ -12,7 +12,7 @@
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'mainwindow.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
-#error "This file was generated using the moc from 5.7.1. It"
+#error "This file was generated using the moc from 5.6.2. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
@@ -20,7 +20,7 @@
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_MainWindow_t {
     QByteArrayData data[11];
-    char stringdata0[155];
+    char stringdata0[153];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -35,15 +35,15 @@ QT_MOC_LITERAL(2, 25, 0), // ""
 QT_MOC_LITERAL(3, 26, 9), // "vmodel_t*"
 QT_MOC_LITERAL(4, 36, 12), // "sentVDataPtr"
 QT_MOC_LITERAL(5, 49, 8), // "vdata_t*"
-QT_MOC_LITERAL(6, 58, 25), // "on_actionExport_triggered"
-QT_MOC_LITERAL(7, 84, 23), // "on_actionOpen_triggered"
-QT_MOC_LITERAL(8, 108, 12), // "setAttribute"
-QT_MOC_LITERAL(9, 121, 16), // "QTreeWidgetItem*"
-QT_MOC_LITERAL(10, 138, 16) // "QListWidgetItem*"
+QT_MOC_LITERAL(6, 58, 23), // "on_actionSave_triggered"
+QT_MOC_LITERAL(7, 82, 23), // "on_actionOpen_triggered"
+QT_MOC_LITERAL(8, 106, 12), // "setAttribute"
+QT_MOC_LITERAL(9, 119, 16), // "QTreeWidgetItem*"
+QT_MOC_LITERAL(10, 136, 16) // "QListWidgetItem*"
 
     },
     "MainWindow\0sentVModelPtr\0\0vmodel_t*\0"
-    "sentVDataPtr\0vdata_t*\0on_actionExport_triggered\0"
+    "sentVDataPtr\0vdata_t*\0on_actionSave_triggered\0"
     "on_actionOpen_triggered\0setAttribute\0"
     "QTreeWidgetItem*\0QListWidgetItem*"
 };
@@ -93,7 +93,7 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         switch (_id) {
         case 0: _t->sentVModelPtr((*reinterpret_cast< vmodel_t*(*)>(_a[1]))); break;
         case 1: _t->sentVDataPtr((*reinterpret_cast< vdata_t*(*)>(_a[1]))); break;
-        case 2: _t->on_actionExport_triggered(); break;
+        case 2: _t->on_actionSave_triggered(); break;
         case 3: _t->on_actionOpen_triggered(); break;
         case 4: _t->setAttribute((*reinterpret_cast< QTreeWidgetItem*(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
         case 5: _t->setAttribute((*reinterpret_cast< QListWidgetItem*(*)>(_a[1]))); break;

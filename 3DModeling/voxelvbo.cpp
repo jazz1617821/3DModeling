@@ -258,10 +258,13 @@ vbo_t * createVoxelVBO(vdata_t * vd)
 	//vbo->bbox->min[0] = vbo->bbox->min[1] = vbo->bbox->min[2] = INT_MAX;
 	//vbo->bbox->max[0] = vbo->bbox->max[1] = vbo->bbox->max[2] = INT_MIN;
 	vbo->enable = true;
+	/*
 	vbo->enableBuffers[VERTEX] =
 		vbo->enableBuffers[NORMAL] =
 		vbo->enableBuffers[WIREFRAME] =
 		vbo->enableBuffers[FACE] = true;
+		*/
+	vbo->enableBuffers[VERTEX] = true;
 	deleteObject(&boxVBO);
 	deleteObject(&boxWFVBO);
 
