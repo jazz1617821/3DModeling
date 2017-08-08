@@ -453,6 +453,29 @@ void MainWindow::on_actionOpen_triggered()
 void MainWindow::on_actionSave_triggered()
 {
 	
+	//							   	 ---------
+	//							   	 |  vm   |
+	//							   	 ---------
+	//									 |
+	//								------------
+	//								| root_obj |  
+	//								------------
+	//								/		    \
+	//							   /             \
+	//				       --------------     --------------
+	//                     | temp_obj_1 |     | temp_obj_2 |
+	//				       --------------     --------------
+	//					  /             |             |
+	//                   /              |             |
+	//        --------------     --------------   ------------
+	//        |temp_obj_1_1|     |temp_obj_1_2|   |dataitem_3|
+	//        --------------     --------------   ------------
+	//				|                   |
+	//				|					|
+	//		    ------------      ------------
+	//		    |dataitem_1|      |dataitem_2|
+	//          ------------      ------------
+
 	int resolution[3] = { 256,256,256 };
 	float voxelsize[3] = { 1.0,0.5,1.0 };
 	bool isbitcompress = 1;
@@ -541,6 +564,8 @@ void MainWindow::on_actionSave_triggered()
 
 	(VoxelObject*)vmodel->rootObj->firstChild = (VoxelObject*)malloc(sizeof(VoxelObject *) * 1);
 
+
+	//Create 2 object
 	VoxelObject * tempobj_1 = new VoxelObject;
 	tempobj_1->name = (char*)malloc(sizeof(char) * 256);
 	strcpy(tempobj_1->name, "Object_1");
@@ -548,32 +573,47 @@ void MainWindow::on_actionSave_triggered()
 		tempobj_1->bbox->maxBound[i] = 2048;
 		tempobj_1->bbox->minBound[i] = 0;
 	}
-	tempobj_1->numberOfChild = 1;
-	tempobj_1->dataItem = tempData_1;
+	tempobj_1->numberOfChild = 2;
 
 	VoxelObject * tempobj_2 = new VoxelObject;
 	tempobj_2->name = (char*)malloc(sizeof(char) * 256);
 	strcpy(tempobj_2->name, "Object_2");
 	for (int i = 0; i < 3; i++) {
-		tempobj_2->max_bound[i] = 4096;
-		tempobj_2->min_bound[i] = 2048;
+		tempobj_2->bbox->maxBound[i] = 4096;
+		tempobj_2->bbox->minBound[i] = 2048;
 	}
-	tempobj_2->number_of_child = 1;
-	tempobj_2->vd = tempData_2;
+	tempobj_2->numberOfChild = 1;
+	tempobj_2->dataItem = dataitem_2;
 
-	VoxelObject * tempobj_3 = new VoxelObject;
-	tempobj_3->name = (char*)malloc(sizeof(char) * 256);
-	strcpy(tempobj_3->name, "Object_3");
+
+	//2 Leaf obj
+	VoxelObject * tempobj_1_1 = new VoxelObject;
+	tempobj_1_1->name = (char*)malloc(sizeof(char) * 256);
+	strcpy(tempobj_1_1->name, "Object_1_1");
 	for (int i = 0; i < 3; i++) {
-		tempobj_3->max_bound[i] = 4096;
-		tempobj_3->min_bound[i] = 0;
+		tempobj_1_1->bbox->maxBound[i] = 4096;
+		tempobj_1_1->bbox->minBound[i] = 0;
 	}
-	tempobj_3->number_of_child = 1;
-	tempobj_3->vd = tempData_3;
+	tempobj_1_1->numberOfChild = 1;
+	tempobj_1_1->dataItem = dataitem_3;
 
-	vmodel->root_vobj->child[0] = tempobj_1;
-	vmodel->root_vobj->child[1] = tempobj_2;
-	vmodel->root_vobj->child[2] = tempobj_3;
+	VoxelObject * tempobj_1_2 = new VoxelObject;
+	tempobj_1_2->name = (char*)malloc(sizeof(char) * 256);
+	strcpy(tempobj_1_2->name, "Object_1_1");
+	for (int i = 0; i < 3; i++) {
+		tempobj_1_2->bbox->maxBound[i] = 4096;
+		tempobj_1_2->bbox->minBound[i] = 0;
+	}
+	tempobj_1_2->numberOfChild = 1;
+	tempobj_1_2->dataItem = dataitem_3;
+
+	//conect link
+	vmodel->rootObj->firstChild = tempobj_1;
+	
+
+
+
+	
 	
 	
 

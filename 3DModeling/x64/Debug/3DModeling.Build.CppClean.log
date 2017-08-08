@@ -1,20 +1,3 @@
-c:\users\graphicbfg\desktop\3dmodeling-master\3dmodeling\x64\debug\vc140.pdb
-c:\users\graphicbfg\desktop\3dmodeling-master\3dmodeling\x64\debug\viewwidget.obj
-c:\users\graphicbfg\desktop\3dmodeling-master\3dmodeling\x64\debug\voxelvbo.obj
-c:\users\graphicbfg\desktop\3dmodeling-master\3dmodeling\x64\debug\object.obj
-c:\users\graphicbfg\desktop\3dmodeling-master\3dmodeling\x64\debug\mytreewidgetitem.obj
-c:\users\graphicbfg\desktop\3dmodeling-master\3dmodeling\x64\debug\mymath.obj
-c:\users\graphicbfg\desktop\3dmodeling-master\3dmodeling\x64\debug\mylistwidgetitem.obj
-c:\users\graphicbfg\desktop\3dmodeling-master\3dmodeling\x64\debug\material.obj
-c:\users\graphicbfg\desktop\3dmodeling-master\3dmodeling\x64\debug\mainwindow.obj
-c:\users\graphicbfg\desktop\3dmodeling-master\3dmodeling\x64\debug\main.obj
-c:\users\graphicbfg\desktop\3dmodeling-master\3dmodeling\x64\debug\loadshaders.obj
-c:\users\graphicbfg\desktop\3dmodeling-master\3dmodeling\x64\debug\light.obj
-c:\users\graphicbfg\desktop\3dmodeling-master\3dmodeling\x64\debug\moc_viewwidget.obj
-c:\users\graphicbfg\desktop\3dmodeling-master\3dmodeling\x64\debug\moc_mainwindow.obj
-c:\users\graphicbfg\desktop\3dmodeling-master\3dmodeling\x64\debug\moc_editwidget.obj
-c:\users\graphicbfg\desktop\3dmodeling-master\3dmodeling\x64\debug\editwidget.obj
-c:\users\graphicbfg\desktop\3dmodeling-master\3dmodeling\x64\debug\qrc_mainwindow.obj
 c:\users\graphicbfg\desktop\jazz file\3dmodeling\3dmodeling\x64\debug\vc140.pdb
 c:\users\graphicbfg\desktop\jazz file\3dmodeling\3dmodeling\x64\debug\object.obj
 c:\users\graphicbfg\desktop\jazz file\3dmodeling\3dmodeling\x64\debug\mymath.obj
@@ -22,11 +5,6 @@ c:\users\graphicbfg\desktop\jazz file\3dmodeling\3dmodeling\x64\debug\material.o
 c:\users\graphicbfg\desktop\jazz file\3dmodeling\3dmodeling\x64\debug\loadshaders.obj
 c:\users\graphicbfg\desktop\jazz file\3dmodeling\3dmodeling\x64\debug\light.obj
 c:\users\graphicbfg\desktop\jazz file\3dmodeling\3dmodeling\x64\debug\enqlist.obj
-c:\users\graphicbfg\desktop\3dmodeling-master\3dmodeling\generatedfiles\debug\moc_mainwindow.cpp
-c:\users\graphicbfg\desktop\3dmodeling-master\3dmodeling\generatedfiles\ui_mainwindow.h
-c:\users\graphicbfg\desktop\3dmodeling-master\3dmodeling\generatedfiles\debug\moc_editwidget.cpp
-c:\users\graphicbfg\desktop\3dmodeling-master\3dmodeling\generatedfiles\debug\moc_viewwidget.cpp
-c:\users\graphicbfg\desktop\3dmodeling-master\3dmodeling\generatedfiles\qrc_mainwindow.cpp
 c:\users\graphicbfg\desktop\jazz file\3dmodeling\3dmodeling\generatedfiles\debug\moc_mainwindow.cpp
 c:\users\graphicbfg\desktop\jazz file\3dmodeling\3dmodeling\generatedfiles\ui_mainwindow.h
 c:\users\graphicbfg\desktop\jazz file\3dmodeling\3dmodeling\generatedfiles\debug\moc_editwidget.cpp
@@ -36,30 +14,37 @@ c:\users\graphicbfg\desktop\3dmodeling-master\x64\debug\3dmodeling.ilk
 c:\users\graphicbfg\desktop\3dmodeling-master\x64\debug\3dmodeling.exe
 c:\users\graphicbfg\desktop\3dmodeling-master\x64\debug\3dmodeling.pdb
 c:\users\graphicbfg\desktop\3dmodeling-master\3dmodeling\x64\debug\3dmodeling.res
-c:\users\graphicbfg\desktop\jazz file\3dmodeling\3dmodeling\x64\debug\editwidget.obj
-c:\users\graphicbfg\desktop\jazz file\3dmodeling\3dmodeling\x64\debug\main.obj
-c:\users\graphicbfg\desktop\jazz file\3dmodeling\3dmodeling\x64\debug\mainwindow.obj
-c:\users\graphicbfg\desktop\jazz file\3dmodeling\3dmodeling\x64\debug\moc_editwidget.obj
-c:\users\graphicbfg\desktop\jazz file\3dmodeling\3dmodeling\x64\debug\moc_mainwindow.obj
-c:\users\graphicbfg\desktop\jazz file\3dmodeling\3dmodeling\x64\debug\moc_viewwidget.obj
-c:\users\graphicbfg\desktop\jazz file\3dmodeling\3dmodeling\x64\debug\mylistwidgetitem.obj
-c:\users\graphicbfg\desktop\jazz file\3dmodeling\3dmodeling\x64\debug\mytreewidgetitem.obj
-c:\users\graphicbfg\desktop\jazz file\3dmodeling\3dmodeling\x64\debug\qrc_mainwindow.obj
-c:\users\graphicbfg\desktop\jazz file\3dmodeling\3dmodeling\x64\debug\viewwidget.obj
-c:\users\graphicbfg\desktop\jazz file\3dmodeling\3dmodeling\x64\debug\voxelvbo.obj
-c:\users\graphicbfg\desktop\jazz file\3dmodeling\3dmodeling\x64\debug\3dmodeling.res
-c:\users\graphicbfg\desktop\jazz file\3dmodeling\x64\debug\3dmodeling.pdb
-c:\users\graphicbfg\desktop\jazz file\3dmodeling\x64\debug\3dmodeling.exe
-c:\users\graphicbfg\desktop\jazz file\3dmodeling\x64\debug\3dmodeling.ilk
-c:\users\graphicbfg\desktop\jazz file\3dmodeling\3dmodeling\x64\debug\3dmodeling.tlog\cl.command.1.tlog
-c:\users\graphicbfg\desktop\jazz file\3dmodeling\3dmodeling\x64\debug\3dmodeling.tlog\cl.read.1.tlog
-c:\users\graphicbfg\desktop\jazz file\3dmodeling\3dmodeling\x64\debug\3dmodeling.tlog\cl.write.1.tlog
-c:\users\graphicbfg\desktop\jazz file\3dmodeling\3dmodeling\x64\debug\3dmodeling.tlog\custombuild.command.1.tlog
-c:\users\graphicbfg\desktop\jazz file\3dmodeling\3dmodeling\x64\debug\3dmodeling.tlog\custombuild.read.1.tlog
-c:\users\graphicbfg\desktop\jazz file\3dmodeling\3dmodeling\x64\debug\3dmodeling.tlog\custombuild.write.1.tlog
-c:\users\graphicbfg\desktop\jazz file\3dmodeling\3dmodeling\x64\debug\3dmodeling.tlog\link.command.1.tlog
-c:\users\graphicbfg\desktop\jazz file\3dmodeling\3dmodeling\x64\debug\3dmodeling.tlog\link.read.1.tlog
-c:\users\graphicbfg\desktop\jazz file\3dmodeling\3dmodeling\x64\debug\3dmodeling.tlog\link.write.1.tlog
-c:\users\graphicbfg\desktop\jazz file\3dmodeling\3dmodeling\x64\debug\3dmodeling.tlog\rc.command.1.tlog
-c:\users\graphicbfg\desktop\jazz file\3dmodeling\3dmodeling\x64\debug\3dmodeling.tlog\rc.read.1.tlog
-c:\users\graphicbfg\desktop\jazz file\3dmodeling\3dmodeling\x64\debug\3dmodeling.tlog\rc.write.1.tlog
+c:\users\jazz\documents\github\3dmodeling\3dmodeling\x64\debug\editwidget.obj
+c:\users\jazz\documents\github\3dmodeling\3dmodeling\x64\debug\enqlist.obj
+c:\users\jazz\documents\github\3dmodeling\3dmodeling\x64\debug\light.obj
+c:\users\jazz\documents\github\3dmodeling\3dmodeling\x64\debug\loadshaders.obj
+c:\users\jazz\documents\github\3dmodeling\3dmodeling\x64\debug\main.obj
+c:\users\jazz\documents\github\3dmodeling\3dmodeling\x64\debug\mainwindow.obj
+c:\users\jazz\documents\github\3dmodeling\3dmodeling\x64\debug\material.obj
+c:\users\jazz\documents\github\3dmodeling\3dmodeling\x64\debug\moc_editwidget.obj
+c:\users\jazz\documents\github\3dmodeling\3dmodeling\x64\debug\moc_mainwindow.obj
+c:\users\jazz\documents\github\3dmodeling\3dmodeling\x64\debug\moc_viewwidget.obj
+c:\users\jazz\documents\github\3dmodeling\3dmodeling\x64\debug\mylistwidgetitem.obj
+c:\users\jazz\documents\github\3dmodeling\3dmodeling\x64\debug\mymath.obj
+c:\users\jazz\documents\github\3dmodeling\3dmodeling\x64\debug\mytreewidgetitem.obj
+c:\users\jazz\documents\github\3dmodeling\3dmodeling\x64\debug\object.obj
+c:\users\jazz\documents\github\3dmodeling\3dmodeling\x64\debug\qrc_mainwindow.obj
+c:\users\jazz\documents\github\3dmodeling\3dmodeling\x64\debug\viewwidget.obj
+c:\users\jazz\documents\github\3dmodeling\3dmodeling\x64\debug\voxelvbo.obj
+c:\users\jazz\documents\github\3dmodeling\3dmodeling\x64\debug\3dmodeling.res
+c:\users\jazz\documents\github\3dmodeling\3dmodeling\x64\debug\vc140.pdb
+c:\users\jazz\documents\github\3dmodeling\x64\debug\3dmodeling.pdb
+c:\users\jazz\documents\github\3dmodeling\x64\debug\3dmodeling.exe
+c:\users\jazz\documents\github\3dmodeling\x64\debug\3dmodeling.ilk
+c:\users\jazz\documents\github\3dmodeling\3dmodeling\x64\debug\3dmodeling.tlog\cl.command.1.tlog
+c:\users\jazz\documents\github\3dmodeling\3dmodeling\x64\debug\3dmodeling.tlog\cl.read.1.tlog
+c:\users\jazz\documents\github\3dmodeling\3dmodeling\x64\debug\3dmodeling.tlog\cl.write.1.tlog
+c:\users\jazz\documents\github\3dmodeling\3dmodeling\x64\debug\3dmodeling.tlog\custombuild.command.1.tlog
+c:\users\jazz\documents\github\3dmodeling\3dmodeling\x64\debug\3dmodeling.tlog\custombuild.read.1.tlog
+c:\users\jazz\documents\github\3dmodeling\3dmodeling\x64\debug\3dmodeling.tlog\custombuild.write.1.tlog
+c:\users\jazz\documents\github\3dmodeling\3dmodeling\x64\debug\3dmodeling.tlog\link.command.1.tlog
+c:\users\jazz\documents\github\3dmodeling\3dmodeling\x64\debug\3dmodeling.tlog\link.read.1.tlog
+c:\users\jazz\documents\github\3dmodeling\3dmodeling\x64\debug\3dmodeling.tlog\link.write.1.tlog
+c:\users\jazz\documents\github\3dmodeling\3dmodeling\x64\debug\3dmodeling.tlog\rc.command.1.tlog
+c:\users\jazz\documents\github\3dmodeling\3dmodeling\x64\debug\3dmodeling.tlog\rc.read.1.tlog
+c:\users\jazz\documents\github\3dmodeling\3dmodeling\x64\debug\3dmodeling.tlog\rc.write.1.tlog
