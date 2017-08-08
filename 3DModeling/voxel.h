@@ -14,6 +14,8 @@
 #define VOX_IN_THICK 3
 #define VOX_OUT_THICK 4
 
+#include "enqlist.h"
+
 typedef struct Voxel
 {
 	unsigned char data;
@@ -21,37 +23,49 @@ typedef struct Voxel
 
 typedef struct VoxelData
 {
-	char* name;				//體素物件名稱
-	int resolution[3];		//此Data解析度
-	float voxelsize[3];		//此Data體素大小
-	bool isbitcompress;		//
-	Voxel * rawdata;
+	char* name;				//Data Name
+	int resolution[3];		//Data resolution	
+	float voxelSize[3];		//Data voxle size
+	bool isBitCompress;		//Data store type
+	voxel_t* rawData;		//Raw data
 }vdata_t;
+
+typedef struct DataItem
+{
+	enqdlist_t enqDList;	//Enqueueable double linked list 
+	vobj_t* parent;			//The leaf object which has this dataitem
+	vdata_t* voxlData;		//Voxel data pointer
+}ditem_t;
 
 typedef struct VoxelObject
 {
 	//VoxelObject
-	char* name;						//體素物件名稱
-	float max_bound[3];				//在VM中的位置
-	float min_bound[3];				//
-	int number_of_child;			//物件子節點個數
-	VoxelObject * parent;			//father pointer
-	VoxelObject ** child;			//Child array;
-									//橫向優先展開
-	//VoxelData
-	VoxelData* vd;					//leaft only
+	char* name;				//Object name
+	aabb_t* bbox;			//Axis Aligned Bounding Box
+	int numberOfChild;		//Number of child
+	vobj_t* parent;			//Up stair voxel object pointer
+	vobj_t* nextSibling;	//Same stair next voxel object pointer
+	vobj_t* prevSibling;	//Same stair previous voxel object pointer
+
+	vobj_t* firstChild;		//Down stair first child voxel object pointer, leaf voxel object does not have this.
+	ditem_t* dataItem;		//
 }vobj_t;
 
 typedef struct VoxelModel
 {
-	char* name;						//整個模型名稱
-	int resolution[3];				//模型最大解析度
-	float voxelsize[3];				//體素大小
-	int number_of_voxel_data;		//體素資料個數
+	char* name;				//Model name
+	int resolution[3];		//Max Resolution
+	float voxelSize[3];		//Unite all data to one voxel size
+	int numberOfVoxelData;	//Raw data count
 
-	VoxelObject* root_vobj;			//
-
+	VoxelObject* rootObj;	//Root of the object tree
+	ditem_t* rootItem;		//Root of the data item 
 }vmodel_t;
+
+typedef struct AxisAlignedBoundingBox {
+	float minBound[3];	//order x y z
+	float maxBound[3];	//order x y z
+}aabb_t;
 
 
 #endif //_VOXEL_H

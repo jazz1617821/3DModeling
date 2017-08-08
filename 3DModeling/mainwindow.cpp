@@ -27,7 +27,7 @@ MainWindow::~MainWindow()
 //Private Fuction
 void MainWindow::addInDataList_VO(vobj_t * vo) 
 {
-	if (vo->number_of_child == 1) {
+	if (vo->numberOfChild == 1) {
 		MyListWidgetItem* itm = new MyListWidgetItem();
 		itm->vd = vo->vd;
 		itm->setText(vo->vd->name);
@@ -467,45 +467,55 @@ void MainWindow::on_actionSave_triggered()
 	strcpy(tempData_1->name, "Data_0");
 	for (int i = 0; i < 3; i++) {
 		tempData_1->resolution[i] = resolution[i];
-		tempData_1->voxelsize[i] = voxelsize[i];
+		tempData_1->voxelSize[i] = voxelsize[i];
 	}
-	tempData_1->isbitcompress = isbitcompress;
+	tempData_1->isBitCompress = isbitcompress;
 
-	(Voxel *)tempData_1->rawdata = (Voxel *)calloc(resolution[0] * resolution[1] * resolution[2], sizeof(Voxel));
+	(Voxel *)tempData_1->rawData = (Voxel *)calloc(resolution[0] * resolution[1] * resolution[2], sizeof(Voxel));
 
 	for (int i = 0; i < resolution[0] * resolution[1] * resolution[2]; i++) {
-		tempData_1->rawdata[i].data = buffer[i];
+		tempData_1->rawData[i].data = buffer[i];
 	}
+	ditem_t* dataitem_1 = new ditem_t;
+	dataitem_1->voxlData = new VoxelData;
+	dataitem_1->voxlData = tempData_1;
 
 	VoxelData* tempData_2 = new VoxelData;
 	tempData_2->name = (char*)malloc(sizeof(char) * 256);
 	strcpy(tempData_2->name, "Data_1");
 	for (int i = 0; i < 3; i++) {
 		tempData_2->resolution[i] = resolution[i];
-		tempData_2->voxelsize[i] = voxelsize[i];
+		tempData_2->voxelSize[i] = voxelsize[i];
 	}
-	tempData_2->isbitcompress = isbitcompress;
+	tempData_2->isBitCompress = isbitcompress;
 
-	(Voxel *)tempData_2->rawdata = (Voxel *)calloc(resolution[0] * resolution[1] * resolution[2], sizeof(Voxel));
+	(Voxel *)tempData_2->rawData = (Voxel *)calloc(resolution[0] * resolution[1] * resolution[2], sizeof(Voxel));
 
 	for (int i = 0; i < resolution[0] * resolution[1] * resolution[2]; i++) {
-		tempData_2->rawdata[i].data = buffer[i];
+		tempData_2->rawData[i].data = buffer[i];
 	}
+	ditem_t* dataitem_2 = new ditem_t;
+	dataitem_2->voxlData = new VoxelData;
+	dataitem_2->voxlData = tempData_2;
 
 	VoxelData* tempData_3 = new VoxelData;
 	tempData_3->name = (char*)malloc(sizeof(char) * 256);
 	strcpy(tempData_3->name, "Data_2");
 	for (int i = 0; i < 3; i++) {
 		tempData_3->resolution[i] = resolution[i];
-		tempData_3->voxelsize[i] = voxelsize[i];
+		tempData_3->voxelSize[i] = voxelsize[i];
 	}
-	tempData_3->isbitcompress = isbitcompress;
+	tempData_3->isBitCompress = isbitcompress;
 
-	(Voxel *)tempData_3->rawdata = (Voxel *)calloc(resolution[0] * resolution[1] * resolution[2], sizeof(Voxel));
+	(Voxel *)tempData_3->rawData = (Voxel *)calloc(resolution[0] * resolution[1] * resolution[2], sizeof(Voxel));
 
 	for (int i = 0; i < resolution[0] * resolution[1] * resolution[2]; i++) {
-		tempData_3->rawdata[i].data = buffer[i];
+		tempData_3->rawData[i].data = buffer[i];
 	}
+	ditem_t* dataitem_3 = new ditem_t;
+	dataitem_3->voxlData = new VoxelData;
+	dataitem_3->voxlData = tempData_3;
+
 
 	free(buffer);
 
@@ -515,31 +525,31 @@ void MainWindow::on_actionSave_triggered()
 	strcpy(vmodel->name, "Model_0");
 	for (int i = 0; i < 3; i++) {
 		vmodel->resolution[i] = 4096;
-		vmodel->voxelsize[i] = 1;
+		vmodel->voxelSize[i] = 1;
 	}
-	vmodel->number_of_voxel_data = 3;
+	vmodel->numberOfVoxelData = 3;
 
 	//Creat root object
-	vmodel->root_vobj = new VoxelObject;
-	vmodel->root_vobj->name = (char*)malloc(sizeof(char) * 256);
-	strcpy(vmodel->root_vobj->name, "Object_0");
+	vmodel->rootObj = new VoxelObject;
+	vmodel->rootObj->name = (char*)malloc(sizeof(char) * 256);
+	strcpy(vmodel->rootObj->name, "Object_0");
 	for (int i = 0; i < 3; i++) {
-		vmodel->root_vobj->max_bound[i] = 4096;
-		vmodel->root_vobj->min_bound[i] = 0;
+		vmodel->rootObj->bbox->maxBound[i] = 4096;
+		vmodel->rootObj->bbox->minBound[i] = 0;
 	}
-	vmodel->root_vobj->number_of_child = 3;
+	vmodel->rootObj->numberOfChild = 3;
 
-	(VoxelObject**)vmodel->root_vobj->child = (VoxelObject **)malloc(sizeof(VoxelObject *) * 3);
+	(VoxelObject*)vmodel->rootObj->firstChild = (VoxelObject*)malloc(sizeof(VoxelObject *) * 1);
 
 	VoxelObject * tempobj_1 = new VoxelObject;
 	tempobj_1->name = (char*)malloc(sizeof(char) * 256);
 	strcpy(tempobj_1->name, "Object_1");
 	for (int i = 0; i < 3; i++) {
-		tempobj_1->max_bound[i] = 2048;
-		tempobj_1->min_bound[i] = 0;
+		tempobj_1->bbox->maxBound[i] = 2048;
+		tempobj_1->bbox->minBound[i] = 0;
 	}
-	tempobj_1->number_of_child = 1;
-	tempobj_1->vd = tempData_1;
+	tempobj_1->numberOfChild = 1;
+	tempobj_1->dataItem = tempData_1;
 
 	VoxelObject * tempobj_2 = new VoxelObject;
 	tempobj_2->name = (char*)malloc(sizeof(char) * 256);
