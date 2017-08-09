@@ -28,11 +28,13 @@ public:
 	~MainWindow();
 
 private:
-	void addInDataList_VO(VoxelObject * vo);
+	void makeTestFile(void);
+
+	void addInDataList_VO(vobj_t * vo);
 
 	void addInTreeList_VD(MyTreeWidgetItem * parent, vdata_t* vdata);
 	void addInTreeList_VO(MyTreeWidgetItem * parent, vobj_t* vobject);
-	void addInTreeList_VM(VoxelModel* vmodel);
+	void addInTreeList_VM(vmodel_t* vmodel);
 
 	void openVD(const char* filepath);
 	void openVD(const char* filepath, vdata_t* vd);

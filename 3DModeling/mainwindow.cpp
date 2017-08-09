@@ -24,6 +24,190 @@ MainWindow::~MainWindow()
 
 }
 
+void MainWindow::makeTestFile(void)
+{
+	cout << "Make test file." << endl;
+	cout << "//--------------------------------test file--------------------------------//" << endl
+		 << "//							   	 ---------									//" << endl
+		 << "//							   	 |  vm   |									//" << endl
+		 << "//							   	 ---------									//" << endl
+		 << "//									 |										//" << endl
+		 << "//								------------								//" << endl
+		 << "//								| root_obj |  								//" << endl
+		 << "//								------------								//" << endl
+		 << "//								/		    \								//" << endl
+		 << "//							   /             \								//" << endl
+		 << "//				       --------------     --------------					//" << endl
+		 << "//                    | temp_obj_1 |     | temp_obj_2 |					//" << endl
+		 << "//				       --------------     --------------					//" << endl
+		 << "//					  /             |             |							//" << endl
+		 << "//                  /              |             |							//" << endl
+		 << "//        --------------     --------------   ------------					//" << endl
+		 << "//        |temp_obj_1_1|     |temp_obj_1_2|   |dataitem_3|					//" << endl
+		 << "//        --------------     --------------   ------------					//" << endl
+		 << "//				|                   |										//" << endl
+		 << "//				|					|										//" << endl
+		 << "//		    ------------      ------------									//" << endl
+		 << "//		    |dataitem_1|      |dataitem_2|									//" << endl
+		 << "//         ------------      ------------									//" << endl
+		 << "//-------------------------------test file---------------------------------//" << endl;
+
+
+
+	int resolution[3] = { 256,256,256 };
+	float voxelsize[3] = { 1.0,0.5,1.0 };
+	bool isbitcompress = 1;
+	unsigned char* buffer = (unsigned char *)calloc(sizeof(unsigned char), resolution[0] * resolution[1] * resolution[2]);
+
+	for (int i = 0; i < 1000; i++) {
+		buffer[(rand() % 256) + (rand() % 256) * 256 + (rand() % 256) * 256 * 256] = 1;
+	}
+
+	VoxelData* tempData_1 = new VoxelData;
+	tempData_1->name = (char*)malloc(sizeof(char) * 256);
+	strcpy(tempData_1->name, "Data_0");
+	for (int i = 0; i < 3; i++) {
+		tempData_1->resolution[i] = resolution[i];
+		tempData_1->voxelSize[i] = voxelsize[i];
+	}
+	tempData_1->isBitCompress = isbitcompress;
+
+	(Voxel *)tempData_1->rawData = (Voxel *)calloc(resolution[0] * resolution[1] * resolution[2], sizeof(Voxel));
+
+	for (int i = 0; i < resolution[0] * resolution[1] * resolution[2]; i++) {
+		tempData_1->rawData[i].data = buffer[i];
+	}
+	ditem_t* dataitem_1 = new ditem_t;
+	dataitem_1->voxlData = new VoxelData;
+	dataitem_1->voxlData = tempData_1;
+
+	VoxelData* tempData_2 = new VoxelData;
+	tempData_2->name = (char*)malloc(sizeof(char) * 256);
+	strcpy(tempData_2->name, "Data_1");
+	for (int i = 0; i < 3; i++) {
+		tempData_2->resolution[i] = resolution[i];
+		tempData_2->voxelSize[i] = voxelsize[i];
+	}
+	tempData_2->isBitCompress = isbitcompress;
+
+	(Voxel *)tempData_2->rawData = (Voxel *)calloc(resolution[0] * resolution[1] * resolution[2], sizeof(Voxel));
+
+	for (int i = 0; i < resolution[0] * resolution[1] * resolution[2]; i++) {
+		tempData_2->rawData[i].data = buffer[i];
+	}
+	ditem_t* dataitem_2 = new ditem_t;
+	dataitem_2->voxlData = new VoxelData;
+	dataitem_2->voxlData = tempData_2;
+
+	VoxelData* tempData_3 = new VoxelData;
+	tempData_3->name = (char*)malloc(sizeof(char) * 256);
+	strcpy(tempData_3->name, "Data_2");
+	for (int i = 0; i < 3; i++) {
+		tempData_3->resolution[i] = resolution[i];
+		tempData_3->voxelSize[i] = voxelsize[i];
+	}
+	tempData_3->isBitCompress = isbitcompress;
+
+	(Voxel *)tempData_3->rawData = (Voxel *)calloc(resolution[0] * resolution[1] * resolution[2], sizeof(Voxel));
+
+	for (int i = 0; i < resolution[0] * resolution[1] * resolution[2]; i++) {
+		tempData_3->rawData[i].data = buffer[i];
+	}
+	ditem_t* dataitem_3 = new ditem_t;
+	dataitem_3->voxlData = new VoxelData;
+	dataitem_3->voxlData = tempData_3;
+
+
+	free(buffer);
+
+
+	vmodel = new VoxelModel;
+	vmodel->name = (char*)malloc(sizeof(char) * 256);
+	strcpy(vmodel->name, "Model_0");
+	for (int i = 0; i < 3; i++) {
+		vmodel->resolution[i] = 4096;
+		vmodel->voxelSize[i] = 1;
+	}
+	vmodel->numberOfVoxelData = 3;
+
+	//Creat root object
+	vmodel->rootObj = new VoxelObject;
+	vmodel->rootObj->name = (char*)malloc(sizeof(char) * 256);
+	strcpy(vmodel->rootObj->name, "Object_0");
+	for (int i = 0; i < 3; i++) {
+		vmodel->rootObj->bbox->maxBound[i] = 4096;
+		vmodel->rootObj->bbox->minBound[i] = 0;
+	}
+	vmodel->rootObj->numberOfChild = 3;
+
+	(VoxelObject*)vmodel->rootObj->firstChild = (VoxelObject*)malloc(sizeof(VoxelObject *) * 1);
+
+
+	//Create 2 object
+	VoxelObject * tempobj_1 = new VoxelObject;
+	tempobj_1->name = (char*)malloc(sizeof(char) * 256);
+	strcpy(tempobj_1->name, "Object_1");
+	for (int i = 0; i < 3; i++) {
+		tempobj_1->bbox->maxBound[i] = 2048;
+		tempobj_1->bbox->minBound[i] = 0;
+	}
+	tempobj_1->numberOfChild = 2;
+
+	VoxelObject * tempobj_2 = new VoxelObject;
+	tempobj_2->name = (char*)malloc(sizeof(char) * 256);
+	strcpy(tempobj_2->name, "Object_2");
+	for (int i = 0; i < 3; i++) {
+		tempobj_2->bbox->maxBound[i] = 4096;
+		tempobj_2->bbox->minBound[i] = 2048;
+	}
+	tempobj_2->numberOfChild = 1;
+	tempobj_2->dataItem = dataitem_2;
+
+
+	//2 Leaf obj
+	VoxelObject * tempobj_1_1 = new VoxelObject;
+	tempobj_1_1->name = (char*)malloc(sizeof(char) * 256);
+	strcpy(tempobj_1_1->name, "Object_1_1");
+	for (int i = 0; i < 3; i++) {
+		tempobj_1_1->bbox->maxBound[i] = 4096;
+		tempobj_1_1->bbox->minBound[i] = 0;
+	}
+	tempobj_1_1->numberOfChild = 1;
+	tempobj_1_1->dataItem = dataitem_3;
+
+	VoxelObject * tempobj_1_2 = new VoxelObject;
+	tempobj_1_2->name = (char*)malloc(sizeof(char) * 256);
+	strcpy(tempobj_1_2->name, "Object_1_1");
+	for (int i = 0; i < 3; i++) {
+		tempobj_1_2->bbox->maxBound[i] = 4096;
+		tempobj_1_2->bbox->minBound[i] = 0;
+	}
+	tempobj_1_2->numberOfChild = 1;
+	tempobj_1_2->dataItem = dataitem_3;
+
+	//conect link
+	vmodel->rootObj->firstChild = tempobj_1;
+
+	tempobj_1->nextSibling = tempobj_2;
+	tempobj_1->parent = vmodel->rootObj;
+	tempobj_1->firstChild = tempobj_1_1;
+
+	tempobj_1_1->nextSibling = tempobj_1_2;
+	tempobj_1_1->parent = tempobj_1;
+	tempobj_1_1->dataItem = dataitem_1;
+
+	tempobj_1_2->prevSibling = tempobj_1_1;
+	tempobj_1_2->parent = tempobj_1;
+	tempobj_1_2->dataItem = dataitem_2;
+
+	tempobj_2->prevSibling = tempobj_1;
+	tempobj_2->parent = vmodel->rootObj;
+	tempobj_2->dataItem = dataitem_3;
+
+	cout << "Make test file end." << endl;
+	return;
+}
+
 //Private Fuction
 void MainWindow::addInDataList_VO(vobj_t * vo) 
 {
@@ -246,22 +430,24 @@ void MainWindow::openVM(const char* filepath)
 	return;
 }
 
-void MainWindow::writeVO(const char* filepath,FILE* vmodelfile,VoxelObject * vo)
-{
+void MainWindow::writeVO(const char* filepath,FILE* vmodelfile, vobj_t * vo)
+{8+
 	//Write this object
 	fprintf(vmodelfile, "Name:%s\n", vo->name);
-	fprintf(vmodelfile, "Max bound:%fx%fx%f\n", vo->max_bound[0], vo->max_bound[1], vo->max_bound[2]);
-	fprintf(vmodelfile, "Min bound:%fx%fx%f\n", vo->min_bound[0], vo->min_bound[1], vo->min_bound[2]);
-	fprintf(vmodelfile, "Number of child:%d\n", vo->number_of_child);
+	fprintf(vmodelfile, "Max bound:%fx%fx%f\n", vo->bbox->maxBound[0], vo->bbox->maxBound[1], vo->bbox->maxBound[2]);
+	fprintf(vmodelfile, "Min bound:%fx%fx%f\n", vo->bbox->minBound[0], vo->bbox->minBound[1], vo->bbox->minBound[2]);
+	fprintf(vmodelfile, "Number of child:%d\n", vo->numberOfChild);
 
-	if (vo->number_of_child == 1) {
-		fprintf(vmodelfile,"Voxel data filename:%s\n",vo->vd->name);
-		writeVD(filepath,vo->vd);
+	if (vo->numberOfChild == 1) {
+		fprintf(vmodelfile,"Voxel data filename:%s\n",vo->dataItem->voxlData->name);
+		writeVD(filepath,vo->dataItem->voxlData);
 		return;
 	}
 	else {
-		for (int i = 0; i < vo->number_of_child; i++) {
-			writeVO(filepath, vmodelfile, vo->child[i]);
+		vobj_t* voxelObjPtr = vo->firstChild;
+		while (voxelObjPtr != NULL) {
+			writeVO(filepath, vmodelfile, voxelObjPtr);
+			voxelObjPtr = voxelObjPtr->nextSibling;
 		}
 	}
 }
@@ -288,10 +474,10 @@ void MainWindow::writeVD(const char* filepath, vdata_t * vd)
 		}*/
 
 		fwrite(vd->resolution, sizeof(int), 3, vdatafile);
-		fwrite(vd->voxelsize, sizeof(float), 3, vdatafile);
-		fwrite(&vd->isbitcompress, sizeof(int), 1, vdatafile);
+		fwrite(vd->voxelSize, sizeof(float), 3, vdatafile);
+		fwrite(&vd->isBitCompress, sizeof(int), 1, vdatafile);
 		for (int i = 0; i < vd->resolution[0] * vd->resolution[1] * vd->resolution[2]; i++) {
-			fwrite(&vd->rawdata[i].data, sizeof(unsigned char), 1, vdatafile);
+			fwrite(&vd->rawData[i].data, sizeof(unsigned char), 1, vdatafile);
 		}
 		cout << "Finish write " << vd->name << endl;
 		fclose(vdatafile);
@@ -339,11 +525,11 @@ void MainWindow::setAttribute(vdata_t* vd)
 void MainWindow::setAttribute(vobj_t* vo) 
 {
 	ui->attributetableWidget->clear();
-	if (vo->number_of_child == 1) {
+	if (vo->numberOfChild == 1) {
 		ui->attributetableWidget->setRowCount(5);
 	}
 	else {
-		ui->attributetableWidget->setRowCount(4 + vo->number_of_child);
+		ui->attributetableWidget->setRowCount(4 + vo->numberOfChild);
 	}
 	ui->attributetableWidget->setColumnCount(4);
 
@@ -352,37 +538,42 @@ void MainWindow::setAttribute(vobj_t* vo)
 	ui->attributetableWidget->setItem(0, 0, namelabel);
 	ui->attributetableWidget->setItem(0, 1, name);
 	QTableWidgetItem* max_boundlabel = new QTableWidgetItem("Max bound:");
-	QTableWidgetItem* max_bound_x = new QTableWidgetItem(QString::number(vo->max_bound[0]));
-	QTableWidgetItem* max_bound_y = new QTableWidgetItem(QString::number(vo->max_bound[1]));
-	QTableWidgetItem* max_bound_z = new QTableWidgetItem(QString::number(vo->max_bound[2]));
+	QTableWidgetItem* max_bound_x = new QTableWidgetItem(QString::number(vo->bbox->maxBound[0]));
+	QTableWidgetItem* max_bound_y = new QTableWidgetItem(QString::number(vo->bbox->maxBound[1]));
+	QTableWidgetItem* max_bound_z = new QTableWidgetItem(QString::number(vo->bbox->maxBound[2]));
 	ui->attributetableWidget->setItem(1, 0, max_boundlabel);
 	ui->attributetableWidget->setItem(1, 1, max_bound_x);
 	ui->attributetableWidget->setItem(1, 2, max_bound_y);
 	ui->attributetableWidget->setItem(1, 3, max_bound_z);
 	QTableWidgetItem* min_boundlabel = new QTableWidgetItem("Min bound:");
-	QTableWidgetItem* min_bound_x = new QTableWidgetItem(QString::number(vo->min_bound[0]));
-	QTableWidgetItem* min_bound_y = new QTableWidgetItem(QString::number(vo->min_bound[1]));
-	QTableWidgetItem* min_bound_z = new QTableWidgetItem(QString::number(vo->min_bound[2]));
+	QTableWidgetItem* min_bound_x = new QTableWidgetItem(QString::number(vo->bbox->minBound[0]));
+	QTableWidgetItem* min_bound_y = new QTableWidgetItem(QString::number(vo->bbox->minBound[1]));
+	QTableWidgetItem* min_bound_z = new QTableWidgetItem(QString::number(vo->bbox->minBound[2]));
 	ui->attributetableWidget->setItem(2, 0, min_boundlabel);
 	ui->attributetableWidget->setItem(2, 1, min_bound_x);
 	ui->attributetableWidget->setItem(2, 2, min_bound_y);
 	ui->attributetableWidget->setItem(2, 3, min_bound_z);
 	QTableWidgetItem* number_of_childlabel = new QTableWidgetItem("Number of child:");
-	QTableWidgetItem* number_of_child = new QTableWidgetItem(QString::number(vo->number_of_child));
+	QTableWidgetItem* number_of_child = new QTableWidgetItem(QString::number(vo->numberOfChild));
 	ui->attributetableWidget->setItem(3, 0, number_of_childlabel);
 	ui->attributetableWidget->setItem(3, 1, number_of_child);
-	if (vo->number_of_child == 1) {
+	if (vo->numberOfChild == 1) {
 		QTableWidgetItem* voxeldatanamelabel = new QTableWidgetItem("Voxel Data:");
-		QTableWidgetItem* voxeldataname = new QTableWidgetItem(vo->vd->name);
+		QTableWidgetItem* voxeldataname = new QTableWidgetItem(vo->dataItem->voxlData->name);
 		ui->attributetableWidget->setItem(4, 0, voxeldatanamelabel);
 		ui->attributetableWidget->setItem(4, 1, voxeldataname);
 	}
 	else {
 		QTableWidgetItem* childnamelabel = new QTableWidgetItem("Child Object:");
 		ui->attributetableWidget->setItem(4, 0, childnamelabel);
-		for (int i = 0; i < vo->number_of_child; i++) {
-			QTableWidgetItem* childname = new QTableWidgetItem(vo->child[i]->name);
-			ui->attributetableWidget->setItem(i + 4, 1, childname);
+		vobj_t* voxelObjectPtr = vo->firstChild;
+		int count = 0;
+		while (voxelObjectPtr != NULL) {
+			QTableWidgetItem* childname = new QTableWidgetItem(voxelObjectPtr->dataItem->voxlData->name);
+			ui->attributetableWidget->setItem(count + 4, 1, childname);
+
+			voxelObjectPtr = voxelObjectPtr->nextSibling;
+			count++;
 		}
 	}
 	return;
@@ -452,170 +643,7 @@ void MainWindow::on_actionOpen_triggered()
 
 void MainWindow::on_actionSave_triggered()
 {
-	
-	//							   	 ---------
-	//							   	 |  vm   |
-	//							   	 ---------
-	//									 |
-	//								------------
-	//								| root_obj |  
-	//								------------
-	//								/		    \
-	//							   /             \
-	//				       --------------     --------------
-	//                     | temp_obj_1 |     | temp_obj_2 |
-	//				       --------------     --------------
-	//					  /             |             |
-	//                   /              |             |
-	//        --------------     --------------   ------------
-	//        |temp_obj_1_1|     |temp_obj_1_2|   |dataitem_3|
-	//        --------------     --------------   ------------
-	//				|                   |
-	//				|					|
-	//		    ------------      ------------
-	//		    |dataitem_1|      |dataitem_2|
-	//          ------------      ------------
-
-	int resolution[3] = { 256,256,256 };
-	float voxelsize[3] = { 1.0,0.5,1.0 };
-	bool isbitcompress = 1;
-	unsigned char* buffer = (unsigned char *)calloc(sizeof(unsigned char), resolution[0] * resolution[1] * resolution[2]);
-
-	for (int i = 0; i < 1000; i++) {
-		buffer[(rand() % 256) + (rand() % 256) * 256 + (rand() % 256) * 256 * 256] = 1;
-	}
-
-	VoxelData* tempData_1 = new VoxelData;
-	tempData_1->name = (char*)malloc(sizeof(char) * 256);
-	strcpy(tempData_1->name, "Data_0");
-	for (int i = 0; i < 3; i++) {
-		tempData_1->resolution[i] = resolution[i];
-		tempData_1->voxelSize[i] = voxelsize[i];
-	}
-	tempData_1->isBitCompress = isbitcompress;
-
-	(Voxel *)tempData_1->rawData = (Voxel *)calloc(resolution[0] * resolution[1] * resolution[2], sizeof(Voxel));
-
-	for (int i = 0; i < resolution[0] * resolution[1] * resolution[2]; i++) {
-		tempData_1->rawData[i].data = buffer[i];
-	}
-	ditem_t* dataitem_1 = new ditem_t;
-	dataitem_1->voxlData = new VoxelData;
-	dataitem_1->voxlData = tempData_1;
-
-	VoxelData* tempData_2 = new VoxelData;
-	tempData_2->name = (char*)malloc(sizeof(char) * 256);
-	strcpy(tempData_2->name, "Data_1");
-	for (int i = 0; i < 3; i++) {
-		tempData_2->resolution[i] = resolution[i];
-		tempData_2->voxelSize[i] = voxelsize[i];
-	}
-	tempData_2->isBitCompress = isbitcompress;
-
-	(Voxel *)tempData_2->rawData = (Voxel *)calloc(resolution[0] * resolution[1] * resolution[2], sizeof(Voxel));
-
-	for (int i = 0; i < resolution[0] * resolution[1] * resolution[2]; i++) {
-		tempData_2->rawData[i].data = buffer[i];
-	}
-	ditem_t* dataitem_2 = new ditem_t;
-	dataitem_2->voxlData = new VoxelData;
-	dataitem_2->voxlData = tempData_2;
-
-	VoxelData* tempData_3 = new VoxelData;
-	tempData_3->name = (char*)malloc(sizeof(char) * 256);
-	strcpy(tempData_3->name, "Data_2");
-	for (int i = 0; i < 3; i++) {
-		tempData_3->resolution[i] = resolution[i];
-		tempData_3->voxelSize[i] = voxelsize[i];
-	}
-	tempData_3->isBitCompress = isbitcompress;
-
-	(Voxel *)tempData_3->rawData = (Voxel *)calloc(resolution[0] * resolution[1] * resolution[2], sizeof(Voxel));
-
-	for (int i = 0; i < resolution[0] * resolution[1] * resolution[2]; i++) {
-		tempData_3->rawData[i].data = buffer[i];
-	}
-	ditem_t* dataitem_3 = new ditem_t;
-	dataitem_3->voxlData = new VoxelData;
-	dataitem_3->voxlData = tempData_3;
-
-
-	free(buffer);
-
-
-	vmodel = new VoxelModel;
-	vmodel->name = (char*)malloc(sizeof(char) * 256);
-	strcpy(vmodel->name, "Model_0");
-	for (int i = 0; i < 3; i++) {
-		vmodel->resolution[i] = 4096;
-		vmodel->voxelSize[i] = 1;
-	}
-	vmodel->numberOfVoxelData = 3;
-
-	//Creat root object
-	vmodel->rootObj = new VoxelObject;
-	vmodel->rootObj->name = (char*)malloc(sizeof(char) * 256);
-	strcpy(vmodel->rootObj->name, "Object_0");
-	for (int i = 0; i < 3; i++) {
-		vmodel->rootObj->bbox->maxBound[i] = 4096;
-		vmodel->rootObj->bbox->minBound[i] = 0;
-	}
-	vmodel->rootObj->numberOfChild = 3;
-
-	(VoxelObject*)vmodel->rootObj->firstChild = (VoxelObject*)malloc(sizeof(VoxelObject *) * 1);
-
-
-	//Create 2 object
-	VoxelObject * tempobj_1 = new VoxelObject;
-	tempobj_1->name = (char*)malloc(sizeof(char) * 256);
-	strcpy(tempobj_1->name, "Object_1");
-	for (int i = 0; i < 3; i++) {
-		tempobj_1->bbox->maxBound[i] = 2048;
-		tempobj_1->bbox->minBound[i] = 0;
-	}
-	tempobj_1->numberOfChild = 2;
-
-	VoxelObject * tempobj_2 = new VoxelObject;
-	tempobj_2->name = (char*)malloc(sizeof(char) * 256);
-	strcpy(tempobj_2->name, "Object_2");
-	for (int i = 0; i < 3; i++) {
-		tempobj_2->bbox->maxBound[i] = 4096;
-		tempobj_2->bbox->minBound[i] = 2048;
-	}
-	tempobj_2->numberOfChild = 1;
-	tempobj_2->dataItem = dataitem_2;
-
-
-	//2 Leaf obj
-	VoxelObject * tempobj_1_1 = new VoxelObject;
-	tempobj_1_1->name = (char*)malloc(sizeof(char) * 256);
-	strcpy(tempobj_1_1->name, "Object_1_1");
-	for (int i = 0; i < 3; i++) {
-		tempobj_1_1->bbox->maxBound[i] = 4096;
-		tempobj_1_1->bbox->minBound[i] = 0;
-	}
-	tempobj_1_1->numberOfChild = 1;
-	tempobj_1_1->dataItem = dataitem_3;
-
-	VoxelObject * tempobj_1_2 = new VoxelObject;
-	tempobj_1_2->name = (char*)malloc(sizeof(char) * 256);
-	strcpy(tempobj_1_2->name, "Object_1_1");
-	for (int i = 0; i < 3; i++) {
-		tempobj_1_2->bbox->maxBound[i] = 4096;
-		tempobj_1_2->bbox->minBound[i] = 0;
-	}
-	tempobj_1_2->numberOfChild = 1;
-	tempobj_1_2->dataItem = dataitem_3;
-
-	//conect link
-	vmodel->rootObj->firstChild = tempobj_1;
-	
-
-
-
-	
-	
-	
+	makeTestFile();
 
 	QString filename;
 	const char *str;
@@ -641,13 +669,11 @@ void MainWindow::on_actionSave_triggered()
 				fprintf(vmodelfile, "Voxel Model:\n");
 				fprintf(vmodelfile, "Name:%s\n", vmodel->name);
 				fprintf(vmodelfile, "Resolution:%dx%dx%d\n", vmodel->resolution[0], vmodel->resolution[1], vmodel->resolution[2]);
-				fprintf(vmodelfile, "Voxelsize:%.2f:%.2f:%.2f\n", vmodel->voxelsize[0], vmodel->voxelsize[1], vmodel->voxelsize[2]);
-				fprintf(vmodelfile, "Number of voxel data:%d\n", vmodel->number_of_voxel_data);
-
-
+				fprintf(vmodelfile, "Voxelsize:%.2f:%.2f:%.2f\n", vmodel->voxelSize[0], vmodel->voxelSize[1], vmodel->voxelSize[2]);
+				fprintf(vmodelfile, "Number of voxel data:%d\n", vmodel->numberOfVoxelData);
 
 				//DFS Write Voxel Object
-				writeVO(str, vmodelfile, vmodel->root_vobj);
+				writeVO(str, vmodelfile, vmodel->rootObj);
 
 				//
 				fclose(vmodelfile);
@@ -655,7 +681,6 @@ void MainWindow::on_actionSave_triggered()
 			}
 			else if (!strcmp(fe, ".vdat")) {
 				//export vdata
-
 
 
 			}

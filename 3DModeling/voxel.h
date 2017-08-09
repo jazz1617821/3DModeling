@@ -16,6 +16,7 @@
 
 #include "enqlist.h"
 
+
 typedef struct Voxel
 {
 	unsigned char data;
@@ -23,48 +24,48 @@ typedef struct Voxel
 
 typedef struct VoxelData
 {
-	char* name;				//Data Name
-	int resolution[3];		//Data resolution	
-	float voxelSize[3];		//Data voxle size
-	bool isBitCompress;		//Data store type
-	voxel_t* rawData;		//Raw data
+	char* name;					//Data Name
+	int resolution[3];			//Data resolution	
+	float voxelSize[3];			//Data voxle size
+	bool isBitCompress;			//Data store type
+	voxel_t* rawData = NULL;	//Raw data
 }vdata_t;
 
 typedef struct DataItem
 {
-	enqdlist_t enqDList;	//Enqueueable double linked list 
-	vobj_t* parent;			//The leaf object which has this dataitem
-	vdata_t* voxlData;		//Voxel data pointer
+	enqdlist_t enqDList;		//Enqueueable double linked list 
+	vobj_t* parent = NULL;		//The leaf object which has this dataitem
+	vdata_t* voxlData = NULL;	//Voxel data pointer
 }ditem_t;
 
 typedef struct VoxelObject
 {
 	//VoxelObject
-	char* name;				//Object name
-	aabb_t* bbox;			//Axis Aligned Bounding Box
-	int numberOfChild;		//Number of child
-	vobj_t* parent;			//Up stair voxel object pointer
-	vobj_t* nextSibling;	//Same stair next voxel object pointer
-	vobj_t* prevSibling;	//Same stair previous voxel object pointer
+	char* name;					//Object name
+	aabb_t* bbox;				//Axis Aligned Bounding Box
+	int numberOfChild;			//Number of child
+	vobj_t* parent = NULL;		//Up stair voxel object pointer
+	vobj_t* nextSibling = NULL;	//Same stair next voxel object pointer
+	vobj_t* prevSibling = NULL;	//Same stair previous voxel object pointer
 
-	vobj_t* firstChild;		//Down stair first child voxel object pointer, leaf voxel object does not have this.
-	ditem_t* dataItem;		//
+	vobj_t* firstChild = NULL;	//Down stair first child voxel object pointer, leaf voxel object does not have this.
+	ditem_t* dataItem = NULL;	//
 }vobj_t;
 
 typedef struct VoxelModel
 {
-	char* name;				//Model name
-	int resolution[3];		//Max Resolution
-	float voxelSize[3];		//Unite all data to one voxel size
-	int numberOfVoxelData;	//Raw data count
+	char* name;					//Model name
+	int resolution[3];			//Max Resolution
+	float voxelSize[3];			//Unite all data to one voxel size
+	int numberOfVoxelData;		//Raw data count
 
-	VoxelObject* rootObj;	//Root of the object tree
-	ditem_t* rootItem;		//Root of the data item 
+	vobj_t* rootObj = NULL;		//Root of the object tree
+	ditem_t* rootItem = NULL;	//Root of the data item 
 }vmodel_t;
 
 typedef struct AxisAlignedBoundingBox {
-	float minBound[3];	//order x y z
-	float maxBound[3];	//order x y z
+	float minBound[3];		//order x y z
+	float maxBound[3];		//order x y z
 }aabb_t;
 
 
