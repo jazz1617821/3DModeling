@@ -209,6 +209,7 @@ void MainWindow::makeTestFile(void)
 }
 
 //Private Fuction
+/*
 void MainWindow::addInDataList_VO(vobj_t * vo) 
 {
 	if (vo->numberOfChild == 1) {
@@ -224,12 +225,13 @@ void MainWindow::addInDataList_VO(vobj_t * vo)
 		}
 	}
 }
+*/
 
-void MainWindow::addInTreeList_VD(MyTreeWidgetItem * parent, vdata_t* vdata)
+void MainWindow::addInTreeList_VD(MyTreeWidgetItem * parent, ditem_t* dataItem)
 {
 	MyTreeWidgetItem * itm = new MyTreeWidgetItem();
-	itm->setText(0, (QString)vdata->name);
-	itm->vd = vdata;
+	itm->setText(0, (QString)dataItem->voxlData->name);
+	itm->dataItem = dataItem;
 	parent->addChild(itm);
 }
 
@@ -239,13 +241,15 @@ void MainWindow::addInTreeList_VO(MyTreeWidgetItem * parent, vobj_t* vobject)
 	itm->setText(0, (QString)vobject->name);
 	itm->vo = vobject;
 	parent->addChild(itm);
-	if (vobject->number_of_child > 1) {
-		for (int i = 0; i < vobject->number_of_child; i++) {
-			addInTreeList_VO(parent, vobject->child[i]);
-		}
+	if (vobject->numberOfChild == 1) {
+		addInTreeList_VD(itm, vobject->dataItem);
 	}
 	else {
-		addInTreeList_VD(itm, vobject->vd);
+		vobj_t* voxelObjectPtr = vobject->firstChild;
+		while (voxelObjectPtr != NULL) {
+			addInTreeList_VO(parent, voxelObjectPtr);
+			voxelObjectPtr = voxelObjectPtr->nextSibling;
+		}
 	}
 }
 
@@ -254,7 +258,7 @@ void MainWindow::addInTreeList_VM(vmodel_t* vmodel)
 	MyTreeWidgetItem * itm = new MyTreeWidgetItem(ui->voxeltreeWidget);
 	itm->setText(0,(QString)vmodel->name);
 	itm->vm = vmodel;
-	addInTreeList_VO(itm, vmodel->root_vobj);
+	addInTreeList_VO(itm, vmodel->rootObj);
 }
 
 void MainWindow::openVD(const char* filepath)
@@ -283,14 +287,14 @@ void MainWindow::openVD(const char* filepath)
 	strcpy(temp->name, "Data_0");
 	for (int i = 0; i < 3;i++) {
 		temp->resolution[i] = resolution[i];
-		temp->voxelsize[i] = voxelsize[i];
+		temp->voxelSize[i] = voxelsize[i];
 	}
-	temp->isbitcompress = isbitcompress;
+	temp->isBitCompress = isbitcompress;
 
-	(Voxel *)temp->rawdata = (Voxel *)calloc(resolution[0] * resolution[1] * resolution[2] , sizeof(Voxel));
+	(Voxel *)temp->rawData = (Voxel *)calloc(resolution[0] * resolution[1] * resolution[2] , sizeof(Voxel));
 	
 	for (int i = 0; i < resolution[0] * resolution[1] * resolution[2];i++) {
-		temp->rawdata[i].data = buffer[i];
+		temp->rawData[i].data = buffer[i];
 	}
 
 	free(buffer);
@@ -303,20 +307,20 @@ void MainWindow::openVD(const char* filepath)
 		strcpy(vmodel->name, "Model_0");
 		for (int i = 0; i < 3; i++) {
 			vmodel->resolution[i] = resolution[i];
-			vmodel->voxelsize[i] = voxelsize[i];
+			vmodel->voxelSize[i] = voxelsize[i];
 		}
-		vmodel->number_of_voxel_data = 1;
+		vmodel->numberOfVoxelData = 1;
 		
 		//Creat root object
-		vmodel->root_vobj = new VoxelObject;
-		vmodel->root_vobj->name = (char*)malloc(sizeof(char) * 256);
-		strcpy(vmodel->root_vobj->name, "Object_0");
+		vmodel->rootObj = new VoxelObject;
+		vmodel->rootObj->name = (char*)malloc(sizeof(char) * 256);
+		strcpy(vmodel->rootObj->name, "Object_0");
 		for (int i = 0; i < 3; i++) {
-			vmodel->root_vobj->max_bound[0] = resolution[0];
-			vmodel->root_vobj->min_bound[0] = 0;
+			vmodel->rootObj->bbox->maxBound[0] = resolution[0];
+			vmodel->rootObj->bbox->minBound[0] = 0;
 		}
-		vmodel->root_vobj->number_of_child = 1;
-		vmodel->root_vobj->vd = temp;
+		vmodel->rootObj->numberOfChild = 1;
+		vmodel->rootObj->dataItem->voxlData = temp;
 
 	}
 	else {
@@ -347,15 +351,15 @@ void MainWindow::openVD(const char * filepath, vdata_t * vd)
 	if (vdatafile != NULL) {
 		fread(vd->resolution, sizeof(int), 3, vdatafile);
 		cout << vd->resolution[0] << " " << vd->resolution[1] << " " << vd->resolution[2] << endl;
-		fread(vd->voxelsize, sizeof(float), 3, vdatafile);
-		cout << vd->voxelsize[0] << " " << vd->voxelsize[1] << " " << vd->voxelsize[2] << endl;
-		fread(&vd->isbitcompress, sizeof(int), 1, vdatafile);
-		cout << vd->isbitcompress << endl;
+		fread(vd->voxelSize, sizeof(float), 3, vdatafile);
+		cout << vd->voxelSize[0] << " " << vd->voxelSize[1] << " " << vd->voxelSize[2] << endl;
+		fread(&vd->isBitCompress, sizeof(int), 1, vdatafile);
+		cout << vd->isBitCompress << endl;
 
-		(Voxel*)vd->rawdata = (Voxel *)calloc(sizeof(Voxel) , vd->resolution[0] * vd->resolution[1] * vd->resolution[2]);
+		(Voxel*)vd->rawData = (Voxel *)calloc(sizeof(Voxel) , vd->resolution[0] * vd->resolution[1] * vd->resolution[2]);
 
 		for (int i = 0; i < vd->resolution[0] * vd->resolution[1] * vd->resolution[2]; i++) {
-			fread(&vd->rawdata[i].data, sizeof(unsigned char), 1, vdatafile);
+			fread(&vd->rawData[i].data, sizeof(unsigned char), 1, vdatafile);
 		}
 		fclose(vdatafile);
 	}
@@ -370,28 +374,37 @@ void MainWindow::openVO(const char* filepath,FILE * vmodelfile, vobj_t* vo)
 	(char*)vo->name = (char*)calloc(sizeof(char) , 20);
 	fscanf(vmodelfile, "Name:%s\n", vo->name);
 	cout << vo->name << endl;
-	fscanf(vmodelfile, "Max bound:%fx%fx%f\n", &vo->max_bound[0], &vo->max_bound[1], &vo->max_bound[2]);
-	cout << vo->max_bound[0]<< " " << vo->max_bound[1] << " " << vo->max_bound[2] << endl;
-	fscanf(vmodelfile, "Min bound:%fx%fx%f\n", &vo->min_bound[0], &vo->min_bound[1], &vo->min_bound[2]);
-	cout << vo->min_bound[0] << " " << vo->min_bound[1] << " " << vo->min_bound[2] << endl;
-	fscanf(vmodelfile, "Number of child:%d\n", &vo->number_of_child);
-	cout << vo->number_of_child << endl;
+	fscanf(vmodelfile, "Max bound:%fx%fx%f\n", &vo->bbox->maxBound[0], &vo->bbox->maxBound[1], &vo->bbox->maxBound[2]);
+	cout << vo->bbox->maxBound[0]<< " " << vo->bbox->maxBound[1] << " " << vo->bbox->maxBound[2] << endl;
+	fscanf(vmodelfile, "Min bound:%fx%fx%f\n", &vo->bbox->minBound[0], &vo->bbox->minBound[1], &vo->bbox->minBound[2]);
+	cout << vo->bbox->minBound[0] << " " << vo->bbox->minBound[1] << " " << vo->bbox->minBound[2] << endl;
+	fscanf(vmodelfile, "Number of child:%d\n", &vo->numberOfChild);
+	cout << vo->numberOfChild << endl;
 
-	if (vo->number_of_child == 1) {
-		vo->vd = new VoxelData;
-		vo->vd->name = (char*)calloc(sizeof(char) , 20);
-		fscanf(vmodelfile, "Voxel data filename:%s\n", vo->vd->name);
-		cout << vo->vd->name << endl;
-		openVD(filepath, vo->vd);
+	if (vo->numberOfChild == 1) {
+		vo->dataItem = new ditem_t;
+		vo->dataItem->parent = vo;
+		vo->dataItem->voxlData = new vdata_t;
+		vo->dataItem->voxlData->name = (char*)calloc(sizeof(char) , 20);
+		fscanf(vmodelfile, "Voxel data filename:%s\n", vo->dataItem->voxlData->name);
+		cout << vo->dataItem->voxlData->name << endl;
+		openVD(filepath, vo->dataItem->voxlData);
 		return;
 	}
 	else {
-		(VoxelObject**)vo->child = (VoxelObject**)malloc(sizeof(VoxelObject*)*vo->number_of_child);
-		for (int i = 0; i < vo->number_of_child; i++) {
-			vo->child[i] = new VoxelObject;
-			vo->child[i]->parent = new VoxelObject;
-			vo->child[i]->parent = vo;
-			openVO(filepath, vmodelfile, vo->child[i]);
+		vo->firstChild = new vobj_t;
+		vobj_t* voxelObjectPtr = vo->firstChild;
+		for (int i = 0; i < vo->numberOfChild; i++) {
+			voxelObjectPtr->parent = vo;
+			openVO(filepath, vmodelfile, voxelObjectPtr);
+			if (i == vo->numberOfChild - 1) {
+				voxelObjectPtr->nextSibling = NULL;
+			}
+			else {
+				voxelObjectPtr->nextSibling = new vobj_t;
+				voxelObjectPtr->nextSibling->prevSibling = voxelObjectPtr;
+				voxelObjectPtr = voxelObjectPtr->nextSibling;
+			}
 		}
 	}
 }
@@ -411,19 +424,19 @@ void MainWindow::openVM(const char* filepath)
 		cout << vmodel->name << endl;
 		fscanf(vmodelfile, "Resolution:%dx%dx%d\n", &vmodel->resolution[0], &vmodel->resolution[1], &vmodel->resolution[2]);
 		cout << vmodel->resolution[0] << " " << vmodel->resolution[1] << " " << vmodel->resolution[2] << " " << endl;
-		fscanf(vmodelfile, "Voxelsize:%f:%f:%f\n", &vmodel->voxelsize[0], &vmodel->voxelsize[1], &vmodel->voxelsize[2]);
-		cout << vmodel->voxelsize[0] << " " << vmodel->voxelsize[1] << " " << vmodel->voxelsize[2] << " " << endl;
-		fscanf(vmodelfile, "Number of voxel data:%d\n", &vmodel->number_of_voxel_data);
-		cout << vmodel->number_of_voxel_data << endl;
+		fscanf(vmodelfile, "Voxelsize:%f:%f:%f\n", &vmodel->voxelSize[0], &vmodel->voxelSize[1], &vmodel->voxelSize[2]);
+		cout << vmodel->voxelSize[0] << " " << vmodel->voxelSize[1] << " " << vmodel->voxelSize[2] << " " << endl;
+		fscanf(vmodelfile, "Number of voxel data:%d\n", &vmodel->numberOfVoxelData);
+		cout << vmodel->numberOfVoxelData << endl;
 
-		vmodel->root_vobj = new vobj_t;
-		openVO(filepath, vmodelfile, vmodel->root_vobj);
+		vmodel->rootObj = new vobj_t;
+		openVO(filepath, vmodelfile, vmodel->rootObj);
 	}
 
 	fclose(vmodelfile);
 
 	addInTreeList_VM(vmodel);
-	addInDataList_VO(vmodel->root_vobj);
+	addInDataList_VO(vmodel->rootObj);
 	setAttribute(vmodel);
 	finishLoadVModel();
 
@@ -507,15 +520,15 @@ void MainWindow::setAttribute(vdata_t* vd)
 	ui->attributetableWidget->setItem(1, 2, resolution_y);
 	ui->attributetableWidget->setItem(1, 3, resolution_z);
 	QTableWidgetItem* voxelsizelabel = new QTableWidgetItem("Voxelsize:");
-	QTableWidgetItem* voxelsize_x = new QTableWidgetItem(QString::number(vd->voxelsize[0]));
-	QTableWidgetItem* voxelsize_y = new QTableWidgetItem(QString::number(vd->voxelsize[1]));
-	QTableWidgetItem* voxelsize_z = new QTableWidgetItem(QString::number(vd->voxelsize[2]));
+	QTableWidgetItem* voxelsize_x = new QTableWidgetItem(QString::number(vd->voxelSize[0]));
+	QTableWidgetItem* voxelsize_y = new QTableWidgetItem(QString::number(vd->voxelSize[1]));
+	QTableWidgetItem* voxelsize_z = new QTableWidgetItem(QString::number(vd->voxelSize[2]));
 	ui->attributetableWidget->setItem(2, 0, voxelsizelabel);
 	ui->attributetableWidget->setItem(2, 1, voxelsize_x);
 	ui->attributetableWidget->setItem(2, 2, voxelsize_y);
 	ui->attributetableWidget->setItem(2, 3, voxelsize_z);
 	QTableWidgetItem* bitcompresslabel = new QTableWidgetItem("Bit compressed:");
-	QTableWidgetItem* bitcompress = new QTableWidgetItem(QString::number(vd->isbitcompress));
+	QTableWidgetItem* bitcompress = new QTableWidgetItem(QString::number(vd->isBitCompress));
 	ui->attributetableWidget->setItem(3, 0, bitcompresslabel);
 	ui->attributetableWidget->setItem(3, 1, bitcompress);
 
@@ -598,15 +611,15 @@ void MainWindow::setAttribute(vmodel_t* vm)
 	ui->attributetableWidget->setItem(1, 2, resolution_y);
 	ui->attributetableWidget->setItem(1, 3, resolution_z);
 	QTableWidgetItem* voxelsizelabel = new QTableWidgetItem("Voxelsize:");
-	QTableWidgetItem* voxelsize_x = new QTableWidgetItem(QString::number(vm->voxelsize[0]));
-	QTableWidgetItem* voxelsize_y = new QTableWidgetItem(QString::number(vm->voxelsize[1]));
-	QTableWidgetItem* voxelsize_z = new QTableWidgetItem(QString::number(vm->voxelsize[2]));
+	QTableWidgetItem* voxelsize_x = new QTableWidgetItem(QString::number(vm->voxelSize[0]));
+	QTableWidgetItem* voxelsize_y = new QTableWidgetItem(QString::number(vm->voxelSize[1]));
+	QTableWidgetItem* voxelsize_z = new QTableWidgetItem(QString::number(vm->voxelSize[2]));
 	ui->attributetableWidget->setItem(2, 0, voxelsizelabel);
 	ui->attributetableWidget->setItem(2, 1, voxelsize_x);
 	ui->attributetableWidget->setItem(2, 2, voxelsize_y);
 	ui->attributetableWidget->setItem(2, 3, voxelsize_z);
 	QTableWidgetItem* number_of_voxel_datalabel = new QTableWidgetItem("Number of voxel data:");
-	QTableWidgetItem* number_of_voxel_data = new QTableWidgetItem(QString::number(vm->number_of_voxel_data));
+	QTableWidgetItem* number_of_voxel_data = new QTableWidgetItem(QString::number(vm->numberOfVoxelData));
 	ui->attributetableWidget->setItem(3, 0, number_of_voxel_datalabel);
 	ui->attributetableWidget->setItem(3, 1, number_of_voxel_data);
 
@@ -696,9 +709,9 @@ void MainWindow::on_actionSave_triggered()
 
 void MainWindow::setAttribute(QTreeWidgetItem * itm, int i) {
 	ui->view_tabWidget->setCurrentWidget(ui->viewWidgetLayout);
-	if (((MyTreeWidgetItem *)itm)->vd != NULL) {
+	if (((MyTreeWidgetItem *)itm)->dataItem != NULL) {
 		//cout << "I am a Voxel Data." << endl;
-		setAttribute(((MyTreeWidgetItem *)itm)->vd);
+		setAttribute(((MyTreeWidgetItem *)itm)->dataItem->voxlData);
 	}
 	else if (((MyTreeWidgetItem *)itm)->vo != NULL) {
 		//cout << "I am a Voxel Object." << endl;
@@ -712,9 +725,9 @@ void MainWindow::setAttribute(QTreeWidgetItem * itm, int i) {
 }
 
 void MainWindow::setAttribute(QListWidgetItem * itm) {
-	setAttribute(((MyListWidgetItem *)itm)->vd);
+	setAttribute(((MyListWidgetItem *)itm)->dataItem->voxlData);
 	ui->view_tabWidget->setCurrentWidget(ui->editWidgetLayout);
-	emit sentVDataPtr(((MyListWidgetItem *)itm)->vd);
+	emit sentVDataPtr(((MyListWidgetItem *)itm)->dataItem->voxlData);
 	return;
 }
 

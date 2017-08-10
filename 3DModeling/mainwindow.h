@@ -32,7 +32,7 @@ private:
 
 	void addInDataList_VO(vobj_t * vo);
 
-	void addInTreeList_VD(MyTreeWidgetItem * parent, vdata_t* vdata);
+	void addInTreeList_VD(MyTreeWidgetItem * parent, ditem_t* dataItem);
 	void addInTreeList_VO(MyTreeWidgetItem * parent, vobj_t* vobject);
 	void addInTreeList_VM(vmodel_t* vmodel);
 

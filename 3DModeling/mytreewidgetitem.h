@@ -5,9 +5,9 @@
 class MyTreeWidgetItem : public QTreeWidgetItem {
 
 public:
-	VoxelData* vd = NULL;
-	VoxelObject* vo = NULL;
-	VoxelModel* vm = NULL;
+	ditem_t* dataItem = NULL;
+	vobj_t* vo = NULL;
+	vmodel_t* vm = NULL;
 
 private:
 

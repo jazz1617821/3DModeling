@@ -5,7 +5,7 @@
 class MyListWidgetItem : public QListWidgetItem {
 
 public:
-	VoxelData* vd = NULL;
+	ditem_t* dataItem = NULL;
 
 private:
 

@@ -177,108 +177,90 @@ mainwindow.cpp(203): error C2039: 'prevSibling': is not a member of 'VoxelObject
   c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
 mainwindow.cpp(204): error C2039: 'parent': is not a member of 'VoxelObject'
   c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(216): error C2039: 'vd': is not a member of 'VoxelObject'
+mainwindow.cpp(248): error C2039: 'firstChild': is not a member of 'VoxelObject'
   c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(217): error C2039: 'vd': is not a member of 'VoxelObject'
+mainwindow.cpp(251): error C2039: 'nextSibling': is not a member of 'VoxelObject'
   c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(217): error C2227: left of '->name' must point to class/struct/union/generic type
-mainwindow.cpp(222): error C2039: 'number_of_child': is not a member of 'VoxelObject'
+mainwindow.cpp(319): error C2039: 'bbox': is not a member of 'VoxelObject'
   c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(223): error C2039: 'child': is not a member of 'VoxelObject'
+mainwindow.cpp(319): error C2227: left of '->maxBound' must point to class/struct/union/generic type
+mainwindow.cpp(320): error C2039: 'bbox': is not a member of 'VoxelObject'
   c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(242): error C2039: 'number_of_child': is not a member of 'VoxelObject'
+mainwindow.cpp(320): error C2227: left of '->minBound' must point to class/struct/union/generic type
+mainwindow.cpp(377): error C2039: 'bbox': is not a member of 'VoxelObject'
   c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(243): error C2039: 'number_of_child': is not a member of 'VoxelObject'
+mainwindow.cpp(377): error C2227: left of '->maxBound' must point to class/struct/union/generic type
+mainwindow.cpp(378): error C2039: 'bbox': is not a member of 'VoxelObject'
   c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(244): error C2039: 'child': is not a member of 'VoxelObject'
+mainwindow.cpp(378): error C2227: left of '->maxBound' must point to class/struct/union/generic type
+mainwindow.cpp(379): error C2039: 'bbox': is not a member of 'VoxelObject'
   c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(244): error C2660: 'MainWindow::addInTreeList_VO': function does not take 1 arguments
-mainwindow.cpp(248): error C2039: 'vd': is not a member of 'VoxelObject'
+mainwindow.cpp(379): error C2227: left of '->minBound' must point to class/struct/union/generic type
+mainwindow.cpp(380): error C2039: 'bbox': is not a member of 'VoxelObject'
   c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(248): error C2660: 'MainWindow::addInTreeList_VD': function does not take 1 arguments
-mainwindow.cpp(257): error C2039: 'root_vobj': is not a member of 'VoxelModel'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(56): note: see declaration of 'VoxelModel'
-mainwindow.cpp(257): error C2660: 'MainWindow::addInTreeList_VO': function does not take 1 arguments
-mainwindow.cpp(286): error C2039: 'voxelsize': is not a member of 'VoxelData'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(26): note: see declaration of 'VoxelData'
-mainwindow.cpp(288): error C2039: 'isbitcompress': is not a member of 'VoxelData'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(26): note: see declaration of 'VoxelData'
-mainwindow.cpp(290): error C2039: 'rawdata': is not a member of 'VoxelData'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(26): note: see declaration of 'VoxelData'
-mainwindow.cpp(293): error C2039: 'rawdata': is not a member of 'VoxelData'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(26): note: see declaration of 'VoxelData'
-mainwindow.cpp(293): error C2228: left of '.data' must have class/struct/union
-mainwindow.cpp(306): error C2039: 'voxelsize': is not a member of 'VoxelModel'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(56): note: see declaration of 'VoxelModel'
-mainwindow.cpp(308): error C2039: 'number_of_voxel_data': is not a member of 'VoxelModel'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(56): note: see declaration of 'VoxelModel'
-mainwindow.cpp(311): error C2039: 'root_vobj': is not a member of 'VoxelModel'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(56): note: see declaration of 'VoxelModel'
-mainwindow.cpp(312): error C2039: 'root_vobj': is not a member of 'VoxelModel'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(56): note: see declaration of 'VoxelModel'
-mainwindow.cpp(312): error C2227: left of '->name' must point to class/struct/union/generic type
-mainwindow.cpp(313): error C2039: 'root_vobj': is not a member of 'VoxelModel'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(56): note: see declaration of 'VoxelModel'
-mainwindow.cpp(313): error C2227: left of '->name' must point to class/struct/union/generic type
-mainwindow.cpp(315): error C2039: 'root_vobj': is not a member of 'VoxelModel'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(56): note: see declaration of 'VoxelModel'
-mainwindow.cpp(315): error C2227: left of '->max_bound' must point to class/struct/union/generic type
-mainwindow.cpp(316): error C2039: 'root_vobj': is not a member of 'VoxelModel'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(56): note: see declaration of 'VoxelModel'
-mainwindow.cpp(316): error C2227: left of '->min_bound' must point to class/struct/union/generic type
-mainwindow.cpp(318): error C2039: 'root_vobj': is not a member of 'VoxelModel'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(56): note: see declaration of 'VoxelModel'
-mainwindow.cpp(318): error C2227: left of '->number_of_child' must point to class/struct/union/generic type
-mainwindow.cpp(319): error C2039: 'root_vobj': is not a member of 'VoxelModel'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(56): note: see declaration of 'VoxelModel'
-mainwindow.cpp(319): error C2227: left of '->vd' must point to class/struct/union/generic type
-mainwindow.cpp(350): error C2039: 'voxelsize': is not a member of 'VoxelData'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(26): note: see declaration of 'VoxelData'
-mainwindow.cpp(351): error C2039: 'voxelsize': is not a member of 'VoxelData'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(26): note: see declaration of 'VoxelData'
-mainwindow.cpp(352): error C2039: 'isbitcompress': is not a member of 'VoxelData'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(26): note: see declaration of 'VoxelData'
-mainwindow.cpp(353): error C2039: 'isbitcompress': is not a member of 'VoxelData'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(26): note: see declaration of 'VoxelData'
-mainwindow.cpp(355): error C2039: 'rawdata': is not a member of 'VoxelData'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(26): note: see declaration of 'VoxelData'
-mainwindow.cpp(358): error C2039: 'rawdata': is not a member of 'VoxelData'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(26): note: see declaration of 'VoxelData'
-mainwindow.cpp(358): error C2228: left of '.data' must have class/struct/union
-mainwindow.cpp(373): error C2039: 'max_bound': is not a member of 'VoxelObject'
+mainwindow.cpp(380): error C2227: left of '->minBound' must point to class/struct/union/generic type
+mainwindow.cpp(386): error C2039: 'parent': is not a member of 'DataItem'
+  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(35): note: see declaration of 'DataItem'
+mainwindow.cpp(395): error C2039: 'firstChild': is not a member of 'VoxelObject'
   c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(374): error C2039: 'max_bound': is not a member of 'VoxelObject'
+mainwindow.cpp(396): error C2039: 'firstChild': is not a member of 'VoxelObject'
   c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(375): error C2039: 'min_bound': is not a member of 'VoxelObject'
+mainwindow.cpp(398): error C2039: 'parent': is not a member of 'VoxelObject'
   c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(376): error C2039: 'min_bound': is not a member of 'VoxelObject'
+mainwindow.cpp(401): error C2039: 'nextSibling': is not a member of 'VoxelObject'
   c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(377): error C2039: 'number_of_child': is not a member of 'VoxelObject'
+mainwindow.cpp(404): error C2039: 'nextSibling': is not a member of 'VoxelObject'
   c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(378): error C2039: 'number_of_child': is not a member of 'VoxelObject'
+mainwindow.cpp(405): error C2039: 'nextSibling': is not a member of 'VoxelObject'
   c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(380): error C2039: 'number_of_child': is not a member of 'VoxelObject'
+mainwindow.cpp(405): error C2227: left of '->prevSibling' must point to class/struct/union/generic type
+mainwindow.cpp(406): error C2039: 'nextSibling': is not a member of 'VoxelObject'
   c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(381): error C2039: 'vd': is not a member of 'VoxelObject'
+mainwindow.cpp(377): warning C4473: 'fscanf' : not enough arguments passed for format string
+  mainwindow.cpp(377): note: placeholders and their parameters expect 3 variadic arguments, but 0 were provided
+  mainwindow.cpp(377): note: the missing variadic argument 1 is required by format string '%f'
+mainwindow.cpp(379): warning C4473: 'fscanf' : not enough arguments passed for format string
+  mainwindow.cpp(379): note: placeholders and their parameters expect 3 variadic arguments, but 0 were provided
+  mainwindow.cpp(379): note: the missing variadic argument 1 is required by format string '%f'
+mainwindow.cpp(447): warning C4552: '+': operator has no effect; expected operator with side-effect
+mainwindow.cpp(450): error C2039: 'bbox': is not a member of 'VoxelObject'
   c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(382): error C2039: 'vd': is not a member of 'VoxelObject'
+mainwindow.cpp(450): error C2227: left of '->maxBound' must point to class/struct/union/generic type
+mainwindow.cpp(451): error C2039: 'bbox': is not a member of 'VoxelObject'
   c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(382): error C2227: left of '->name' must point to class/struct/union/generic type
-mainwindow.cpp(383): error C2039: 'vd': is not a member of 'VoxelObject'
+mainwindow.cpp(451): error C2227: left of '->minBound' must point to class/struct/union/generic type
+mainwindow.cpp(460): error C2039: 'firstChild': is not a member of 'VoxelObject'
   c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(383): error C2227: left of '->name' must point to class/struct/union/generic type
-mainwindow.cpp(384): error C2039: 'vd': is not a member of 'VoxelObject'
+mainwindow.cpp(463): error C2039: 'nextSibling': is not a member of 'VoxelObject'
   c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(384): error C2227: left of '->name' must point to class/struct/union/generic type
-mainwindow.cpp(385): error C2039: 'vd': is not a member of 'VoxelObject'
+mainwindow.cpp(450): warning C4473: 'fprintf' : not enough arguments passed for format string
+  mainwindow.cpp(450): note: placeholders and their parameters expect 3 variadic arguments, but 0 were provided
+  mainwindow.cpp(450): note: the missing variadic argument 1 is required by format string '%f'
+mainwindow.cpp(451): warning C4473: 'fprintf' : not enough arguments passed for format string
+  mainwindow.cpp(451): note: placeholders and their parameters expect 3 variadic arguments, but 0 were provided
+  mainwindow.cpp(451): note: the missing variadic argument 1 is required by format string '%f'
+mainwindow.cpp(554): error C2039: 'bbox': is not a member of 'VoxelObject'
   c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(389): error C2039: 'child': is not a member of 'VoxelObject'
+mainwindow.cpp(554): error C2227: left of '->maxBound' must point to class/struct/union/generic type
+mainwindow.cpp(555): error C2039: 'bbox': is not a member of 'VoxelObject'
   c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(389): error C2039: 'number_of_child': is not a member of 'VoxelObject'
+mainwindow.cpp(555): error C2227: left of '->maxBound' must point to class/struct/union/generic type
+mainwindow.cpp(556): error C2039: 'bbox': is not a member of 'VoxelObject'
   c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(390): error C2039: 'number_of_child': is not a member of 'VoxelObject'
+mainwindow.cpp(556): error C2227: left of '->maxBound' must point to class/struct/union/generic type
+mainwindow.cpp(562): error C2039: 'bbox': is not a member of 'VoxelObject'
   c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(390): fatal error C1003: error count exceeds 100; stopping compilation
+mainwindow.cpp(562): error C2227: left of '->minBound' must point to class/struct/union/generic type
+mainwindow.cpp(563): error C2039: 'bbox': is not a member of 'VoxelObject'
+  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
+mainwindow.cpp(563): error C2227: left of '->minBound' must point to class/struct/union/generic type
+mainwindow.cpp(564): error C2039: 'bbox': is not a member of 'VoxelObject'
+  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
+mainwindow.cpp(564): error C2227: left of '->minBound' must point to class/struct/union/generic type
+mainwindow.cpp(582): error C2039: 'firstChild': is not a member of 'VoxelObject'
+  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
+mainwindow.cpp(588): error C2039: 'nextSibling': is not a member of 'VoxelObject'
+  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
   material.cpp
 material.cpp(62): warning C4838: conversion from 'double' to 'float' requires a narrowing conversion
 material.cpp(90): warning C4838: conversion from 'double' to 'float' requires a narrowing conversion
