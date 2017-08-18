@@ -1002,16 +1002,18 @@ void ViewWidget::renderQuad()
 
 void ViewWidget::makeModelVBO(vobj_t* vo)
 {
-	if (vo->number_of_child == 1) {
-		cout << "Make " << vo->vd->name << " VBO." << endl;
+	if (vo->numberOfChild == 1) {
+		cout << "Make " << vo->dataItem->voxlData->name << " VBO." << endl;
 		addVertexBufferObject(createVoxelVBO(vo), vboa);
 		setColorVBO(1.2, 1.0, 0.47, 1.0, vboa->vbos[vboa->numVBOs - 1]);
 		bindData(vboa->vbos[vboa->numVBOs - 1]);
 		return;
 	}
 	else {
-		for (int i = 0; i < vo->number_of_child; i++) {
-			makeModelVBO(vo->child[i]);
+		vobj_t* voxelObjectPtr = vo->firstChild;
+		while (voxelObjectPtr != NULL) {
+			makeModelVBO(voxelObjectPtr);
+			voxelObjectPtr = voxelObjectPtr->nextSibling;
 		}
 	}
 }
@@ -1021,7 +1023,7 @@ void ViewWidget::getVModelPtr(vmodel_t* vmodel) {
 	this->vmodel = new VoxelModel;
 	this->vmodel = vmodel;
 	cout << this->vmodel->name << endl;
-	makeModelVBO(this->vmodel->root_vobj);
+	makeModelVBO(this->vmodel->rootObj);
 	update();
 	return;
 }

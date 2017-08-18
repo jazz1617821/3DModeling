@@ -1,10 +1,10 @@
-#include "mainwindow.h"
+#include "tdmmainwindow.h"
 #include <QtWidgets/QApplication>
 
 int main(int argc, char *argv[])
 {
 	QApplication a(argc, argv);
-	MainWindow w;
+	TDMMainWindow w;
 	w.show();
 	return a.exec();
 }

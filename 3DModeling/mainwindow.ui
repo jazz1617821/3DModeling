@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>mainwindow</string>
+   <string>3DModeling</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout_3">
@@ -218,8 +218,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>458</width>
-                 <height>69</height>
+                 <width>100</width>
+                 <height>58</height>
                 </rect>
                </property>
                <property name="sizePolicy">
@@ -272,8 +272,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>458</width>
-                 <height>69</height>
+                 <width>100</width>
+                 <height>30</height>
                 </rect>
                </property>
                <property name="sizePolicy">

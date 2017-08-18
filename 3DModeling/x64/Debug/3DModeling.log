@@ -1,480 +1,81 @@
-﻿  Moc'ing mainwindow.h...
-  Uic'ing mainwindow.ui...
-C:\Users\Jazz\Documents\GitHub\3DModeling\3DModeling\mainwindow.ui : warning : The name 'widget' (QWidget) is already in use, defaulting to 'widget1'.
+﻿  Moc'ing tdmmainwindow.h...
+  Uic'ing threedimensionmodelingwindow.ui...
+C:\Users\Jazz\Documents\GitHub\3DModeling\3DModeling\threedimensionmodelingwindow.ui : warning : The name 'widget' (QWidget) is already in use, defaulting to 'widget1'.
   Moc'ing editwidget.h...
   Moc'ing viewwidget.h...
   Rcc'ing mainwindow.qrc...
 RCC : warning : No resources in 'C:\Users\Jazz\Documents\GitHub\3DModeling\3DModeling\mainwindow.qrc'.
   
   editwidget.cpp
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(37): error C2143: syntax error: missing ';' before '*'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(37): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(37): error C2238: unexpected token(s) preceding ';'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(45): error C2143: syntax error: missing ';' before '*'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(45): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(45): error C2238: unexpected token(s) preceding ';'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(47): error C2143: syntax error: missing ';' before '*'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(47): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(47): error C2238: unexpected token(s) preceding ';'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(48): error C2143: syntax error: missing ';' before '*'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(48): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(48): error C2238: unexpected token(s) preceding ';'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(49): error C2143: syntax error: missing ';' before '*'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(49): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(49): error C2238: unexpected token(s) preceding ';'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(51): error C2143: syntax error: missing ';' before '*'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(51): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(51): error C2238: unexpected token(s) preceding ';'
   enqlist.cpp
   moc_editwidget.cpp
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(37): error C2143: syntax error: missing ';' before '*'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(37): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(37): error C2238: unexpected token(s) preceding ';'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(45): error C2143: syntax error: missing ';' before '*'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(45): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(45): error C2238: unexpected token(s) preceding ';'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(47): error C2143: syntax error: missing ';' before '*'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(47): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(47): error C2238: unexpected token(s) preceding ';'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(48): error C2143: syntax error: missing ';' before '*'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(48): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(48): error C2238: unexpected token(s) preceding ';'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(49): error C2143: syntax error: missing ';' before '*'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(49): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(49): error C2238: unexpected token(s) preceding ';'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(51): error C2143: syntax error: missing ';' before '*'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(51): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(51): error C2238: unexpected token(s) preceding ';'
-  moc_mainwindow.cpp
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(37): error C2143: syntax error: missing ';' before '*'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(37): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(37): error C2238: unexpected token(s) preceding ';'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(45): error C2143: syntax error: missing ';' before '*'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(45): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(45): error C2238: unexpected token(s) preceding ';'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(47): error C2143: syntax error: missing ';' before '*'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(47): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(47): error C2238: unexpected token(s) preceding ';'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(48): error C2143: syntax error: missing ';' before '*'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(48): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(48): error C2238: unexpected token(s) preceding ';'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(49): error C2143: syntax error: missing ';' before '*'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(49): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(49): error C2238: unexpected token(s) preceding ';'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(51): error C2143: syntax error: missing ';' before '*'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(51): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(51): error C2238: unexpected token(s) preceding ';'
+  moc_tdmmainwindow.cpp
   moc_viewwidget.cpp
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(37): error C2143: syntax error: missing ';' before '*'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(37): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(37): error C2238: unexpected token(s) preceding ';'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(45): error C2143: syntax error: missing ';' before '*'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(45): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(45): error C2238: unexpected token(s) preceding ';'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(47): error C2143: syntax error: missing ';' before '*'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(47): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(47): error C2238: unexpected token(s) preceding ';'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(48): error C2143: syntax error: missing ';' before '*'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(48): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(48): error C2238: unexpected token(s) preceding ';'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(49): error C2143: syntax error: missing ';' before '*'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(49): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(49): error C2238: unexpected token(s) preceding ';'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(51): error C2143: syntax error: missing ';' before '*'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(51): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(51): error C2238: unexpected token(s) preceding ';'
   light.cpp
   LoadShaders.cpp
   main.cpp
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(37): error C2143: syntax error: missing ';' before '*'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(37): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(37): error C2238: unexpected token(s) preceding ';'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(45): error C2143: syntax error: missing ';' before '*'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(45): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(45): error C2238: unexpected token(s) preceding ';'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(47): error C2143: syntax error: missing ';' before '*'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(47): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(47): error C2238: unexpected token(s) preceding ';'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(48): error C2143: syntax error: missing ';' before '*'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(48): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(48): error C2238: unexpected token(s) preceding ';'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(49): error C2143: syntax error: missing ';' before '*'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(49): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(49): error C2238: unexpected token(s) preceding ';'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(51): error C2143: syntax error: missing ';' before '*'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(51): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(51): error C2238: unexpected token(s) preceding ';'
-  mainwindow.cpp
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(37): error C2143: syntax error: missing ';' before '*'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(37): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(37): error C2238: unexpected token(s) preceding ';'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(45): error C2143: syntax error: missing ';' before '*'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(45): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(45): error C2238: unexpected token(s) preceding ';'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(47): error C2143: syntax error: missing ';' before '*'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(47): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(47): error C2238: unexpected token(s) preceding ';'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(48): error C2143: syntax error: missing ';' before '*'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(48): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(48): error C2238: unexpected token(s) preceding ';'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(49): error C2143: syntax error: missing ';' before '*'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(49): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(49): error C2238: unexpected token(s) preceding ';'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(51): error C2143: syntax error: missing ';' before '*'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(51): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(51): error C2238: unexpected token(s) preceding ';'
-mainwindow.cpp(38): warning C4129: '	': unrecognized character escape sequence
-mainwindow.cpp(39): warning C4129: '	': unrecognized character escape sequence
-mainwindow.cpp(138): error C2039: 'bbox': is not a member of 'VoxelObject'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(138): error C2227: left of '->maxBound' must point to class/struct/union/generic type
-mainwindow.cpp(139): error C2039: 'bbox': is not a member of 'VoxelObject'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(139): error C2227: left of '->minBound' must point to class/struct/union/generic type
-mainwindow.cpp(143): error C2039: 'firstChild': is not a member of 'VoxelObject'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(151): error C2039: 'bbox': is not a member of 'VoxelObject'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(151): error C2227: left of '->maxBound' must point to class/struct/union/generic type
-mainwindow.cpp(152): error C2039: 'bbox': is not a member of 'VoxelObject'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(152): error C2227: left of '->minBound' must point to class/struct/union/generic type
-mainwindow.cpp(160): error C2039: 'bbox': is not a member of 'VoxelObject'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(160): error C2227: left of '->maxBound' must point to class/struct/union/generic type
-mainwindow.cpp(161): error C2039: 'bbox': is not a member of 'VoxelObject'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(161): error C2227: left of '->minBound' must point to class/struct/union/generic type
-mainwindow.cpp(172): error C2039: 'bbox': is not a member of 'VoxelObject'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(172): error C2227: left of '->maxBound' must point to class/struct/union/generic type
-mainwindow.cpp(173): error C2039: 'bbox': is not a member of 'VoxelObject'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(173): error C2227: left of '->minBound' must point to class/struct/union/generic type
-mainwindow.cpp(182): error C2039: 'bbox': is not a member of 'VoxelObject'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(182): error C2227: left of '->maxBound' must point to class/struct/union/generic type
-mainwindow.cpp(183): error C2039: 'bbox': is not a member of 'VoxelObject'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(183): error C2227: left of '->minBound' must point to class/struct/union/generic type
-mainwindow.cpp(189): error C2039: 'firstChild': is not a member of 'VoxelObject'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(191): error C2039: 'nextSibling': is not a member of 'VoxelObject'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(192): error C2039: 'parent': is not a member of 'VoxelObject'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(193): error C2039: 'firstChild': is not a member of 'VoxelObject'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(195): error C2039: 'nextSibling': is not a member of 'VoxelObject'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(196): error C2039: 'parent': is not a member of 'VoxelObject'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(199): error C2039: 'prevSibling': is not a member of 'VoxelObject'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(200): error C2039: 'parent': is not a member of 'VoxelObject'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(203): error C2039: 'prevSibling': is not a member of 'VoxelObject'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(204): error C2039: 'parent': is not a member of 'VoxelObject'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(248): error C2039: 'firstChild': is not a member of 'VoxelObject'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(251): error C2039: 'nextSibling': is not a member of 'VoxelObject'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(319): error C2039: 'bbox': is not a member of 'VoxelObject'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(319): error C2227: left of '->maxBound' must point to class/struct/union/generic type
-mainwindow.cpp(320): error C2039: 'bbox': is not a member of 'VoxelObject'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(320): error C2227: left of '->minBound' must point to class/struct/union/generic type
-mainwindow.cpp(377): error C2039: 'bbox': is not a member of 'VoxelObject'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(377): error C2227: left of '->maxBound' must point to class/struct/union/generic type
-mainwindow.cpp(378): error C2039: 'bbox': is not a member of 'VoxelObject'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(378): error C2227: left of '->maxBound' must point to class/struct/union/generic type
-mainwindow.cpp(379): error C2039: 'bbox': is not a member of 'VoxelObject'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(379): error C2227: left of '->minBound' must point to class/struct/union/generic type
-mainwindow.cpp(380): error C2039: 'bbox': is not a member of 'VoxelObject'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(380): error C2227: left of '->minBound' must point to class/struct/union/generic type
-mainwindow.cpp(386): error C2039: 'parent': is not a member of 'DataItem'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(35): note: see declaration of 'DataItem'
-mainwindow.cpp(395): error C2039: 'firstChild': is not a member of 'VoxelObject'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(396): error C2039: 'firstChild': is not a member of 'VoxelObject'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(398): error C2039: 'parent': is not a member of 'VoxelObject'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(401): error C2039: 'nextSibling': is not a member of 'VoxelObject'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(404): error C2039: 'nextSibling': is not a member of 'VoxelObject'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(405): error C2039: 'nextSibling': is not a member of 'VoxelObject'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(405): error C2227: left of '->prevSibling' must point to class/struct/union/generic type
-mainwindow.cpp(406): error C2039: 'nextSibling': is not a member of 'VoxelObject'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(377): warning C4473: 'fscanf' : not enough arguments passed for format string
-  mainwindow.cpp(377): note: placeholders and their parameters expect 3 variadic arguments, but 0 were provided
-  mainwindow.cpp(377): note: the missing variadic argument 1 is required by format string '%f'
-mainwindow.cpp(379): warning C4473: 'fscanf' : not enough arguments passed for format string
-  mainwindow.cpp(379): note: placeholders and their parameters expect 3 variadic arguments, but 0 were provided
-  mainwindow.cpp(379): note: the missing variadic argument 1 is required by format string '%f'
-mainwindow.cpp(447): warning C4552: '+': operator has no effect; expected operator with side-effect
-mainwindow.cpp(450): error C2039: 'bbox': is not a member of 'VoxelObject'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(450): error C2227: left of '->maxBound' must point to class/struct/union/generic type
-mainwindow.cpp(451): error C2039: 'bbox': is not a member of 'VoxelObject'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(451): error C2227: left of '->minBound' must point to class/struct/union/generic type
-mainwindow.cpp(460): error C2039: 'firstChild': is not a member of 'VoxelObject'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(463): error C2039: 'nextSibling': is not a member of 'VoxelObject'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(450): warning C4473: 'fprintf' : not enough arguments passed for format string
-  mainwindow.cpp(450): note: placeholders and their parameters expect 3 variadic arguments, but 0 were provided
-  mainwindow.cpp(450): note: the missing variadic argument 1 is required by format string '%f'
-mainwindow.cpp(451): warning C4473: 'fprintf' : not enough arguments passed for format string
-  mainwindow.cpp(451): note: placeholders and their parameters expect 3 variadic arguments, but 0 were provided
-  mainwindow.cpp(451): note: the missing variadic argument 1 is required by format string '%f'
-mainwindow.cpp(554): error C2039: 'bbox': is not a member of 'VoxelObject'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(554): error C2227: left of '->maxBound' must point to class/struct/union/generic type
-mainwindow.cpp(555): error C2039: 'bbox': is not a member of 'VoxelObject'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(555): error C2227: left of '->maxBound' must point to class/struct/union/generic type
-mainwindow.cpp(556): error C2039: 'bbox': is not a member of 'VoxelObject'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(556): error C2227: left of '->maxBound' must point to class/struct/union/generic type
-mainwindow.cpp(562): error C2039: 'bbox': is not a member of 'VoxelObject'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(562): error C2227: left of '->minBound' must point to class/struct/union/generic type
-mainwindow.cpp(563): error C2039: 'bbox': is not a member of 'VoxelObject'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(563): error C2227: left of '->minBound' must point to class/struct/union/generic type
-mainwindow.cpp(564): error C2039: 'bbox': is not a member of 'VoxelObject'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(564): error C2227: left of '->minBound' must point to class/struct/union/generic type
-mainwindow.cpp(582): error C2039: 'firstChild': is not a member of 'VoxelObject'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-mainwindow.cpp(588): error C2039: 'nextSibling': is not a member of 'VoxelObject'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
+  tdmmainwindow.cpp
+tdmmainwindow.cpp(454): warning C4552: '+': operator has no effect; expected operator with side-effect
   material.cpp
 material.cpp(62): warning C4838: conversion from 'double' to 'float' requires a narrowing conversion
 material.cpp(90): warning C4838: conversion from 'double' to 'float' requires a narrowing conversion
 material.cpp(118): warning C4838: conversion from 'double' to 'float' requires a narrowing conversion
 material.cpp(146): warning C4838: conversion from 'double' to 'float' requires a narrowing conversion
   mylistwidgetitem.cpp
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(37): error C2143: syntax error: missing ';' before '*'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(37): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(37): error C2238: unexpected token(s) preceding ';'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(45): error C2143: syntax error: missing ';' before '*'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(45): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(45): error C2238: unexpected token(s) preceding ';'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(47): error C2143: syntax error: missing ';' before '*'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(47): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(47): error C2238: unexpected token(s) preceding ';'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(48): error C2143: syntax error: missing ';' before '*'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(48): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(48): error C2238: unexpected token(s) preceding ';'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(49): error C2143: syntax error: missing ';' before '*'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(49): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(49): error C2238: unexpected token(s) preceding ';'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(51): error C2143: syntax error: missing ';' before '*'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(51): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(51): error C2238: unexpected token(s) preceding ';'
   mymath.cpp
   mytreewidgetitem.cpp
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(37): error C2143: syntax error: missing ';' before '*'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(37): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(37): error C2238: unexpected token(s) preceding ';'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(45): error C2143: syntax error: missing ';' before '*'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(45): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(45): error C2238: unexpected token(s) preceding ';'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(47): error C2143: syntax error: missing ';' before '*'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(47): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(47): error C2238: unexpected token(s) preceding ';'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(48): error C2143: syntax error: missing ';' before '*'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(48): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(48): error C2238: unexpected token(s) preceding ';'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(49): error C2143: syntax error: missing ';' before '*'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(49): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(49): error C2238: unexpected token(s) preceding ';'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(51): error C2143: syntax error: missing ';' before '*'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(51): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(51): error C2238: unexpected token(s) preceding ';'
   object.cpp
 object.cpp(204): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
   voxelvbo.cpp
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(31): error C2065: 'NULL': undeclared identifier
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(37): error C2143: syntax error: missing ';' before '*'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(37): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(37): error C2238: unexpected token(s) preceding ';'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(45): error C2143: syntax error: missing ';' before '*'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(45): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(45): error C2238: unexpected token(s) preceding ';'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(47): error C2143: syntax error: missing ';' before '*'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(47): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(47): error C2238: unexpected token(s) preceding ';'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(48): error C2143: syntax error: missing ';' before '*'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(48): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(48): error C2238: unexpected token(s) preceding ';'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(49): error C2143: syntax error: missing ';' before '*'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(49): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(49): error C2238: unexpected token(s) preceding ';'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(51): error C2143: syntax error: missing ';' before '*'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(51): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(51): error C2238: unexpected token(s) preceding ';'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(62): error C2065: 'NULL': undeclared identifier
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(63): error C2065: 'NULL': undeclared identifier
-voxelvbo.cpp(17): error C2039: 'vd': is not a member of 'VoxelObject'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-voxelvbo.cpp(18): error C2039: 'vd': is not a member of 'VoxelObject'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-voxelvbo.cpp(18): error C2227: left of '->rawdata' must point to class/struct/union/generic type
-voxelvbo.cpp(23): error C2039: 'min_bound': is not a member of 'VoxelObject'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-voxelvbo.cpp(24): error C2039: 'min_bound': is not a member of 'VoxelObject'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-voxelvbo.cpp(25): error C2039: 'min_bound': is not a member of 'VoxelObject'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-voxelvbo.cpp(37): error C2039: 'rawdata': is not a member of 'VoxelData'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(26): note: see declaration of 'VoxelData'
-voxelvbo.cpp(37): error C2228: left of '.data' must have class/struct/union
-voxelvbo.cpp(38): error C2039: 'rawdata': is not a member of 'VoxelData'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(26): note: see declaration of 'VoxelData'
-voxelvbo.cpp(38): error C2228: left of '.data' must have class/struct/union
-voxelvbo.cpp(40): error C2039: 'rawdata': is not a member of 'VoxelData'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(26): note: see declaration of 'VoxelData'
-voxelvbo.cpp(40): error C2228: left of '.data' must have class/struct/union
-voxelvbo.cpp(42): error C2039: 'rawdata': is not a member of 'VoxelData'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(26): note: see declaration of 'VoxelData'
-voxelvbo.cpp(42): error C2228: left of '.data' must have class/struct/union
-voxelvbo.cpp(44): error C2039: 'rawdata': is not a member of 'VoxelData'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(26): note: see declaration of 'VoxelData'
-voxelvbo.cpp(44): error C2228: left of '.data' must have class/struct/union
-voxelvbo.cpp(46): error C2039: 'rawdata': is not a member of 'VoxelData'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(26): note: see declaration of 'VoxelData'
-voxelvbo.cpp(46): error C2228: left of '.data' must have class/struct/union
-voxelvbo.cpp(48): error C2039: 'rawdata': is not a member of 'VoxelData'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(26): note: see declaration of 'VoxelData'
-voxelvbo.cpp(48): error C2228: left of '.data' must have class/struct/union
-voxelvbo.cpp(64): error C2039: 'voxelsize': is not a member of 'VoxelData'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(26): note: see declaration of 'VoxelData'
-voxelvbo.cpp(64): error C2660: 'scale': function does not take 2 arguments
-voxelvbo.cpp(76): error C2039: 'rawdata': is not a member of 'VoxelData'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(26): note: see declaration of 'VoxelData'
-voxelvbo.cpp(76): error C2228: left of '.data' must have class/struct/union
-voxelvbo.cpp(77): error C2039: 'rawdata': is not a member of 'VoxelData'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(26): note: see declaration of 'VoxelData'
-voxelvbo.cpp(77): error C2228: left of '.data' must have class/struct/union
-voxelvbo.cpp(79): error C2039: 'rawdata': is not a member of 'VoxelData'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(26): note: see declaration of 'VoxelData'
-voxelvbo.cpp(79): error C2228: left of '.data' must have class/struct/union
-voxelvbo.cpp(81): error C2039: 'rawdata': is not a member of 'VoxelData'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(26): note: see declaration of 'VoxelData'
-voxelvbo.cpp(81): error C2228: left of '.data' must have class/struct/union
-voxelvbo.cpp(83): error C2039: 'rawdata': is not a member of 'VoxelData'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(26): note: see declaration of 'VoxelData'
-voxelvbo.cpp(83): error C2228: left of '.data' must have class/struct/union
-voxelvbo.cpp(85): error C2039: 'rawdata': is not a member of 'VoxelData'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(26): note: see declaration of 'VoxelData'
-voxelvbo.cpp(85): error C2228: left of '.data' must have class/struct/union
-voxelvbo.cpp(87): error C2039: 'rawdata': is not a member of 'VoxelData'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(26): note: see declaration of 'VoxelData'
-voxelvbo.cpp(87): error C2228: left of '.data' must have class/struct/union
-voxelvbo.cpp(91): error C2039: 'voxelsize': is not a member of 'VoxelData'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(26): note: see declaration of 'VoxelData'
-voxelvbo.cpp(92): error C2039: 'voxelsize': is not a member of 'VoxelData'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(26): note: see declaration of 'VoxelData'
-voxelvbo.cpp(93): error C2039: 'voxelsize': is not a member of 'VoxelData'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(26): note: see declaration of 'VoxelData'
-voxelvbo.cpp(94): error C2660: 'translate': function does not take 2 arguments
-voxelvbo.cpp(147): error C2039: 'rawdata': is not a member of 'VoxelData'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(26): note: see declaration of 'VoxelData'
-voxelvbo.cpp(165): error C2039: 'rawdata': is not a member of 'VoxelData'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(26): note: see declaration of 'VoxelData'
-voxelvbo.cpp(165): error C2228: left of '.data' must have class/struct/union
-voxelvbo.cpp(166): error C2039: 'rawdata': is not a member of 'VoxelData'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(26): note: see declaration of 'VoxelData'
-voxelvbo.cpp(166): error C2228: left of '.data' must have class/struct/union
-voxelvbo.cpp(168): error C2039: 'rawdata': is not a member of 'VoxelData'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(26): note: see declaration of 'VoxelData'
-voxelvbo.cpp(168): error C2228: left of '.data' must have class/struct/union
-voxelvbo.cpp(170): error C2039: 'rawdata': is not a member of 'VoxelData'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(26): note: see declaration of 'VoxelData'
-voxelvbo.cpp(170): error C2228: left of '.data' must have class/struct/union
-voxelvbo.cpp(172): error C2039: 'rawdata': is not a member of 'VoxelData'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(26): note: see declaration of 'VoxelData'
-voxelvbo.cpp(172): error C2228: left of '.data' must have class/struct/union
-voxelvbo.cpp(174): error C2039: 'rawdata': is not a member of 'VoxelData'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(26): note: see declaration of 'VoxelData'
-voxelvbo.cpp(174): error C2228: left of '.data' must have class/struct/union
-voxelvbo.cpp(176): error C2039: 'rawdata': is not a member of 'VoxelData'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(26): note: see declaration of 'VoxelData'
-voxelvbo.cpp(176): error C2228: left of '.data' must have class/struct/union
-voxelvbo.cpp(192): error C2039: 'voxelsize': is not a member of 'VoxelData'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(26): note: see declaration of 'VoxelData'
-voxelvbo.cpp(192): error C2660: 'scale': function does not take 2 arguments
-voxelvbo.cpp(204): error C2039: 'rawdata': is not a member of 'VoxelData'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(26): note: see declaration of 'VoxelData'
-voxelvbo.cpp(204): error C2228: left of '.data' must have class/struct/union
-voxelvbo.cpp(205): error C2039: 'rawdata': is not a member of 'VoxelData'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(26): note: see declaration of 'VoxelData'
-voxelvbo.cpp(205): error C2228: left of '.data' must have class/struct/union
-voxelvbo.cpp(207): error C2039: 'rawdata': is not a member of 'VoxelData'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(26): note: see declaration of 'VoxelData'
-voxelvbo.cpp(207): error C2228: left of '.data' must have class/struct/union
-voxelvbo.cpp(209): error C2039: 'rawdata': is not a member of 'VoxelData'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(26): note: see declaration of 'VoxelData'
-voxelvbo.cpp(209): error C2228: left of '.data' must have class/struct/union
-voxelvbo.cpp(211): error C2039: 'rawdata': is not a member of 'VoxelData'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(26): note: see declaration of 'VoxelData'
-voxelvbo.cpp(211): error C2228: left of '.data' must have class/struct/union
-voxelvbo.cpp(213): error C2039: 'rawdata': is not a member of 'VoxelData'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(26): note: see declaration of 'VoxelData'
-voxelvbo.cpp(213): error C2228: left of '.data' must have class/struct/union
-voxelvbo.cpp(215): error C2039: 'rawdata': is not a member of 'VoxelData'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(26): note: see declaration of 'VoxelData'
-voxelvbo.cpp(215): error C2228: left of '.data' must have class/struct/union
-voxelvbo.cpp(219): error C2039: 'voxelsize': is not a member of 'VoxelData'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(26): note: see declaration of 'VoxelData'
-voxelvbo.cpp(220): error C2039: 'voxelsize': is not a member of 'VoxelData'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(26): note: see declaration of 'VoxelData'
-voxelvbo.cpp(221): error C2039: 'voxelsize': is not a member of 'VoxelData'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(26): note: see declaration of 'VoxelData'
-voxelvbo.cpp(222): error C2660: 'translate': function does not take 2 arguments
   viewwidget.cpp
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(37): error C2143: syntax error: missing ';' before '*'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(37): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(37): error C2238: unexpected token(s) preceding ';'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(45): error C2143: syntax error: missing ';' before '*'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(45): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(45): error C2238: unexpected token(s) preceding ';'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(47): error C2143: syntax error: missing ';' before '*'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(47): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(47): error C2238: unexpected token(s) preceding ';'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(48): error C2143: syntax error: missing ';' before '*'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(48): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(48): error C2238: unexpected token(s) preceding ';'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(49): error C2143: syntax error: missing ';' before '*'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(49): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(49): error C2238: unexpected token(s) preceding ';'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(51): error C2143: syntax error: missing ';' before '*'
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(51): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(51): error C2238: unexpected token(s) preceding ';'
 viewwidget.cpp(754): warning C4838: conversion from 'double' to 'float' requires a narrowing conversion
-viewwidget.cpp(1005): error C2039: 'number_of_child': is not a member of 'VoxelObject'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-viewwidget.cpp(1006): error C2039: 'vd': is not a member of 'VoxelObject'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-viewwidget.cpp(1006): error C2227: left of '->name' must point to class/struct/union/generic type
-viewwidget.cpp(1013): error C2039: 'number_of_child': is not a member of 'VoxelObject'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-viewwidget.cpp(1014): error C2039: 'child': is not a member of 'VoxelObject'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(42): note: see declaration of 'VoxelObject'
-viewwidget.cpp(1024): error C2039: 'root_vobj': is not a member of 'VoxelModel'
-  c:\users\jazz\documents\github\3dmodeling\3dmodeling\voxel.h(56): note: see declaration of 'VoxelModel'
   Generating Code...
+  qrc_mainwindow.cpp
+LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
+editwidget.obj : warning LNK4217: locally defined symbol glewInit imported in function "protected: virtual void __cdecl EditWidget::initializeGL(void)" (?initializeGL@EditWidget@@MEAAXXZ)
+viewwidget.obj : warning LNK4049: locally defined symbol glewInit imported
+editwidget.obj : warning LNK4049: locally defined symbol __glewBindBuffer imported
+viewwidget.obj : warning LNK4049: locally defined symbol __glewBindBuffer imported
+editwidget.obj : warning LNK4049: locally defined symbol __glewBufferData imported
+viewwidget.obj : warning LNK4049: locally defined symbol __glewBufferData imported
+editwidget.obj : warning LNK4049: locally defined symbol __glewGenBuffers imported
+viewwidget.obj : warning LNK4049: locally defined symbol __glewGenBuffers imported
+editwidget.obj : warning LNK4049: locally defined symbol __glewDisableVertexAttribArray imported
+viewwidget.obj : warning LNK4049: locally defined symbol __glewDisableVertexAttribArray imported
+editwidget.obj : warning LNK4049: locally defined symbol __glewEnableVertexAttribArray imported
+viewwidget.obj : warning LNK4049: locally defined symbol __glewEnableVertexAttribArray imported
+editwidget.obj : warning LNK4049: locally defined symbol __glewGetUniformLocation imported
+viewwidget.obj : warning LNK4049: locally defined symbol __glewGetUniformLocation imported
+editwidget.obj : warning LNK4049: locally defined symbol __glewUniform4fv imported
+viewwidget.obj : warning LNK4049: locally defined symbol __glewUniform4fv imported
+editwidget.obj : warning LNK4049: locally defined symbol __glewUniformMatrix4fv imported
+viewwidget.obj : warning LNK4049: locally defined symbol __glewUniformMatrix4fv imported
+editwidget.obj : warning LNK4049: locally defined symbol __glewUseProgram imported
+viewwidget.obj : warning LNK4049: locally defined symbol __glewUseProgram imported
+editwidget.obj : warning LNK4049: locally defined symbol __glewVertexAttribPointer imported
+viewwidget.obj : warning LNK4049: locally defined symbol __glewVertexAttribPointer imported
+editwidget.obj : warning LNK4049: locally defined symbol __glewBindVertexArray imported
+viewwidget.obj : warning LNK4049: locally defined symbol __glewBindVertexArray imported
+editwidget.obj : warning LNK4049: locally defined symbol __glewGenVertexArrays imported
+viewwidget.obj : warning LNK4049: locally defined symbol __glewGenVertexArrays imported
+viewwidget.obj : warning LNK4049: locally defined symbol __glewActiveTexture imported
+viewwidget.obj : warning LNK4049: locally defined symbol __glewDrawBuffers imported
+viewwidget.obj : warning LNK4049: locally defined symbol __glewUniform1f imported
+viewwidget.obj : warning LNK4049: locally defined symbol __glewUniform1i imported
+viewwidget.obj : warning LNK4049: locally defined symbol __glewUniform2fv imported
+viewwidget.obj : warning LNK4049: locally defined symbol __glewUniform3fv imported
+viewwidget.obj : warning LNK4049: locally defined symbol __glewUniform4f imported
+viewwidget.obj : warning LNK4049: locally defined symbol __glewBindFramebuffer imported
+viewwidget.obj : warning LNK4049: locally defined symbol __glewBindRenderbuffer imported
+viewwidget.obj : warning LNK4049: locally defined symbol __glewBlitFramebuffer imported
+viewwidget.obj : warning LNK4049: locally defined symbol __glewCheckFramebufferStatus imported
+viewwidget.obj : warning LNK4049: locally defined symbol __glewFramebufferRenderbuffer imported
+viewwidget.obj : warning LNK4049: locally defined symbol __glewFramebufferTexture2D imported
+viewwidget.obj : warning LNK4049: locally defined symbol __glewGenFramebuffers imported
+viewwidget.obj : warning LNK4049: locally defined symbol __glewGenRenderbuffers imported
+viewwidget.obj : warning LNK4049: locally defined symbol __glewRenderbufferStorage imported
+viewwidget.obj : warning LNK4049: locally defined symbol __glewRenderbufferStorageMultisample imported
+viewwidget.obj : warning LNK4049: locally defined symbol __glewTexImage2DMultisample imported
+glew32s.lib(glew.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'glew32s.lib(glew.obj)' or at 'C:\Users\Jazz\Documents\GitHub\3DModeling\x64\Debug\vc120.pdb'; linking object as if no debug info
+  3DModeling.vcxproj -> C:\Users\Jazz\Documents\GitHub\3DModeling\x64\Debug\3DModeling.exe
+  3DModeling.vcxproj -> C:\Users\Jazz\Documents\GitHub\3DModeling\x64\Debug\3DModeling.pdb (Full PDB)

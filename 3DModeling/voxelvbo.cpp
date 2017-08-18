@@ -14,15 +14,15 @@ vbo_t* createVoxelVBO(vobj_t* vo)
 	bool neighbor[26];
 	int i, j, k, l, m, values[3], index, count, numFaces, resolution[3];
 	float translateMat[16], scaleMat[16], ids[144], face[4], origin[3];
-	vdata_t* vd = vo->vd;
-	voxel_t* vox = vo->vd->rawdata;
+	vdata_t* vd = vo->dataItem->voxlData;
+	voxel_t* vox = vo->dataItem->voxlData->rawData;
 	vbo_t* vbo;
 	vbo_t* boxVBO;
 	vbo_t* boxWFVBO;
 
-	origin[X] = vo->min_bound[X];
-	origin[Y] = vo->min_bound[Y];
-	origin[Z] = vo->min_bound[Z];
+	origin[X] = -(vo->bbox->minBound[X]/2);
+	origin[Y] = -(vo->bbox->minBound[Y]/2);
+	origin[Z] = -(vo->bbox->minBound[Z]/2);
 
 
 	// count drawing faces
@@ -34,18 +34,18 @@ vbo_t* createVoxelVBO(vobj_t* vo)
 			for (k = 0; k < vd->resolution[X]; ++k)
 			{
 				index = k + j * vd->resolution[X] + i * vd->resolution[X] * vd->resolution[Y];
-				if (vd->rawdata[index].data == VOX_EMPTY) continue;
-				(k + 1 < vd->resolution[X] && vd->rawdata[index + 1].data) ?
+				if (vd->rawData[index].data == VOX_EMPTY) continue;
+				(k + 1 < vd->resolution[X] && vd->rawData[index + 1].data) ?
 					0 : numFaces++;
-				(k > 1 && vd->rawdata[index - 1].data) ?
+				(k > 1 && vd->rawData[index - 1].data) ?
 					0 : numFaces++;
-				(j + 1 < vd->resolution[Y] && vd->rawdata[index + vd->resolution[X]].data) ?
+				(j + 1 < vd->resolution[Y] && vd->rawData[index + vd->resolution[X]].data) ?
 					0 : numFaces++;
-				(j > 1 && vd->rawdata[index - vd->resolution[X]].data) ?
+				(j > 1 && vd->rawData[index - vd->resolution[X]].data) ?
 					0 : numFaces++;
-				(i + 1 < vd->resolution[Z] && vd->rawdata[index + vd->resolution[X] * vd->resolution[Y]].data) ?
+				(i + 1 < vd->resolution[Z] && vd->rawData[index + vd->resolution[X] * vd->resolution[Y]].data) ?
 					0 : numFaces++;
-				(i > 1 && vd->rawdata[index - vd->resolution[X] * vd->resolution[Y]].data) ?
+				(i > 1 && vd->rawData[index - vd->resolution[X] * vd->resolution[Y]].data) ?
 					0 : numFaces++;
 			}
 		}
@@ -61,7 +61,7 @@ vbo_t* createVoxelVBO(vobj_t* vo)
 	vbo->attribs[FACE] = (float*)calloc(numFaces * 144, sizeof(float));
 	boxVBO = newBox(NULL);
 	boxWFVBO = newBoxWF(NULL);
-	scale(vd->voxelsize[X], vd->voxelsize[Y], vd->voxelsize[Z], scaleMat);
+	scale(vd->voxelSize[X], vd->voxelSize[Y], vd->voxelSize[Z], scaleMat);
 	vbo->numVertices = 0;
 	vbo->numWFLoop = 4;
 
@@ -73,24 +73,24 @@ vbo_t* createVoxelVBO(vobj_t* vo)
 			for (k = 0; k < vd->resolution[X]; ++k)
 			{
 				index = k + j * vd->resolution[X] + i * vd->resolution[X] * vd->resolution[Y];
-				if (vd->rawdata[index].data == VOX_EMPTY) continue;
-				neighbor[0] = (k + 1 < vd->resolution[X] && vd->rawdata[index + 1].data) ?
+				if (vd->rawData[index].data == VOX_EMPTY) continue;
+				neighbor[0] = (k + 1 < vd->resolution[X] && vd->rawData[index + 1].data) ?
 					false : true;
-				neighbor[1] = (k > 1 && vd->rawdata[index - 1].data) ?
+				neighbor[1] = (k > 1 && vd->rawData[index - 1].data) ?
 					false : true;
-				neighbor[2] = (j + 1 < vd->resolution[Y] && vd->rawdata[index + vd->resolution[X]].data) ?
+				neighbor[2] = (j + 1 < vd->resolution[Y] && vd->rawData[index + vd->resolution[X]].data) ?
 					false : true;
-				neighbor[3] = (j > 1 && vd->rawdata[index - vd->resolution[X]].data) ?
+				neighbor[3] = (j > 1 && vd->rawData[index - vd->resolution[X]].data) ?
 					false : true;
-				neighbor[4] = (i + 1 < vd->resolution[Z] && vd->rawdata[index + vd->resolution[X] * vd->resolution[Y]].data) ?
+				neighbor[4] = (i + 1 < vd->resolution[Z] && vd->rawData[index + vd->resolution[X] * vd->resolution[Y]].data) ?
 					false : true;
-				neighbor[5] = (i > 1 && vd->rawdata[index - vd->resolution[X] * vd->resolution[Y]].data) ?
+				neighbor[5] = (i > 1 && vd->rawData[index - vd->resolution[X] * vd->resolution[Y]].data) ?
 					false : true;
 				initBox(boxVBO, neighbor);
 				initBoxWF(boxWFVBO, neighbor);
-				translate(origin[0] + k * vd->voxelsize[X],
-					origin[1] + j * vd->voxelsize[Y],
-					origin[2] + i * vd->voxelsize[Z],
+				translate(origin[0] + k * vd->voxelSize[X],
+					origin[1] + j * vd->voxelSize[Y],
+					origin[2] + i * vd->voxelSize[Z],
 					translateMat);
 				multMat4fv(translateMat, scaleMat, boxVBO->modelMat);
 				multMat4fv(translateMat, scaleMat, boxWFVBO->modelMat);
@@ -139,18 +139,19 @@ vbo_t* createVoxelVBO(vobj_t* vo)
 
 	return vbo;
 }
+
 vbo_t * createVoxelVBO(vdata_t * vd)
 {
 	bool neighbor[26];
 	int i, j, k, l, m, values[3], index, count, numFaces, resolution[3];
 	float translateMat[16], scaleMat[16], ids[144], face[4], origin[3];
-	voxel_t* vox = vd->rawdata;
+	voxel_t* vox = vd->rawData;
 	vbo_t* vbo;
 	vbo_t* boxVBO;
 	vbo_t* boxWFVBO;
 
 	origin[X] = -128;
-	origin[Y] = -128;
+	origin[Y] = 0;
 	origin[Z] = -128;
 
 	// count drawing faces
@@ -162,18 +163,18 @@ vbo_t * createVoxelVBO(vdata_t * vd)
 			for (k = 0; k < vd->resolution[X]; ++k)
 			{
 				index = k + j * vd->resolution[X] + i * vd->resolution[X] * vd->resolution[Y];
-				if (vd->rawdata[index].data == VOX_EMPTY) continue;
-				(k + 1 < vd->resolution[X] && vd->rawdata[index].data) ?
+				if (vd->rawData[index].data == VOX_EMPTY) continue;
+				(k + 1 < vd->resolution[X] && vd->rawData[index].data) ?
 					0 : numFaces++;
-				(k > 1 && vd->rawdata[index - 1].data) ?
+				(k > 1 && vd->rawData[index - 1].data) ?
 					0 : numFaces++;
-				(j + 1 < vd->resolution[Y] && vd->rawdata[index + vd->resolution[X]].data) ?
+				(j + 1 < vd->resolution[Y] && vd->rawData[index + vd->resolution[X]].data) ?
 					0 : numFaces++;
-				(j > 1 && vd->rawdata[index - vd->resolution[X]].data) ?
+				(j > 1 && vd->rawData[index - vd->resolution[X]].data) ?
 					0 : numFaces++;
-				(i + 1 < vd->resolution[Z] && vd->rawdata[index + vd->resolution[X] * vd->resolution[Y]].data) ?
+				(i + 1 < vd->resolution[Z] && vd->rawData[index + vd->resolution[X] * vd->resolution[Y]].data) ?
 					0 : numFaces++;
-				(i > 1 && vd->rawdata[index - vd->resolution[X] * vd->resolution[Y]].data) ?
+				(i > 1 && vd->rawData[index - vd->resolution[X] * vd->resolution[Y]].data) ?
 					0 : numFaces++;
 			}
 		}
@@ -189,7 +190,7 @@ vbo_t * createVoxelVBO(vdata_t * vd)
 	vbo->attribs[FACE] = (float*)calloc(numFaces * 144, sizeof(float));
 	boxVBO = newBox(NULL);
 	boxWFVBO = newBoxWF(NULL);
-	scale(vd->voxelsize[X], vd->voxelsize[Y], vd->voxelsize[Z], scaleMat);
+	scale(vd->voxelSize[X], vd->voxelSize[Y], vd->voxelSize[Z], scaleMat);
 	vbo->numVertices = 0;
 	vbo->numWFLoop = 4;
 
@@ -201,24 +202,24 @@ vbo_t * createVoxelVBO(vdata_t * vd)
 			for (k = 0; k < vd->resolution[X]; ++k)
 			{
 				index = k + j * vd->resolution[X] + i * vd->resolution[X] * vd->resolution[Y];
-				if (vd->rawdata[index].data == VOX_EMPTY) continue;
-				neighbor[0] = (k + 1 < vd->resolution[X] && vd->rawdata[index + 1].data) ?
+				if (vd->rawData[index].data == VOX_EMPTY) continue;
+				neighbor[0] = (k + 1 < vd->resolution[X] && vd->rawData[index + 1].data) ?
 					false : true;
-				neighbor[1] = (k > 1 && vd->rawdata[index - 1].data) ?
+				neighbor[1] = (k > 1 && vd->rawData[index - 1].data) ?
 					false : true;
-				neighbor[2] = (j + 1 < vd->resolution[Y] && vd->rawdata[index + vd->resolution[X]].data) ?
+				neighbor[2] = (j + 1 < vd->resolution[Y] && vd->rawData[index + vd->resolution[X]].data) ?
 					false : true;
-				neighbor[3] = (j > 1 && vd->rawdata[index - vd->resolution[X]].data) ?
+				neighbor[3] = (j > 1 && vd->rawData[index - vd->resolution[X]].data) ?
 					false : true;
-				neighbor[4] = (i + 1 < vd->resolution[Z] && vd->rawdata[index + vd->resolution[X] * vd->resolution[Y]].data) ?
+				neighbor[4] = (i + 1 < vd->resolution[Z] && vd->rawData[index + vd->resolution[X] * vd->resolution[Y]].data) ?
 					false : true;
-				neighbor[5] = (i > 1 && vd->rawdata[index - vd->resolution[X] * vd->resolution[Y]].data) ?
+				neighbor[5] = (i > 1 && vd->rawData[index - vd->resolution[X] * vd->resolution[Y]].data) ?
 					false : true;
 				initBox(boxVBO, neighbor);
 				initBoxWF(boxWFVBO, neighbor);
-				translate(origin[0] + k * vd->voxelsize[X],
-					origin[1] + j * vd->voxelsize[Y],
-					origin[2] + i * vd->voxelsize[Z],
+				translate(origin[0] + k * vd->voxelSize[X],
+					origin[1] + j * vd->voxelSize[Y],
+					origin[2] + i * vd->voxelSize[Z],
 					translateMat);
 				multMat4fv(translateMat, scaleMat, boxVBO->modelMat);
 				multMat4fv(translateMat, scaleMat, boxWFVBO->modelMat);
