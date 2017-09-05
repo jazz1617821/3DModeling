@@ -30,8 +30,6 @@ private:
 	void setupOpenGL(void);
 	void fixView(void);
 	void updateViewing(int);
-	void bindData(vbo_t* pObj);
-	void drawData(vbo_t * const vbo, int mode);
 	void make_view(int);
 	void make_projection(int);
 
@@ -121,10 +119,6 @@ private:
 	int selectedPoxY;
 
 	vbo_t* vbo;
-	vbo_t* ground;
-	vbo_t* ground_x;
-	vbo_t* ground_y;
-	vbo_t* ground_z;
 
 	GLuint vao;
 };

@@ -14,7 +14,11 @@
 
 using namespace std;
 
-enum RENDER_MODE { RENDER_POLYGON, RENDER_WIREFRAME, RENDER_PICKING };
+enum VAO_IDs { Triangles, Wireframe, NumVAOs };
+enum Buffer_IDs { ArrayBuffer_0, ArrayBuffer_1, NumBuffers };
+
+GLuint VAOs[NumVAOs];
+GLuint Buffers[NumBuffers];
 
 EditWidget::EditWidget(QWidget * parent) : QOpenGLWidget(parent)
 {
@@ -53,7 +57,6 @@ EditWidget::EditWidget(QWidget * parent) : QOpenGLWidget(parent)
 
 	windowmodeID = FOUR_WINDOWS;
 	vbo = NULL;
-	ground = NULL;
 	vdata = NULL;
 }
 
@@ -102,42 +105,12 @@ void EditWidget::initializeGL(void)
 	// color varibles
 	colorLoc = glGetUniformLocation(program[0], "color");
 
-	// create gound plane
-	ground = newPlane(200, 200, 1);
-	setMatAmbient(ground->material, .19225, .19225, .19225, 1.0);
-	setMatDiffuse(ground->material, .50754, .50754, .50754, 1.0);
-	setMatSpecular(ground->material, .508273, .508273, .508273, 1.0);
-	setMatShininess(ground->material, .4 * 128.0);
-	rotateX(90.0, mat);
-	translate(-100, -100, 0, ground->modelMat);
-	multMat4fv(mat, ground->modelMat, ground->modelMat);
-	bindData(ground);
 
-	// create x_ortho ground 
- 	ground = newPlane(256, 256, 1);
-	setMatAmbient(ground->material, .19225, .19225, .19225, 1.0);
-	setMatDiffuse(ground->material, .50754, .50754, .50754, 1.0);
-	setMatSpecular(ground->material, .508273, .508273, .508273, 1.0);
-	setMatShininess(ground->material, .4 * 128.0);
-	rotateX(90.0, mat);
-	translate(-100, -100, 0, ground->modelMat);
-	multMat4fv(mat, ground->modelMat, ground->modelMat);
-	bindData(ground);
-
-	/* Allocate and assign a Vertex Array Object to our handle */
-	glGenVertexArrays(1, &vao);
-
-	/* Bind our Vertex Array Object as the current used object */
-	glBindVertexArray(vao);
-
-	/* Enable attribute index 0 as being used */
-	glEnableVertexAttribArray(0);
+	//GLuint
 
 	glEnable(GL_DEPTH_TEST);
 
-	// enable clip plane
-	//glEnable(GL_CLIP_DISTANCE0);
-	//printf("%s\n", glGetString(GL_VERSION));
+
 }
 
 void EditWidget::fixView(void)
@@ -207,62 +180,7 @@ void EditWidget::updateViewing(int mode)
 
 }
 
-void EditWidget::bindData(vbo_t* vbo)
-{
-	int i;
 
-	if (!vbo->isGenBuffer) {
-		glGenBuffers(NUM_ATTRIBS, vbo->buffers);
-		glGenBuffers(NUM_ATTRIBS, vbo->bbox->buffers);
-		vbo->isGenBuffer = true;
-		//printf("gen: %d\n", CheckGLErrors());
-	}
-	for (i = 0; i < NUM_ATTRIBS; ++i)
-	{
-		if (vbo->enableBuffers[i]) {
-			glBindBuffer(GL_ARRAY_BUFFER, vbo->buffers[i]);
-			//printf("bindBuffer: %d\n", CheckGLErrors());
-			glBufferData(GL_ARRAY_BUFFER, vbo->numVertices * vbo->dataSize[i] * sizeof(float), vbo->attribs[i], GL_STATIC_DRAW);
-			//printf("bufferData: %d\n", CheckGLErrors());
-		}
-		if (vbo->bbox->enableBuffers[i]) {
-			glBindBuffer(GL_ARRAY_BUFFER, vbo->bbox->buffers[i]);
-			if (i == WIREFRAME) {
-				glBufferData(GL_ARRAY_BUFFER, vbo->bbox->numWFVertices * vbo->bbox->dataSize[i] * sizeof(float), vbo->bbox->attribs[i], GL_STATIC_DRAW);
-			}
-			else {
-				glBufferData(GL_ARRAY_BUFFER, vbo->bbox->numVertices * vbo->bbox->dataSize[i] * sizeof(float), vbo->bbox->attribs[i], GL_STATIC_DRAW);
-			}
-		}
-	}
-}
-
-void EditWidget::drawData(vbo_t* const vbo, int mode)
-{
-	int i;
-	float rotMat[16];
-
-	copyMat4fv(vbo->modelMat, modelMat);
-	
-	updateViewing(mode);
-	for (i = 0; i < NUM_ATTRIBS; ++i)
-	{
-		if (vbo->enableBuffers[i]) {
-			glBindBuffer(GL_ARRAY_BUFFER, vbo->buffers[i]);
-			glVertexAttribPointer(i, vbo->dataSize[i], GL_FLOAT, GL_FALSE, 0, NULL);
-			glEnableVertexAttribArray(i);
-			//printf("bind: %d\n", CheckGLErrors());
-		}
-	}
-	glDrawArrays(GL_TRIANGLES, 0, vbo->numVertices);
-
-	for (i = 0; i < NUM_ATTRIBS; ++i)
-	{
-		if (vbo->enableBuffers[i]) {
-			glDisableVertexAttribArray(i);
-		}
-	}
-}
 
 void EditWidget::make_view(int mode) {
 	switch (mode) {
@@ -318,14 +236,8 @@ void EditWidget::paintGL(void)
 			color[2] = 1.0;
 			color[3] = 1.0;
 			glUniform4fv(colorLoc, 1, color);
-			drawData(vbo, X_WINDOW);
+			//draw
 		}
-		color[0] = 0.5;
-		color[1] = 0.5;
-		color[2] = 0.5;
-		color[3] = 1.0;
-		glUniform4fv(colorLoc, 1, color);
-		drawData(ground, X_WINDOW);
 
 		make_view(Y_WINDOW);
 		make_projection(Y_WINDOW);
@@ -337,14 +249,8 @@ void EditWidget::paintGL(void)
 			color[2] = 1.0;
 			color[3] = 1.0;
 			glUniform4fv(colorLoc, 1, color);
-			drawData(vbo, Y_WINDOW);
+			//draw
 		}
-		color[0] = 0.5;
-		color[1] = 0.5;
-		color[2] = 0.5;
-		color[3] = 1.0;
-		glUniform4fv(colorLoc, 1, color);
-		drawData(ground, Y_WINDOW);
 
 		make_view(Z_WINDOW);
 		make_projection(Z_WINDOW);
@@ -356,14 +262,8 @@ void EditWidget::paintGL(void)
 			color[2] = 1.0;
 			color[3] = 1.0;
 			glUniform4fv(colorLoc, 1, color);
-			drawData(vbo, Z_WINDOW);
+			//draw
 		}
-		color[0] = 0.5;
-		color[1] = 0.5;
-		color[2] = 0.5;
-		color[3] = 1.0;
-		glUniform4fv(colorLoc, 1, color);
-		drawData(ground, Z_WINDOW);
 
 		make_view(THREE_DIMENSION_WINDOW);
 		make_projection(THREE_DIMENSION_WINDOW);
@@ -375,14 +275,8 @@ void EditWidget::paintGL(void)
 			color[2] = 1.0;
 			color[3] = 1.0;
 			glUniform4fv(colorLoc, 1, color);
-			drawData(vbo, THREE_DIMENSION_WINDOW);
+			//draw
 		}
-		color[0] = 0.5;
-		color[1] = 0.5;
-		color[2] = 0.5;
-		color[3] = 1.0;
-		glUniform4fv(colorLoc, 1, color);
-		drawData(ground, THREE_DIMENSION_WINDOW);
 
 		break;
 
@@ -397,14 +291,12 @@ void EditWidget::paintGL(void)
 			color[2] = 1.0;
 			color[3] = 1.0;
 			glUniform4fv(colorLoc, 1, color);
-			drawData(vbo, X_WINDOW);
 		}
 		color[0] = 0.5;
 		color[1] = 0.5;
 		color[2] = 0.5;
 		color[3] = 1.0;
 		glUniform4fv(colorLoc, 1, color);
-		drawData(ground, X_WINDOW);
 
 		break;
 	case Y_WINDOW:
@@ -418,14 +310,12 @@ void EditWidget::paintGL(void)
 			color[2] = 1.0;
 			color[3] = 1.0;
 			glUniform4fv(colorLoc, 1, color);
-			drawData(vbo, Y_WINDOW);
 		}
 		color[0] = 0.5;
 		color[1] = 0.5;
 		color[2] = 0.5;
 		color[3] = 1.0;
 		glUniform4fv(colorLoc, 1, color);
-		drawData(ground, Y_WINDOW);
 
 		break;
 	case Z_WINDOW:
@@ -439,14 +329,12 @@ void EditWidget::paintGL(void)
 			color[2] = 1.0;
 			color[3] = 1.0;
 			glUniform4fv(colorLoc, 1, color);
-			drawData(vbo, Z_WINDOW);
 		}
 		color[0] = 0.5;
 		color[1] = 0.5;
 		color[2] = 0.5;
 		color[3] = 1.0;
 		glUniform4fv(colorLoc, 1, color);
-		drawData(ground, Z_WINDOW);
 
 		break;
 	case THREE_DIMENSION_WINDOW:
@@ -460,14 +348,12 @@ void EditWidget::paintGL(void)
 			color[2] = 1.0;
 			color[3] = 1.0;
 			glUniform4fv(colorLoc, 1, color);
-			drawData(vbo, THREE_DIMENSION_WINDOW);
 		}
 		color[0] = 0.5;
 		color[1] = 0.5;
 		color[2] = 0.5;
 		color[3] = 1.0;
 		glUniform4fv(colorLoc, 1, color);
-		drawData(ground, THREE_DIMENSION_WINDOW);
 
 
 		break;
@@ -673,9 +559,7 @@ void EditWidget::makevDataVBO(vdata_t* vd)
 {
 	cout << "Make " << vd->name << " VBO." << endl;
 	vbo = new vbo_t;
-	vbo = createVoxelVBO(vd);
-	setColorVBO(1.2, 1.0, 0.47, 1.0, vbo);
-	bindData(vbo);
+	
 	
 	return;
 }
