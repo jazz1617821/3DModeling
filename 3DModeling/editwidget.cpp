@@ -14,8 +14,8 @@
 
 using namespace std;
 
-enum VAO_IDs { Triangles, Wireframe, NumVAOs };
-enum Buffer_IDs { ArrayBuffer_0, ArrayBuffer_1, NumBuffers };
+enum VAO_IDs { Ground_xy, Ground_yz, Ground_xz, Triangles, Wireframe, NumVAOs };
+enum Buffer_IDs { ArrayBuffer_Ground_xy, ArrayBuffer_Ground_yz, ArrayBuffer_Ground_xz, ArrayBuffer_Triangles, ArrayBuffer_Wireframe, NumBuffers };
 
 GLuint VAOs[NumVAOs];
 GLuint Buffers[NumBuffers];
@@ -86,6 +86,15 @@ void EditWidget::initializeGL(void)
 	if (glewInit() != GLEW_OK) {
 		exit(EXIT_FAILURE);
 	}
+
+	GLfloat ground_xy[5][3];
+
+
+
+
+
+
+
 
 
 	// load shaders
