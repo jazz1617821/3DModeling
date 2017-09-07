@@ -356,6 +356,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="3DModeling_opgl4.pro" />
+    <None Include="shaders\simple.frag" />
+    <None Include="shaders\simple.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

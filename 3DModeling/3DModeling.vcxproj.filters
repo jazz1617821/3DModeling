@@ -33,6 +33,9 @@
       <Extensions>cpp;moc</Extensions>
       <SourceControlFiles>False</SourceControlFiles>
     </Filter>
+    <Filter Include="Source Files\shaders">
+      <UniqueIdentifier>{7c38298d-92b8-4dfd-af9d-59dbf8768c42}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -154,6 +157,12 @@
   <ItemGroup>
     <None Include="3DModeling_opgl4.pro">
       <Filter>Source Files</Filter>
+    </None>
+    <None Include="shaders\simple.frag">
+      <Filter>Source Files\shaders</Filter>
+    </None>
+    <None Include="shaders\simple.vert">
+      <Filter>Source Files\shaders</Filter>
     </None>
   </ItemGroup>
 </Project>

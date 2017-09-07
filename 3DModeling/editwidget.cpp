@@ -14,8 +14,8 @@
 
 using namespace std;
 
-enum VAO_IDs { Ground_xy, Ground_yz, Ground_xz, Triangles, Wireframe, NumVAOs };
-enum Buffer_IDs { ArrayBuffer_Ground_xy, ArrayBuffer_Ground_yz, ArrayBuffer_Ground_xz, ArrayBuffer_Triangles, ArrayBuffer_Wireframe, NumBuffers };
+enum VAO_IDs { Ground, Triangles, Wireframe, NumVAOs };
+enum Buffer_IDs { ArrayBuffer_Ground, ArrayBuffer_Triangles, ArrayBuffer_Wireframe, NumBuffers };
 
 GLuint VAOs[NumVAOs];
 GLuint Buffers[NumBuffers];
@@ -87,14 +87,32 @@ void EditWidget::initializeGL(void)
 		exit(EXIT_FAILURE);
 	}
 
-	GLfloat ground_xy[5][3];
+	GLfloat ground[256 * 4][3];
 
+	for (int x = 0; x < 256; x++) {
+		ground[x * 2][0] = x;
+		ground[x * 2][1] = 0;
+		ground[x * 2][2] = 0;
+		ground[x * 2 + 1][0] = x;
+		ground[x * 2 + 1][1] = 256;
+		ground[x * 2 + 1][2] = 0;
+	}
 
+	for (int y = 0; y < 256; y++) {
+		ground[y * 2 + 512][0] = 0;
+		ground[y * 2 + 512][1] = y;
+		ground[y * 2 + 512][2] = 0;
+		ground[y * 2 + 1 + 512][0] = 256;
+		ground[y * 2 + 1 + 512][1] = y;
+		ground[y * 2 + 1 + 512][2] = 0;
+	}
 
+	//Gen Buffers
+	glGenBuffers(NumBuffers,Buffers);
 
-
-
-
+	//Bind ground data
+	glBindBuffer(GL_ARRAY_BUFFER, Buffers[ArrayBuffer_Ground]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(ground), ground, GL_STATIC_DRAW);
 
 
 	// load shaders
@@ -114,11 +132,10 @@ void EditWidget::initializeGL(void)
 	// color varibles
 	colorLoc = glGetUniformLocation(program[0], "color");
 
-
-	//GLuint
+	glVertexAttribPointer(glGetAttribLocation(program[0], "vPosition"), 3, GL_FLOAT, GL_FALSE, 0, 0);
+	glEnableVertexAttribArray(glGetAttribLocation(program[0], "vPosition"));
 
 	glEnable(GL_DEPTH_TEST);
-
 
 }
 
@@ -247,6 +264,10 @@ void EditWidget::paintGL(void)
 			glUniform4fv(colorLoc, 1, color);
 			//draw
 		}
+		translate(-256/2,-256/2,-256/2,mat);
+
+		glBindVertexArray(VAOs[ArrayBuffer_Ground]);
+		glDrawArrays(GL_LINE, 0, 256 * 4);
 
 		make_view(Y_WINDOW);
 		make_projection(Y_WINDOW);
