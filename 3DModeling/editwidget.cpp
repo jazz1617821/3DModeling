@@ -166,12 +166,9 @@ void EditWidget::updateViewing(int mode)
 
 	switch (mode) {
 	case THREE_DIMENSION_WINDOW:
-		//identifyMat4fv(modelMat);
 		multMat4fv(perspective_viewMat, modelMat, mvMat);
 		multMat4fv(perspectiveMat, mvMat, mvpMat);
 
-		transposeMat4fv(modelMat, mat);
-		glUniformMatrix4fv(glGetUniformLocation(program[0], "modelMat"), 1, false, mat);
 		transposeMat4fv(mvpMat, mat);
 		glUniformMatrix4fv(glGetUniformLocation(program[0], "mvpMat"), 1, false, mat);
 		break;
@@ -179,8 +176,6 @@ void EditWidget::updateViewing(int mode)
 		multMat4fv(x_ortho_viewMat, modelMat, mvMat);
 		multMat4fv(x_orthoMat, mvMat, mvpMat);
 
-		transposeMat4fv(modelMat, mat);
-		glUniformMatrix4fv(glGetUniformLocation(program[0], "modelMat"), 1, false, mat);
 		transposeMat4fv(mvpMat, mat);
 		glUniformMatrix4fv(glGetUniformLocation(program[0], "mvpMat"), 1, false, mat);
 		break;
@@ -188,8 +183,6 @@ void EditWidget::updateViewing(int mode)
 		multMat4fv(y_ortho_viewMat, modelMat, mvMat);
 		multMat4fv(y_orthoMat, mvMat, mvpMat);
 
-		transposeMat4fv(modelMat, mat);
-		glUniformMatrix4fv(glGetUniformLocation(program[0], "modelMat"), 1, false, mat);
 		transposeMat4fv(mvpMat, mat);
 		glUniformMatrix4fv(glGetUniformLocation(program[0], "mvpMat"), 1, false, mat);
 		break;
@@ -197,16 +190,12 @@ void EditWidget::updateViewing(int mode)
 		multMat4fv(z_ortho_viewMat, modelMat, mvMat);
 		multMat4fv(z_orthoMat, mvMat, mvpMat);
 
-		transposeMat4fv(modelMat, mat);
-		glUniformMatrix4fv(glGetUniformLocation(program[0], "modelMat"), 1, false, mat);
 		transposeMat4fv(mvpMat, mat);
 		glUniformMatrix4fv(glGetUniformLocation(program[0], "mvpMat"), 1, false, mat);
 		break;
 	}
 
 }
-
-
 
 void EditWidget::make_view(int mode) {
 	switch (mode) {
@@ -246,10 +235,10 @@ void EditWidget::paintGL(void)
 {
 	float mat[16], color[4];
 
-	glUseProgram(program[0]);
 	glClearColor(0.66, 0.66, 0.66, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	/*
 	switch (windowmodeID) {
 	case FOUR_WINDOWS:
 		make_view(X_WINDOW);
@@ -264,10 +253,6 @@ void EditWidget::paintGL(void)
 			glUniform4fv(colorLoc, 1, color);
 			//draw
 		}
-		translate(-256/2,-256/2,-256/2,mat);
-
-		glBindVertexArray(VAOs[ArrayBuffer_Ground]);
-		glDrawArrays(GL_LINE, 0, 256 * 4);
 
 		make_view(Y_WINDOW);
 		make_projection(Y_WINDOW);
@@ -388,6 +373,27 @@ void EditWidget::paintGL(void)
 
 		break;
 	}
+	*/
+	
+	glViewport(0, 0, this->width(), this->height());
+
+	glUseProgram(program[0]);
+	make_view(Z_WINDOW);
+	make_projection(Z_WINDOW);
+
+	translate(-256 / 2, -256 / 2, -256 / 2, modelMat);
+	updateViewing(Z_WINDOW);
+
+	color[0] = 1.0;
+	color[1] = 0;
+	color[2] = 0;
+	color[3] = 1.0;
+	glUniform4fv(colorLoc, 1, color);
+
+	glBindVertexArray(VAOs[ArrayBuffer_Ground]);
+	glDrawArrays(GL_LINE, 0, 256 * 4);
+
+
 }
 
 void EditWidget::resizeGL(int width, int height)
