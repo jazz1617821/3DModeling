@@ -3,10 +3,8 @@
 #include <QOpenGLWidget>
 #include <QPushButton>
 #include <QMouseEvent>
-#include "object.h"
 #include "light.h"
 #include "voxel.h"
-#include "voxelvbo.h"
 
 class EditWidget : public QOpenGLWidget {
 	Q_OBJECT
@@ -33,6 +31,11 @@ private:
 	void make_view(int);
 	void make_projection(int);
 
+	void drawMarking(int mode);
+
+	void drawObject(int mode);
+
+	void caculateVoxelAmount(vdata_t * vd);
 	//make VBO
 	void makevDataVBO(vdata_t*);
 
@@ -118,7 +121,14 @@ private:
 	int selectedPosX;
 	int selectedPoxY;
 
-	vbo_t* vbo;
+	//vao vbo setting
+	enum VAO_IDs { Ground, Triangles, Wireframe, NumVAOs };
 
-	GLuint vao;
+	GLuint VAOs[NumVAOs];
+	GLuint Ground_Vertex_Buffer[1];
+	GLuint Triangles_Vertex_Buffer[1];
+	GLuint Wireframe_Vertex_Buffer[1];
+
+	int voxelamount = 0;
+
 };

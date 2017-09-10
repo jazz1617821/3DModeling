@@ -14,12 +14,6 @@
 
 using namespace std;
 
-enum VAO_IDs { Ground, Triangles, Wireframe, NumVAOs };
-enum Buffer_IDs { ArrayBuffer_Ground, ArrayBuffer_Triangles, ArrayBuffer_Wireframe, NumBuffers };
-
-GLuint VAOs[NumVAOs];
-GLuint Buffers[NumBuffers];
-
 EditWidget::EditWidget(QWidget * parent) : QOpenGLWidget(parent)
 {
 	setupOpenGL();
@@ -37,7 +31,7 @@ EditWidget::EditWidget(QWidget * parent) : QOpenGLWidget(parent)
 	y_ortho_lok[0] = 0; y_ortho_lok[1] = 0; y_ortho_lok[2] = 0;
 	y_ortho_vup[0] = 0, y_ortho_vup[1] = 0, y_ortho_vup[2] = 1;
 	//z paralle view matrix init
-	z_ortho_eye[0] = 0; z_ortho_eye[1] = 0; z_ortho_eye[2] = 400;
+	z_ortho_eye[0] = 0; z_ortho_eye[1] = 0; z_ortho_eye[2] = -400;
 	z_ortho_lok[0] = 0; z_ortho_lok[1] = 0; z_ortho_lok[2] = 0;
 	z_ortho_vup[0] = 0, z_ortho_vup[1] = 1, z_ortho_vup[2] = 0;
 
@@ -51,12 +45,11 @@ EditWidget::EditWidget(QWidget * parent) : QOpenGLWidget(parent)
 	x_ortho_width = 50;
 	y_ortho_width = 50;
 	z_ortho_width = 50;
-	nearClip = 0.1;
+	nearClip = 1;
 	farClip = 1000.0;
 	fixView();
 
-	windowmodeID = FOUR_WINDOWS;
-	vbo = NULL;
+	windowmodeID = THREE_DIMENSION_WINDOW;
 	vdata = NULL;
 }
 
@@ -86,6 +79,10 @@ void EditWidget::initializeGL(void)
 	if (glewInit() != GLEW_OK) {
 		exit(EXIT_FAILURE);
 	}
+	//Gen All VAO
+	glGenVertexArrays(NumVAOs, VAOs);
+
+	glBindVertexArray(VAOs[Ground]);
 
 	GLfloat ground[256 * 4][3];
 
@@ -108,10 +105,10 @@ void EditWidget::initializeGL(void)
 	}
 
 	//Gen Buffers
-	glGenBuffers(NumBuffers,Buffers);
+	glGenBuffers(1, Ground_Vertex_Buffer);
 
 	//Bind ground data
-	glBindBuffer(GL_ARRAY_BUFFER, Buffers[ArrayBuffer_Ground]);
+	glBindBuffer(GL_ARRAY_BUFFER, Ground_Vertex_Buffer[0]);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(ground), ground, GL_STATIC_DRAW);
 
 
@@ -231,66 +228,155 @@ void EditWidget::make_projection(int mode) {
 	}
 }
 
+void EditWidget::drawMarking(int mode) {
+	float mat[16], color[4];
+
+	switch (mode) {
+	case X_WINDOW:
+		translate(-256 / 2, -256 / 2, 0, modelMat);
+		rotateY(90, mat);
+		multMat4fv(mat, modelMat, modelMat);
+		updateViewing(X_WINDOW);
+		color[0] = 1.0;
+		color[1] = 0.0;
+		color[2] = 0.0;
+		color[3] = 1.0;
+		break;
+	case Y_WINDOW:
+		translate(-256 / 2, -256 / 2, 0, modelMat);
+		rotateX(90, mat);
+		multMat4fv(mat, modelMat, modelMat);
+		updateViewing(Y_WINDOW);
+		color[0] = 0.0;
+		color[1] = 1.0;
+		color[2] = 0.0;
+		color[3] = 1.0;
+		break;
+	case Z_WINDOW:
+		translate(-256 / 2, -256 / 2, 0, modelMat);
+		updateViewing(Z_WINDOW);
+		color[0] = 0.0;
+		color[1] = 0.0;
+		color[2] = 1.0;
+		color[3] = 1.0;
+		break;
+
+	case THREE_DIMENSION_WINDOW:
+		translate(-256 / 2, -256 / 2, 0, modelMat);
+		identifyMat4fv(mat);
+		rotateX(90, mat);
+		multMat4fv(mat, modelMat, modelMat);
+		updateViewing(THREE_DIMENSION_WINDOW);
+		color[0] = 0.0;
+		color[1] = 0.0;
+		color[2] = 0.0;
+		color[3] = 1.0;
+		break;
+	default:
+		break;
+	}
+	glUniform4fv(colorLoc, 1, color);
+
+	glBindVertexArray(VAOs[Ground]);
+	glDrawArrays(GL_LINES, 0, 256 * 4);
+}
+
+void EditWidget::drawObject(int mode) {
+	float mat[16], color[4];
+
+	switch (mode) {
+	case X_WINDOW:
+		translate(-256 / 2, -256 / 2, 0, modelMat);
+		rotateY(90, mat);
+		multMat4fv(mat, modelMat, modelMat);
+		updateViewing(X_WINDOW);
+		color[0] = 1.0;
+		color[1] = 0.0;
+		color[2] = 0.0;
+		color[3] = 1.0;
+		break;
+	case Y_WINDOW:
+		translate(-256 / 2, -256 / 2, 0, modelMat);
+		rotateX(90, mat);
+		multMat4fv(mat, modelMat, modelMat);
+		updateViewing(Y_WINDOW);
+		color[0] = 0.0;
+		color[1] = 1.0;
+		color[2] = 0.0;
+		color[3] = 1.0;
+		break;
+	case Z_WINDOW:
+		translate(-256 / 2, -256 / 2, 0, modelMat);
+		updateViewing(Z_WINDOW);
+		color[0] = 0.0;
+		color[1] = 0.0;
+		color[2] = 1.0;
+		color[3] = 1.0;
+		break;
+
+	case THREE_DIMENSION_WINDOW:
+		translate(-256 / 2, -256 / 2, -256 / 2, modelMat);
+		updateViewing(THREE_DIMENSION_WINDOW);
+		color[0] = 1.0;
+		color[1] = 1.0;
+		color[2] = 1.0;
+		color[3] = 1.0;
+		glUniform4fv(colorLoc, 1, color);
+		glBindVertexArray(VAOs[Triangles]);
+		glDrawArrays(GL_TRIANGLES, 0, sizeof(float) * 108 * voxelamount);
+
+		color[0] = 0.0;
+		color[1] = 0.0;
+		color[2] = 0.0;
+		color[3] = 1.0;
+		glUniform4fv(colorLoc, 1, color);
+		glBindVertexArray(VAOs[Wireframe]);
+		glDrawArrays(GL_LINES, 0, sizeof(float) * 144 * voxelamount);
+		break;
+	default:
+		break;
+	}
+}
+
 void EditWidget::paintGL(void)
 {
-	float mat[16], color[4];
 
 	glClearColor(0.66, 0.66, 0.66, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glUseProgram(program[0]);
 
-	/*
 	switch (windowmodeID) {
 	case FOUR_WINDOWS:
 		make_view(X_WINDOW);
 		make_projection(X_WINDOW);
 		glViewport(0, 0, this->width() / 2, this->height() / 2);
-		glUniform4fv(colorLoc, 1, color);
-		if (vbo != NULL) {
-			color[0] = 1.0;
-			color[1] = 1.0;
-			color[2] = 1.0;
-			color[3] = 1.0;
-			glUniform4fv(colorLoc, 1, color);
-			//draw
+		drawMarking(X_WINDOW);
+		if (vdata != NULL) {
+			drawObject(X_WINDOW);
 		}
 
 		make_view(Y_WINDOW);
 		make_projection(Y_WINDOW);
 		glViewport(0, this->height() / 2, this->width() / 2, this->height() / 2);
-		glUniform4fv(colorLoc, 1, color);
-		if (vbo != NULL) {
-			color[0] = 1.0;
-			color[1] = 1.0;
-			color[2] = 1.0;
-			color[3] = 1.0;
-			glUniform4fv(colorLoc, 1, color);
-			//draw
+		drawMarking(Y_WINDOW);
+		if (vdata != NULL) {
+			drawObject(Y_WINDOW);
 		}
 
 		make_view(Z_WINDOW);
 		make_projection(Z_WINDOW);
 		glViewport(this->width() / 2, 0, this->width() / 2, this->height() / 2);
-		glUniform4fv(colorLoc, 1, color);
-		if (vbo != NULL) {
-			color[0] = 1.0;
-			color[1] = 1.0;
-			color[2] = 1.0;
-			color[3] = 1.0;
-			glUniform4fv(colorLoc, 1, color);
-			//draw
+		drawMarking(Z_WINDOW);
+		if (vdata != NULL) {
+			drawObject(Z_WINDOW);
 		}
 
 		make_view(THREE_DIMENSION_WINDOW);
 		make_projection(THREE_DIMENSION_WINDOW);
 		glViewport(this->width() / 2, this->height() / 2, this->width() / 2, this->height() / 2);
-		glUniform4fv(colorLoc, 1, color);
-		if (vbo != NULL) {
-			color[0] = 1.0;
-			color[1] = 1.0;
-			color[2] = 1.0;
-			color[3] = 1.0;
-			glUniform4fv(colorLoc, 1, color);
-			//draw
+		drawMarking(THREE_DIMENSION_WINDOW);
+		if (vdata != NULL) {
+			drawObject(THREE_DIMENSION_WINDOW);
 		}
 
 		break;
@@ -299,113 +385,50 @@ void EditWidget::paintGL(void)
 		make_view(X_WINDOW);
 		make_projection(X_WINDOW);
 		glViewport(0, 0, this->width(), this->height());
-		glUniform4fv(colorLoc, 1, color);
-		if (vbo != NULL) {
-			color[0] = 1.0;
-			color[1] = 1.0;
-			color[2] = 1.0;
-			color[3] = 1.0;
-			glUniform4fv(colorLoc, 1, color);
+		drawMarking(X_WINDOW);
+		if (vdata != NULL) {
+			drawObject(X_WINDOW);
 		}
-		color[0] = 0.5;
-		color[1] = 0.5;
-		color[2] = 0.5;
-		color[3] = 1.0;
-		glUniform4fv(colorLoc, 1, color);
 
 		break;
 	case Y_WINDOW:
 		make_view(Y_WINDOW);
 		make_projection(Y_WINDOW);
 		glViewport(0, 0, this->width(), this->height());
-		glUniform4fv(colorLoc, 1, color);
-		if (vbo != NULL) {
-			color[0] = 1.0;
-			color[1] = 1.0;
-			color[2] = 1.0;
-			color[3] = 1.0;
-			glUniform4fv(colorLoc, 1, color);
+		drawMarking(Y_WINDOW);
+		if (vdata != NULL) {
+			drawObject(Y_WINDOW);
 		}
-		color[0] = 0.5;
-		color[1] = 0.5;
-		color[2] = 0.5;
-		color[3] = 1.0;
-		glUniform4fv(colorLoc, 1, color);
 
 		break;
 	case Z_WINDOW:
 		make_view(Z_WINDOW);
 		make_projection(Z_WINDOW);
 		glViewport(0, 0, this->width(), this->height());
-		glUniform4fv(colorLoc, 1, color);
-		if (vbo != NULL) {
-			color[0] = 1.0;
-			color[1] = 1.0;
-			color[2] = 1.0;
-			color[3] = 1.0;
-			glUniform4fv(colorLoc, 1, color);
+		drawMarking(Z_WINDOW);
+		if (vdata != NULL) {
+			drawObject(Z_WINDOW);
 		}
-		color[0] = 0.5;
-		color[1] = 0.5;
-		color[2] = 0.5;
-		color[3] = 1.0;
-		glUniform4fv(colorLoc, 1, color);
 
 		break;
 	case THREE_DIMENSION_WINDOW:
 		make_view(THREE_DIMENSION_WINDOW);
 		make_projection(THREE_DIMENSION_WINDOW);
 		glViewport(0, 0, this->width(), this->height());
-
-		if (vbo != NULL) {
-			color[0] = 1.0;
-			color[1] = 1.0;
-			color[2] = 1.0;
-			color[3] = 1.0;
-			glUniform4fv(colorLoc, 1, color);
+		drawMarking(THREE_DIMENSION_WINDOW);
+		if (vdata != NULL) {
+			drawObject(THREE_DIMENSION_WINDOW);
 		}
-		color[0] = 0.5;
-		color[1] = 0.5;
-		color[2] = 0.5;
-		color[3] = 1.0;
-		glUniform4fv(colorLoc, 1, color);
-
-
 		break;
 	}
-	*/
 	
-	glViewport(0, 0, this->width(), this->height());
-
-	glUseProgram(program[0]);
-	make_view(Z_WINDOW);
-	make_projection(Z_WINDOW);
-
-	translate(-256 / 2, -256 / 2, -256 / 2, modelMat);
-	updateViewing(Z_WINDOW);
-
-	color[0] = 1.0;
-	color[1] = 0;
-	color[2] = 0;
-	color[3] = 1.0;
-	glUniform4fv(colorLoc, 1, color);
-
-	glBindVertexArray(VAOs[ArrayBuffer_Ground]);
-	glDrawArrays(GL_LINE, 0, 256 * 4);
-
-
 }
 
 void EditWidget::resizeGL(int width, int height)
 {
 	float mat[16];
 
-	glViewport(0, 0, width, height);
 	aspect = width / (float)height;
-	perspective(fovy, aspect, nearClip, farClip, perspectiveMat);
-	multMat4fv(perspectiveMat, mvMat, mvpMat);
-	transposeMat4fv(mvpMat, mat);
-	glUniformMatrix4fv(glGetUniformLocation(program[0], "mvpMat"), 1, false, mat);
 
 	update();
 }
@@ -591,20 +614,157 @@ void EditWidget::wheelEvent(QWheelEvent *e)
 	update();
 }
 
+void EditWidget::caculateVoxelAmount(vdata_t* vd) {
+	int amount = 0;
+
+	for (int i = 0; i < vd->resolution[0] * vd->resolution[1] * vd->resolution[2]; i++) {
+		if (vd->rawData[i].data != 0) {
+			amount++;
+		}
+	}
+	voxelamount = amount;
+}
+
 void EditWidget::makevDataVBO(vdata_t* vd)
 {
+	static bool triangleflag = false;
+	static bool wireframeflag = false;
+	float cubeboxpoint[8][3] = {
+		{ 0,0,0 },
+		{ 1,0,0 },
+		{ 1,0,1 },
+		{ 0,0,1 },
+		{ 0,1,0 },
+		{ 1,1,0 },
+		{ 1,1,1 },
+		{ 0,1,1 }
+	};
+
+	int triangle_index[12][3] = {
+		{ 0,1,4 },
+		{ 1,5,4 },
+		{ 1,2,5 },
+		{ 2,6,5 },
+		{ 2,3,6 },
+		{ 3,7,6 },
+		{ 3,0,7 },
+		{ 0,4,7 },
+		{ 4,5,7 },
+		{ 5,6,7 },
+		{ 3,2,0 },
+		{ 2,1,0 }
+	};
+
+	int wireframe_index[24][2] = {
+		//| -
+		{ 0,4 },
+		{ 1,5 },
+		{ 2,6 },
+		{ 3,7 },
+		{ 0,1 },
+		{ 1,2 },
+		{ 2,3 },
+		{ 3,0 },
+		{ 4,5 },
+		{ 5,6 },
+		{ 6,7 },
+		{ 7,4 },
+		//X
+		{ 0,5 },
+		{ 1,4 },
+		{ 1,6 },
+		{ 2,5 },
+		{ 2,7 },
+		{ 3,6 },
+		{ 3,4 },
+		{ 0,7 },
+		{ 4,6 },
+		{ 5,7 },
+		{ 0,2 },
+		{ 1,3 }
+	};
+
 	cout << "Make " << vd->name << " VBO." << endl;
-	vbo = new vbo_t;
 	
+	float* triangle_buffer = (float*)malloc(sizeof(float) * 108 * voxelamount);
+	float* wireframe_buffer = (float*)malloc(sizeof(float) * 144 * voxelamount);
+
+	int count = 0;
+	for (int z = 0; z < vd->resolution[2]; z++) {
+		for (int y = 0; y < vd->resolution[1]; y++) {
+			for (int x = 0; x < vd->resolution[0]; x++) {
+				if (vd->rawData[x+ y * vd->resolution[0] + z * vd->resolution[0] * vd->resolution[1]].data != 0) {
+					//Triangle vertex 
+					for (int i = 0; i < 12; i++) {
+						for (int j = 0; j < 3; j++) {
+							triangle_buffer[count * 108 + i * 9 + j * 3 + 0] = x + cubeboxpoint[triangle_index[i][j]][0];
+							triangle_buffer[count * 108 + i * 9 + j * 3 + 1] = y + cubeboxpoint[triangle_index[i][j]][1];
+							triangle_buffer[count * 108 + i * 9 + j * 3 + 2] = z + cubeboxpoint[triangle_index[i][j]][2];
+						}
+					}
+					//Wireframe vertex
+					for (int i = 0; i < 24; i++) {
+						for (int j = 0; j < 2; j++) {
+							wireframe_buffer[count * 108 + i * 6 + j * 3 + 0] = x + cubeboxpoint[wireframe_index[i][j]][0];
+							wireframe_buffer[count * 108 + i * 6 + j * 3 + 1] = y + cubeboxpoint[wireframe_index[i][j]][1];
+							wireframe_buffer[count * 108 + i * 6 + j * 3 + 2] = z + cubeboxpoint[wireframe_index[i][j]][2];
+						}
+					}
+					count++;
+				}
+			}
+		}
+	}
+	//Triangles
+	glBindVertexArray(VAOs[Triangles]);
+
+	//Gen Buffers
+	if (!triangleflag) {
+		glGenBuffers(1, Triangles_Vertex_Buffer);
+		triangleflag = true;
+	}
+
+	//Bind triangles data
+	glBindBuffer(GL_ARRAY_BUFFER, Triangles_Vertex_Buffer[0]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 108 * voxelamount, triangle_buffer, GL_STATIC_DRAW);
+
+	glVertexAttribPointer(glGetAttribLocation(program[0], "vPosition"), 3, GL_FLOAT, GL_FALSE, 0, 0);
+	glEnableVertexAttribArray(glGetAttribLocation(program[0], "vPosition"));
+
+	free(triangle_buffer);
+
 	
+	//Wireframe
+	glBindVertexArray(VAOs[Wireframe]);
+
+
+	//Gen Buffers
+	if (!wireframeflag) {
+		glGenBuffers(1, Wireframe_Vertex_Buffer);
+		wireframeflag = true;
+	}
+
+	//Bind triangles data
+	glBindBuffer(GL_ARRAY_BUFFER, Wireframe_Vertex_Buffer[0]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 108 * voxelamount, wireframe_buffer, GL_STATIC_DRAW);
+
+	glVertexAttribPointer(glGetAttribLocation(program[0], "vPosition"), 3, GL_FLOAT, GL_FALSE, 0, 0);
+	glEnableVertexAttribArray(glGetAttribLocation(program[0], "vPosition"));
+
+	free(wireframe_buffer);
+
+
 	return;
 }
 
 //Private slots:
 void EditWidget::getVDataPtr(vdata_t* vdata) {
-	this->vdata = new VoxelData;
+	if (this->vdata == NULL) {
+		this->vdata = new VoxelData;
+	}
 	this->vdata = vdata;
 	cout << this->vdata->name << endl;
+	caculateVoxelAmount(this->vdata);
 	makevDataVBO(this->vdata);
 	update();
 	return;

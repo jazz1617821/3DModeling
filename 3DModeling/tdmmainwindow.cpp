@@ -2,6 +2,7 @@
 #include <iostream>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <time.h>
 
 using namespace std;
 
@@ -57,10 +58,20 @@ void TDMMainWindow::makeTestFile(void)
 	float voxelsize[3] = { 1.0,0.5,1.0 };
 	bool isbitcompress = 1;
 	unsigned char* buffer = (unsigned char *)calloc(sizeof(unsigned char), resolution[0] * resolution[1] * resolution[2]);
+	unsigned char* buffer_1 = (unsigned char *)calloc(sizeof(unsigned char), resolution[0] * resolution[1] * resolution[2]);
+	unsigned char* buffer_2 = (unsigned char *)calloc(sizeof(unsigned char), resolution[0] * resolution[1] * resolution[2]);
 
+	srand(time(NULL));
 	for (int i = 0; i < 1000; i++) {
-		buffer[(rand() % 256) + (rand() % 256) * 256 + (rand() % 256) * 256 * 256] = 1;
+		buffer[(rand() % 256) + (rand() % 256) * 256 + (rand() % 256) * 256 * 256] = 0;
 	}
+	for (int i = 0; i < 500; i++) {
+		buffer_1[(rand() % 256) + (rand() % 256) * 256 + (rand() % 256) * 256 * 256] = 1;
+	}
+	for (int i = 0; i < 1600; i++) {
+		buffer_2[(rand() % 256) + (rand() % 256) * 256 + (rand() % 256) * 256 * 256] = 1;
+	}
+
 
 	VoxelData* tempData_1 = new VoxelData;
 	tempData_1->name = (char*)malloc(sizeof(char) * 256);
@@ -92,7 +103,7 @@ void TDMMainWindow::makeTestFile(void)
 	(Voxel *)tempData_2->rawData = (Voxel *)calloc(resolution[0] * resolution[1] * resolution[2], sizeof(Voxel));
 
 	for (int i = 0; i < resolution[0] * resolution[1] * resolution[2]; i++) {
-		tempData_2->rawData[i].data = buffer[i];
+		tempData_2->rawData[i].data = buffer_1[i];
 	}
 	ditem_t* dataitem_2 = new ditem_t;
 	dataitem_2->voxlData = new VoxelData;
@@ -110,7 +121,7 @@ void TDMMainWindow::makeTestFile(void)
 	(Voxel *)tempData_3->rawData = (Voxel *)calloc(resolution[0] * resolution[1] * resolution[2], sizeof(Voxel));
 
 	for (int i = 0; i < resolution[0] * resolution[1] * resolution[2]; i++) {
-		tempData_3->rawData[i].data = buffer[i];
+		tempData_3->rawData[i].data = buffer_2[i];
 	}
 	ditem_t* dataitem_3 = new ditem_t;
 	dataitem_3->voxlData = new VoxelData;
@@ -231,7 +242,6 @@ void TDMMainWindow::addInDataList_VO(vobj_t * vo)
 		}
 	}
 }
-
 
 void TDMMainWindow::addInTreeList_VD(MyTreeWidgetItem * parent, ditem_t* dataItem)
 {
