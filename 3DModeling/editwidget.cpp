@@ -49,6 +49,9 @@ EditWidget::EditWidget(QWidget * parent) : QOpenGLWidget(parent)
 	farClip = 1000.0;
 	fixView();
 
+	// slice variable
+	x_number_of_layers = y_number_of_layers = z_number_of_layers = 0;
+
 	windowmodeID = THREE_DIMENSION_WINDOW;
 	vdata = NULL;
 }
@@ -684,7 +687,7 @@ void EditWidget::makevDataVBO(vdata_t* vd)
 		{ 1,3 }
 	};
 
-	cout << "Make " << vd->name << " VBO." << endl;
+	cout << "Make " << vd->name << "full Object Triangle and Wireframe vertex buffer." << endl;
 	
 	float* triangle_buffer = (float*)malloc(sizeof(float) * 108 * voxelamount);
 	float* wireframe_buffer = (float*)malloc(sizeof(float) * 144 * voxelamount);
@@ -752,6 +755,30 @@ void EditWidget::makevDataVBO(vdata_t* vd)
 	glEnableVertexAttribArray(glGetAttribLocation(program[0], "vPosition"));
 
 	free(wireframe_buffer);
+
+	cout << "Make " << vd->name << "XYZ-Slice vertex buffer." << endl;
+
+	// Caculate 
+	/*
+
+	float* x_slice_buffer = (float*)malloc(sizeof(float) * 108 * voxelamount);
+	float* y_slice_buffer = (float*)malloc(sizeof(float) * 108 * voxelamount);
+	float* z_slice_buffer = (float*)malloc(sizeof(float) * 108 * voxelamount);
+
+	*/
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 	return;

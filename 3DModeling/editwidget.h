@@ -121,13 +121,22 @@ private:
 	int selectedPosX;
 	int selectedPoxY;
 
+	// slice variable
+	int x_number_of_layers;
+	int y_number_of_layers;
+	int z_number_of_layers;
+
 	//vao vbo setting
-	enum VAO_IDs { Ground, Triangles, Wireframe, NumVAOs };
+	enum VAO_IDs { Ground, Triangles, Wireframe, XSlice, YSlice, ZSlice, NumVAOs };
 
 	GLuint VAOs[NumVAOs];
 	GLuint Ground_Vertex_Buffer[1];
 	GLuint Triangles_Vertex_Buffer[1];
 	GLuint Wireframe_Vertex_Buffer[1];
+
+	GLuint X_Slice_Vertex_Buffer[1];
+	GLuint Y_Slice_Vertex_Buffer[1];
+	GLuint Z_Slice_Vertex_Buffer[1];
 
 	int voxelamount = 0;
 
