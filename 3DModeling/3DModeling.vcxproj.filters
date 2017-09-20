@@ -164,5 +164,11 @@
     <None Include="shaders\simple.vert">
       <Filter>Source Files\shaders</Filter>
     </None>
+    <None Include="shaders\slice.frag">
+      <Filter>Source Files\shaders</Filter>
+    </None>
+    <None Include="shaders\slice.vert">
+      <Filter>Source Files\shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

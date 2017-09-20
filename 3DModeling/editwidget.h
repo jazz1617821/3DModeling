@@ -113,7 +113,8 @@ private:
 	GLuint colorLoc;
 
 	// shader program
-	GLuint program[1];
+	enum Program_IDs { Simple, Slice, NumShaders };
+	GLuint program[NumShaders];
 
 	// mouse controll
 	int oldPosX;
@@ -127,16 +128,12 @@ private:
 	int z_number_of_layers;
 
 	//vao vbo setting
-	enum VAO_IDs { Ground, Triangles, Wireframe, XSlice, YSlice, ZSlice, NumVAOs };
+	enum VAO_IDs { Ground, Triangles, Wireframe, NumVAOs };
 
 	GLuint VAOs[NumVAOs];
 	GLuint Ground_Vertex_Buffer[1];
 	GLuint Triangles_Vertex_Buffer[1];
 	GLuint Wireframe_Vertex_Buffer[1];
-
-	GLuint X_Slice_Vertex_Buffer[1];
-	GLuint Y_Slice_Vertex_Buffer[1];
-	GLuint Z_Slice_Vertex_Buffer[1];
 
 	int voxelamount = 0;
 

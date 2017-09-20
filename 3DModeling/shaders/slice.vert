@@ -1,16 +1,17 @@
 #version 400 core
 
 in vec4 vPosition;
-in vec4 clipPlane;
-vec4 fragPos;
+out float gl_ClipDistance[1];
+
+
 uniform mat4 modelMat;
 uniform mat4 mvpMat;
+uniform vec4 ClipPlane;
 
 void main()
 {
-	fragPos = modelMat * vPosition;
-	
-	gl_ClipDistance[0] = dot(fragPos, clipPlane);
 	
 	gl_Position = mvpMat * vPosition;
+	gl_ClipDistance[0] = dot(modelMat * gl_Position, clipPlane);
+
 }

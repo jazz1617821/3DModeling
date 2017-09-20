@@ -117,23 +117,36 @@ void EditWidget::initializeGL(void)
 
 	// load shaders
 
-	// simple shader
+	// simple shader info
 
 	ShaderInfo simpleShaders[] = {
 		{ GL_VERTEX_SHADER, "shaders\\simple.vert" },
 		{ GL_FRAGMENT_SHADER, "shaders\\simple.frag" },
 		{ GL_NONE, NULL }
 	};
-	program[0] = LoadShaders(simpleShaders);
+
+	// simple shader
+	program[Simple] = LoadShaders(simpleShaders);
+
+	// slice shader info
+
+	ShaderInfo sliceShaders[] = {
+		{ GL_VERTEX_SHADER, "shaders\\slice.vert" },
+		{ GL_FRAGMENT_SHADER, "shaders\\slice.frag" },
+		{ GL_NONE, NULL }
+	};
+
+	// slice shader
+	program[Slice] = LoadShaders(sliceShaders);
 
 	// use shader program
-	glUseProgram(program[0]);
+	glUseProgram(program[Simple]);
 
 	// color varibles
-	colorLoc = glGetUniformLocation(program[0], "color");
+	colorLoc = glGetUniformLocation(program[Simple], "color");
 
-	glVertexAttribPointer(glGetAttribLocation(program[0], "vPosition"), 3, GL_FLOAT, GL_FALSE, 0, 0);
-	glEnableVertexAttribArray(glGetAttribLocation(program[0], "vPosition"));
+	glVertexAttribPointer(glGetAttribLocation(program[Simple], "vPosition"), 3, GL_FLOAT, GL_FALSE, 0, 0);
+	glEnableVertexAttribArray(glGetAttribLocation(program[Simple], "vPosition"));
 
 	glEnable(GL_DEPTH_TEST);
 
@@ -170,28 +183,28 @@ void EditWidget::updateViewing(int mode)
 		multMat4fv(perspectiveMat, mvMat, mvpMat);
 
 		transposeMat4fv(mvpMat, mat);
-		glUniformMatrix4fv(glGetUniformLocation(program[0], "mvpMat"), 1, false, mat);
+		glUniformMatrix4fv(glGetUniformLocation(program[Simple], "mvpMat"), 1, false, mat);
 		break;
 	case X_WINDOW:
 		multMat4fv(x_ortho_viewMat, modelMat, mvMat);
 		multMat4fv(x_orthoMat, mvMat, mvpMat);
 
 		transposeMat4fv(mvpMat, mat);
-		glUniformMatrix4fv(glGetUniformLocation(program[0], "mvpMat"), 1, false, mat);
+		glUniformMatrix4fv(glGetUniformLocation(program[Simple], "mvpMat"), 1, false, mat);
 		break;
 	case Y_WINDOW:
 		multMat4fv(y_ortho_viewMat, modelMat, mvMat);
 		multMat4fv(y_orthoMat, mvMat, mvpMat);
 
 		transposeMat4fv(mvpMat, mat);
-		glUniformMatrix4fv(glGetUniformLocation(program[0], "mvpMat"), 1, false, mat);
+		glUniformMatrix4fv(glGetUniformLocation(program[Simple], "mvpMat"), 1, false, mat);
 		break;
 	case Z_WINDOW:
 		multMat4fv(z_ortho_viewMat, modelMat, mvMat);
 		multMat4fv(z_orthoMat, mvMat, mvpMat);
 
 		transposeMat4fv(mvpMat, mat);
-		glUniformMatrix4fv(glGetUniformLocation(program[0], "mvpMat"), 1, false, mat);
+		glUniformMatrix4fv(glGetUniformLocation(program[Simple], "mvpMat"), 1, false, mat);
 		break;
 	}
 
@@ -346,7 +359,7 @@ void EditWidget::paintGL(void)
 
 	glClearColor(0.66, 0.66, 0.66, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glUseProgram(program[0]);
+	glUseProgram(program[Simple]);
 
 	switch (windowmodeID) {
 	case FOUR_WINDOWS:
@@ -390,6 +403,7 @@ void EditWidget::paintGL(void)
 		glViewport(0, 0, this->width(), this->height());
 		drawMarking(X_WINDOW);
 		if (vdata != NULL) {
+			glUseProgram(program[1]);
 			drawObject(X_WINDOW);
 		}
 
@@ -731,8 +745,9 @@ void EditWidget::makevDataVBO(vdata_t* vd)
 	glBindBuffer(GL_ARRAY_BUFFER, Triangles_Vertex_Buffer[0]);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 108 * voxelamount, triangle_buffer, GL_STATIC_DRAW);
 
-	glVertexAttribPointer(glGetAttribLocation(program[0], "vPosition"), 3, GL_FLOAT, GL_FALSE, 0, 0);
-	glEnableVertexAttribArray(glGetAttribLocation(program[0], "vPosition"));
+
+	glVertexAttribPointer(glGetAttribLocation(program[Simple], "vPosition"), 3, GL_FLOAT, GL_FALSE, 0, 0);
+	glEnableVertexAttribArray(glGetAttribLocation(program[Simple], "vPosition"));
 
 	free(triangle_buffer);
 
@@ -751,34 +766,10 @@ void EditWidget::makevDataVBO(vdata_t* vd)
 	glBindBuffer(GL_ARRAY_BUFFER, Wireframe_Vertex_Buffer[0]);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 108 * voxelamount, wireframe_buffer, GL_STATIC_DRAW);
 
-	glVertexAttribPointer(glGetAttribLocation(program[0], "vPosition"), 3, GL_FLOAT, GL_FALSE, 0, 0);
-	glEnableVertexAttribArray(glGetAttribLocation(program[0], "vPosition"));
+	glVertexAttribPointer(glGetAttribLocation(program[Simple], "vPosition"), 3, GL_FLOAT, GL_FALSE, 0, 0);
+	glEnableVertexAttribArray(glGetAttribLocation(program[Simple], "vPosition"));
 
 	free(wireframe_buffer);
-
-	cout << "Make " << vd->name << "XYZ-Slice vertex buffer." << endl;
-
-	// Caculate 
-	/*
-
-	float* x_slice_buffer = (float*)malloc(sizeof(float) * 108 * voxelamount);
-	float* y_slice_buffer = (float*)malloc(sizeof(float) * 108 * voxelamount);
-	float* z_slice_buffer = (float*)malloc(sizeof(float) * 108 * voxelamount);
-
-	*/
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 	return;
