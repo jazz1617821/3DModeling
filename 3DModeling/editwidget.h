@@ -3,6 +3,7 @@
 #include <QOpenGLWidget>
 #include <QPushButton>
 #include <QMouseEvent>
+#include <QSlider>
 #include "light.h"
 #include "voxel.h"
 
@@ -43,6 +44,14 @@ private:
 	void getVDataPtr(vdata_t* vdata);
 
 signals:
+
+
+
+private:
+	QSlider* x_layer_slider;
+	QSlider* y_layer_slider;
+	QSlider* z_layer_slider;
+
 
 
 private:

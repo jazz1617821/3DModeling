@@ -54,6 +54,28 @@ EditWidget::EditWidget(QWidget * parent) : QOpenGLWidget(parent)
 
 	windowmodeID = THREE_DIMENSION_WINDOW;
 	vdata = NULL;
+
+
+	//slider 
+	
+	x_layer_slider = new QSlider(Qt::Vertical, this);
+	x_layer_slider->setRange(0, 256);
+	x_layer_slider->setValue(0);
+	x_number_of_layers = x_layer_slider->value();
+	x_layer_slider->setHidden(true);
+	
+	y_layer_slider = new QSlider(Qt::Vertical, this);
+	y_layer_slider->setRange(0, 256);
+	y_layer_slider->setValue(0);
+	y_number_of_layers = y_layer_slider->value();
+	y_layer_slider->setHidden(true);
+
+	z_layer_slider = new QSlider(Qt::Vertical, this);
+	z_layer_slider->setRange(0, 256);
+	z_layer_slider->setValue(0);
+	z_number_of_layers = z_layer_slider->value();
+	z_layer_slider->setHidden(true);
+	
 }
 
 EditWidget::~EditWidget()
@@ -76,6 +98,11 @@ void EditWidget::setupOpenGL(void)
 
 void EditWidget::initializeGL(void)
 {
+	x_layer_slider->setGeometry(10, 10, 30, this->height()/2);
+	x_number_of_layers = x_layer_slider->value();
+
+
+
 	float mat[16];
 
 	//  initialize glew
@@ -331,6 +358,8 @@ void EditWidget::drawObject(int mode) {
 		break;
 
 	case THREE_DIMENSION_WINDOW:
+		glUseProgram(program[Simple]);
+		
 		translate(-256 / 2, -256 / 2, -256 / 2, modelMat);
 		updateViewing(THREE_DIMENSION_WINDOW);
 		color[0] = 1.0;
@@ -339,6 +368,8 @@ void EditWidget::drawObject(int mode) {
 		color[3] = 1.0;
 		glUniform4fv(colorLoc, 1, color);
 		glBindVertexArray(VAOs[Triangles]);
+		glVertexAttribPointer(glGetAttribLocation(program[Simple], "vPosition"), 3, GL_FLOAT, GL_FALSE, 0, 0);
+		glEnableVertexAttribArray(glGetAttribLocation(program[Simple], "vPosition"));
 		glDrawArrays(GL_TRIANGLES, 0, sizeof(float) * 108 * voxelamount);
 
 		color[0] = 0.0;
@@ -347,6 +378,8 @@ void EditWidget::drawObject(int mode) {
 		color[3] = 1.0;
 		glUniform4fv(colorLoc, 1, color);
 		glBindVertexArray(VAOs[Wireframe]);
+		glVertexAttribPointer(glGetAttribLocation(program[Simple], "vPosition"), 3, GL_FLOAT, GL_FALSE, 0, 0);
+		glEnableVertexAttribArray(glGetAttribLocation(program[Simple], "vPosition"));
 		glDrawArrays(GL_LINES, 0, sizeof(float) * 144 * voxelamount);
 		break;
 	default:
@@ -745,10 +778,6 @@ void EditWidget::makevDataVBO(vdata_t* vd)
 	glBindBuffer(GL_ARRAY_BUFFER, Triangles_Vertex_Buffer[0]);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 108 * voxelamount, triangle_buffer, GL_STATIC_DRAW);
 
-
-	glVertexAttribPointer(glGetAttribLocation(program[Simple], "vPosition"), 3, GL_FLOAT, GL_FALSE, 0, 0);
-	glEnableVertexAttribArray(glGetAttribLocation(program[Simple], "vPosition"));
-
 	free(triangle_buffer);
 
 	
@@ -765,9 +794,6 @@ void EditWidget::makevDataVBO(vdata_t* vd)
 	//Bind triangles data
 	glBindBuffer(GL_ARRAY_BUFFER, Wireframe_Vertex_Buffer[0]);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 108 * voxelamount, wireframe_buffer, GL_STATIC_DRAW);
-
-	glVertexAttribPointer(glGetAttribLocation(program[Simple], "vPosition"), 3, GL_FLOAT, GL_FALSE, 0, 0);
-	glEnableVertexAttribArray(glGetAttribLocation(program[Simple], "vPosition"));
 
 	free(wireframe_buffer);
 

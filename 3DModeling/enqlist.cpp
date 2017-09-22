@@ -1,7 +1,7 @@
 #include "enqlist.h"
 #include <stdio.h>
 
-int initEnqDList(enqdlist_t* item)
+int initEnqDList(enqdlist_t *item)
 {
 	if (item == NULL) return false;
 
@@ -11,77 +11,103 @@ int initEnqDList(enqdlist_t* item)
 	return true;
 }
 
-int isEnqed(enqdlist_t* item)
+int isEnqed(enqdlist_t *item)
 {
-	if (item->flink == item)
+	if (item->flink == item || item->blink == item)
 		return false;
 	return true;
 }
 
-int isEnqEmpty(enqdlist_t* ls)
+int isEnqEmpty(enqdlist_t *ls)
 {
 	if (ls->flink == ls && ls->blink == ls)
 		return true;
 	return false;
 }
 
-int addEnqHead(enqdlist_t* ls, enqdlist_t* item)
+int addEnqHead(enqdlist_t *ls, enqdlist_t *item)
 {
-	item->flink = ls;
-	item->blink = ls->blink;
-	ls->blink = item;
-
-	return true;
-}
-
-int addEnqTail(enqdlist_t* ls, enqdlist_t* item)
-{
+	if (ls == NULL || item == NULL) {
+		return false;
+	}
 	item->flink = ls->flink;
 	item->blink = ls;
+	ls->flink->blink = item;
 	ls->flink = item;
 
 	return true;
 }
 
-int addEnqBefore(enqdlist_t* target, enqdlist_t* item)
+int addEnqTail(enqdlist_t  *ls, enqdlist_t *item)
 {
-	item->flink = target->flink;
-	item->blink = target;
-	target->flink = item;
+	if (ls == NULL || item == NULL) {
+		return false;
+	}
+	item->flink = ls;
+	item->blink = ls->blink;
+	ls->blink->flink = item;
+	ls->blink = item;
 
 	return true;
 }
 
-int addEnqAfter(enqdlist_t* target, enqdlist_t* item)
+int addEnqBefore(enqdlist_t *target, enqdlist_t *item)
 {
+	if (target == NULL || item == NULL) {
+		return false;
+	}
 	item->flink = target;
 	item->blink = target->blink;
+	target->blink->flink = item;
 	target->blink = item;
 
 	return true;
 }
 
-int removeEnqHead(enqdlist_t* ls, enqdlist_t** item)
+int addEnqAfter(enqdlist_t *target, enqdlist_t *item)
 {
-	(*item) = ls->blink;
-	(*item)->flink = *item;
-	(*item)->blink = *item;
-	ls->blink = ls->blink->blink;
+	if (target == NULL || item == NULL) {
+		return false;
+	}
+	item->flink = target->flink;
+	item->blink = target;
+	target->flink->blink = item;
+	target->flink = item;
 
 	return true;
 }
 
-int removeEnqTail(enqdlist_t* ls, enqdlist_t** item)
+enqdlist_t *removeEnqHead(enqdlist_t* ls)
 {
-	(*item) = ls->flink;
-	(*item)->flink = *item;
-	(*item)->blink = *item;
-	ls->flink = ls->flink->flink;
+	enqdlist_t *item;
 
-	return true;
+	if (isEnqEmpty(ls)) {
+		return NULL;
+	}
+	item = ls->flink;
+	removeEnqItem(item);
+	item->flink = item;
+	item->blink = item;
+
+	return item;
 }
 
-int removeEnqItem(enqdlist_t* item)
+enqdlist_t *removeEnqTail(enqdlist_t* ls)
+{
+	enqdlist_t *item;
+
+	if (isEnqEmpty(ls)) {
+		return NULL;
+	}
+	item = ls->flink;
+	removeEnqItem(item);
+	item->flink = item;
+	item->blink = item;
+
+	return item;
+}
+
+int removeEnqItem(enqdlist_t *item)
 {
 	item->flink->blink = item->blink;
 	item->blink->flink = item->flink;
