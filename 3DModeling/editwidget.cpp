@@ -101,8 +101,6 @@ void EditWidget::initializeGL(void)
 	x_layer_slider->setGeometry(10, 10, 30, this->height()/2);
 	x_number_of_layers = x_layer_slider->value();
 
-
-
 	float mat[16];
 
 	//  initialize glew
@@ -145,7 +143,6 @@ void EditWidget::initializeGL(void)
 	// load shaders
 
 	// simple shader info
-
 	ShaderInfo simpleShaders[] = {
 		{ GL_VERTEX_SHADER, "shaders\\simple.vert" },
 		{ GL_FRAGMENT_SHADER, "shaders\\simple.frag" },
@@ -156,7 +153,6 @@ void EditWidget::initializeGL(void)
 	program[Simple] = LoadShaders(simpleShaders);
 
 	// slice shader info
-
 	ShaderInfo sliceShaders[] = {
 		{ GL_VERTEX_SHADER, "shaders\\slice.vert" },
 		{ GL_FRAGMENT_SHADER, "shaders\\slice.frag" },
@@ -169,14 +165,7 @@ void EditWidget::initializeGL(void)
 	// use shader program
 	glUseProgram(program[Simple]);
 
-	// color varibles
-	colorLoc = glGetUniformLocation(program[Simple], "color");
-
-	glVertexAttribPointer(glGetAttribLocation(program[Simple], "vPosition"), 3, GL_FLOAT, GL_FALSE, 0, 0);
-	glEnableVertexAttribArray(glGetAttribLocation(program[Simple], "vPosition"));
-
 	glEnable(GL_DEPTH_TEST);
-
 }
 
 void EditWidget::fixView(void)
@@ -217,21 +206,21 @@ void EditWidget::updateViewing(int mode)
 		multMat4fv(x_orthoMat, mvMat, mvpMat);
 
 		transposeMat4fv(mvpMat, mat);
-		glUniformMatrix4fv(glGetUniformLocation(program[Simple], "mvpMat"), 1, false, mat);
+		glUniformMatrix4fv(glGetUniformLocation(program[Slice], "mvpMat"), 1, false, mat);
 		break;
 	case Y_WINDOW:
 		multMat4fv(y_ortho_viewMat, modelMat, mvMat);
 		multMat4fv(y_orthoMat, mvMat, mvpMat);
 
 		transposeMat4fv(mvpMat, mat);
-		glUniformMatrix4fv(glGetUniformLocation(program[Simple], "mvpMat"), 1, false, mat);
+		glUniformMatrix4fv(glGetUniformLocation(program[Slice], "mvpMat"), 1, false, mat);
 		break;
 	case Z_WINDOW:
 		multMat4fv(z_ortho_viewMat, modelMat, mvMat);
 		multMat4fv(z_orthoMat, mvMat, mvpMat);
 
 		transposeMat4fv(mvpMat, mat);
-		glUniformMatrix4fv(glGetUniformLocation(program[Simple], "mvpMat"), 1, false, mat);
+		glUniformMatrix4fv(glGetUniformLocation(program[Slice], "mvpMat"), 1, false, mat);
 		break;
 	}
 
@@ -273,6 +262,7 @@ void EditWidget::make_projection(int mode) {
 
 void EditWidget::drawMarking(int mode) {
 	float mat[16], color[4];
+	glUseProgram(program[Simple]);
 
 	switch (mode) {
 	case X_WINDOW:
@@ -318,9 +308,11 @@ void EditWidget::drawMarking(int mode) {
 	default:
 		break;
 	}
-	glUniform4fv(colorLoc, 1, color);
+	glUniform4fv(glGetUniformLocation(program[Simple], "color"), 1, color);
 
 	glBindVertexArray(VAOs[Ground]);
+	glVertexAttribPointer(glGetAttribLocation(program[Simple], "vPosition"), 3, GL_FLOAT, GL_FALSE, 0, 0);
+	glEnableVertexAttribArray(glGetAttribLocation(program[Simple], "vPosition"));
 	glDrawArrays(GL_LINES, 0, 256 * 4);
 }
 
@@ -366,7 +358,7 @@ void EditWidget::drawObject(int mode) {
 		color[1] = 1.0;
 		color[2] = 1.0;
 		color[3] = 1.0;
-		glUniform4fv(colorLoc, 1, color);
+		glUniform4fv(glGetUniformLocation(program[Simple],"color"), 1, color);
 		glBindVertexArray(VAOs[Triangles]);
 		glVertexAttribPointer(glGetAttribLocation(program[Simple], "vPosition"), 3, GL_FLOAT, GL_FALSE, 0, 0);
 		glEnableVertexAttribArray(glGetAttribLocation(program[Simple], "vPosition"));
@@ -376,7 +368,7 @@ void EditWidget::drawObject(int mode) {
 		color[1] = 0.0;
 		color[2] = 0.0;
 		color[3] = 1.0;
-		glUniform4fv(colorLoc, 1, color);
+		glUniform4fv(glGetUniformLocation(program[Simple], "color"), 1, color);
 		glBindVertexArray(VAOs[Wireframe]);
 		glVertexAttribPointer(glGetAttribLocation(program[Simple], "vPosition"), 3, GL_FLOAT, GL_FALSE, 0, 0);
 		glEnableVertexAttribArray(glGetAttribLocation(program[Simple], "vPosition"));

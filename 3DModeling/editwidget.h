@@ -118,9 +118,6 @@ private:
 
 	float lightSpaceMat[16];
 
-	// object uniform location
-	GLuint colorLoc;
-
 	// shader program
 	enum Program_IDs { Simple, Slice, NumShaders };
 	GLuint program[NumShaders];
