@@ -1,6 +1,6 @@
 #version 400 core
 
-in vec4 vPosition;
+layout(location = 0) in vec4 vPosition;
 out float gl_ClipDistance[2];
 
 uniform mat4 modelMat;

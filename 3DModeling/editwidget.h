@@ -121,6 +121,7 @@ private:
 	// shader program
 	enum Program_IDs { Simple, Slice, NumShaders };
 	GLuint program[NumShaders];
+	GLuint currentProgram;
 
 	// mouse controll
 	int oldPosX;
@@ -133,10 +134,12 @@ private:
 	int y_number_of_layers;
 	int z_number_of_layers;
 
-	//vao vbo setting
+	// vbo setting
+	/*
 	enum VAO_IDs { Ground, Triangles, Wireframe, NumVAOs };
 
 	GLuint VAOs[NumVAOs];
+	*/
 	GLuint Ground_Vertex_Buffer[1];
 	GLuint Triangles_Vertex_Buffer[1];
 	GLuint Wireframe_Vertex_Buffer[1];

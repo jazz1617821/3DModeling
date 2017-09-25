@@ -1,7 +1,8 @@
 #version 400 core
 
-in vec4 vPosition;
+layout(location = 0) in vec4 vPosition;
 uniform mat4 mvpMat;
+uniform mat4 modelMat;
 
 void main()
 {
