@@ -108,11 +108,6 @@ void EditWidget::initializeGL(void)
 		exit(EXIT_FAILURE);
 	}
 
-	/*
-	//Gen All VAO
-	glGenVertexArrays(NumVAOs, VAOs);
-
-	glBindVertexArray(VAOs[Ground]);*/
 
 	GLfloat ground[256 * 4][3];
 
@@ -141,8 +136,6 @@ void EditWidget::initializeGL(void)
 	glBindBuffer(GL_ARRAY_BUFFER, Ground_Vertex_Buffer[0]);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(ground), ground, GL_STATIC_DRAW);
 
-	//glBindVertexArray(0);
-
 	// load shaders
 
 	// simple shader info
@@ -166,8 +159,8 @@ void EditWidget::initializeGL(void)
 	program[Slice] = LoadShaders(sliceShaders);
 
 	// use shader program
-	glUseProgram(program[Simple]);
-	currentProgram = program[Simple];
+	//glUseProgram(program[Simple]);
+	//currentProgram = program[Simple];
 
 	glEnable(GL_DEPTH_TEST);
 }

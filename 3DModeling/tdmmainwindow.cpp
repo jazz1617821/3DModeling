@@ -245,7 +245,10 @@ void TDMMainWindow::addInDataList_VO(vobj_t * vo)
 
 void TDMMainWindow::addInTreeList_VD(MyTreeWidgetItem * parent, ditem_t* dataItem)
 {
+	QFont fnt;
+	fnt.setPixelSize(13);
 	MyTreeWidgetItem * itm = new MyTreeWidgetItem();
+	itm->setFont(0, fnt);
 	itm->setText(0, (QString)dataItem->voxlData->name);
 	itm->dataItem = dataItem;
 	parent->addChild(itm);
@@ -253,7 +256,10 @@ void TDMMainWindow::addInTreeList_VD(MyTreeWidgetItem * parent, ditem_t* dataIte
 
 void TDMMainWindow::addInTreeList_VO(MyTreeWidgetItem * parent, vobj_t* vobject)
 {
+	QFont fnt;
+	fnt.setPixelSize(15);
 	MyTreeWidgetItem * itm = new MyTreeWidgetItem();
+	itm->setFont(0, fnt);
 	itm->setText(0, (QString)vobject->name);
 	itm->vo = vobject;
 	parent->addChild(itm);
@@ -271,7 +277,10 @@ void TDMMainWindow::addInTreeList_VO(MyTreeWidgetItem * parent, vobj_t* vobject)
 
 void TDMMainWindow::addInTreeList_VM(vmodel_t* vmodel)
 {
+	QFont fnt;
+	fnt.setPixelSize(20);
 	MyTreeWidgetItem * itm = new MyTreeWidgetItem(ui->voxeltreeWidget);
+	itm->setFont(0, fnt);
 	itm->setText(0,(QString)vmodel->name);
 	itm->vm = vmodel;
 	addInTreeList_VO(itm, vmodel->rootObj);
