@@ -62,8 +62,12 @@ void TDMMainWindow::makeTestFile(void)
 	unsigned char* buffer_2 = (unsigned char *)calloc(sizeof(unsigned char), resolution[0] * resolution[1] * resolution[2]);
 
 	srand(time(NULL));
-	for (int i = 0; i < 1000; i++) {
-		buffer[(rand() % 256) + (rand() % 256) * 256 + (rand() % 256) * 256 * 256] = 0;
+	for (int x = 0; x < 128; x++) {
+		for (int y = 0; y < 128; y++) {
+			for (int z = 0; z < 128; z++) {
+				buffer[x + y * 256 + z * 256 * 256] = 1;
+			}
+		}
 	}
 	for (int i = 0; i < 500; i++) {
 		buffer_1[(rand() % 256) + (rand() % 256) * 256 + (rand() % 256) * 256 * 256] = 1;
@@ -470,7 +474,7 @@ void TDMMainWindow::openVM(const char* filepath)
 }
 
 void TDMMainWindow::writeVO(const char* filepath,FILE* vmodelfile, vobj_t * vo)
-{8+
+{
 	//Write this object
 	fprintf(vmodelfile, "Name:%s\n", vo->name);
 	fprintf(vmodelfile, "Max bound:%fx%fx%f\n", vo->bbox->maxBound[0], vo->bbox->maxBound[1], vo->bbox->maxBound[2]);

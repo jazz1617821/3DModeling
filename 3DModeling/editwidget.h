@@ -134,12 +134,15 @@ private:
 	int y_number_of_layers;
 	int z_number_of_layers;
 
+	float clipplane_1[4];
+	float clipplane_2[4];
+
 	// vbo setting
-	/*
+	
 	enum VAO_IDs { Ground, Triangles, Wireframe, NumVAOs };
 
 	GLuint VAOs[NumVAOs];
-	*/
+	
 	GLuint Ground_Vertex_Buffer[1];
 	GLuint Triangles_Vertex_Buffer[1];
 	GLuint Wireframe_Vertex_Buffer[1];

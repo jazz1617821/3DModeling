@@ -129,6 +129,12 @@ void EditWidget::initializeGL(void)
 		ground[y * 2 + 1 + 512][2] = 0;
 	}
 
+	/* Allocate and assign a Vertex Array Object to our handle */
+	glGenVertexArrays(1, VAOs);
+
+	/* Bind our Vertex Array Object as the current used object */
+	glBindVertexArray(VAOs[Ground]);
+
 	//Gen Buffers
 	glGenBuffers(1, Ground_Vertex_Buffer);
 
@@ -327,66 +333,146 @@ void EditWidget::drawObject(int mode) {
 	case X_WINDOW:
 		glUseProgram(program[Slice]);
 		currentProgram = program[Slice];
-		translate(-256 / 2, -256 / 2, 0, modelMat);
-		rotateY(90, mat);
-		multMat4fv(mat, modelMat, modelMat);
-		updateViewing(X_WINDOW);
-		color[0] = 1.0;
-		color[1] = 0.0;
-		color[2] = 0.0;
-		color[3] = 1.0;
-		break;
-	case Y_WINDOW:
-		glUseProgram(program[Slice]);
-		currentProgram = program[Slice];
-		translate(-256 / 2, -256 / 2, 0, modelMat);
-		rotateX(90, mat);
-		multMat4fv(mat, modelMat, modelMat);
-		updateViewing(Y_WINDOW);
-		color[0] = 0.0;
-		color[1] = 1.0;
-		color[2] = 0.0;
-		color[3] = 1.0;
-		break;
-	case Z_WINDOW:
-		glUseProgram(program[Slice]);
-		currentProgram = program[Slice];
-		translate(-256 / 2, -256 / 2, 0, modelMat);
-		updateViewing(Z_WINDOW);
-		color[0] = 0.0;
-		color[1] = 0.0;
-		color[2] = 1.0;
-		color[3] = 1.0;
-		break;
-
-	case THREE_DIMENSION_WINDOW:
-		glUseProgram(program[Simple]);
-		currentProgram = program[Simple];
 		translate(-256 / 2, -256 / 2, -256 / 2, modelMat);
-		updateViewing(THREE_DIMENSION_WINDOW);
+		updateViewing(X_WINDOW);
+
+		clipplane_1[1] = clipplane_1[2] = clipplane_2[1] = clipplane_2[2] = 0;
+		clipplane_1[0] = 1;
+		clipplane_2[0] = -1;
+		clipplane_1[3] = x_number_of_layers;
+		clipplane_2[3] = x_number_of_layers;
+
+		glUniform4fv(glGetUniformLocation(currentProgram, "ClipPlaneUp"), 1, clipplane_1);
+		glUniform4fv(glGetUniformLocation(currentProgram, "ClipPlaneDoen"), 1, clipplane_2);
+
 		color[0] = 1.0;
 		color[1] = 1.0;
 		color[2] = 1.0;
 		color[3] = 1.0;
-		glUniform4fv(glGetUniformLocation(currentProgram,"color"), 1, color);
-		//glBindVertexArray(VAOs[Triangles]);
+		glUniform4fv(glGetUniformLocation(currentProgram, "color"), 1, color);
+		glBindVertexArray(VAOs[Triangles]);
+		glBindBuffer(GL_ARRAY_BUFFER, Triangles_Vertex_Buffer[0]);
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
 		glEnableVertexAttribArray(0);
 		glDrawArrays(GL_TRIANGLES, 0, sizeof(float) * 108 * voxelamount);
-
 
 		color[0] = 0.0;
 		color[1] = 0.0;
 		color[2] = 0.0;
 		color[3] = 1.0;
 		glUniform4fv(glGetUniformLocation(currentProgram, "color"), 1, color);
-		//glBindVertexArray(VAOs[Wireframe]);
+		glBindVertexArray(VAOs[Wireframe]);
+		glBindBuffer(GL_ARRAY_BUFFER, Wireframe_Vertex_Buffer[0]);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+		glEnableVertexAttribArray(0);
+		glDrawArrays(GL_LINES, 0, sizeof(float) * 144 * voxelamount);
+		break;
+	case Y_WINDOW:
+		glUseProgram(program[Slice]);
+		currentProgram = program[Slice];
+		translate(-256 / 2, -256 / 2, -256 / 2, modelMat);
+		updateViewing(Y_WINDOW);
+
+		clipplane_1[0] = clipplane_1[2] = clipplane_2[0] = clipplane_2[2] = 0;
+		clipplane_1[1] = 1;
+		clipplane_2[1] = -1;
+		clipplane_1[3] = y_number_of_layers;
+		clipplane_2[3] = y_number_of_layers;
+
+		glUniform4fv(glGetUniformLocation(currentProgram, "ClipPlaneUp"), 1, clipplane_1);
+		glUniform4fv(glGetUniformLocation(currentProgram, "ClipPlaneDoen"), 1, clipplane_2);
+
+		color[0] = 1.0;
+		color[1] = 1.0;
+		color[2] = 1.0;
+		color[3] = 1.0;
+		glUniform4fv(glGetUniformLocation(currentProgram, "color"), 1, color);
+		glBindVertexArray(VAOs[Triangles]);
+		glBindBuffer(GL_ARRAY_BUFFER, Triangles_Vertex_Buffer[0]);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+		glEnableVertexAttribArray(0);
+		glDrawArrays(GL_TRIANGLES, 0, sizeof(float) * 108 * voxelamount);
+
+		color[0] = 0.0;
+		color[1] = 0.0;
+		color[2] = 0.0;
+		color[3] = 1.0;
+		glUniform4fv(glGetUniformLocation(currentProgram, "color"), 1, color);
+		glBindVertexArray(VAOs[Wireframe]);
+		glBindBuffer(GL_ARRAY_BUFFER, Wireframe_Vertex_Buffer[0]);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+		glEnableVertexAttribArray(0);
+		glDrawArrays(GL_LINES, 0, sizeof(float) * 144 * voxelamount);
+		break;
+	case Z_WINDOW:
+		glUseProgram(program[Slice]);
+		currentProgram = program[Slice];
+		translate(-256 / 2, -256 / 2, -256 / 2, modelMat);
+		updateViewing(Z_WINDOW);
+
+		clipplane_1[0] = clipplane_1[1] = clipplane_2[0] = clipplane_2[1] = 0;
+		clipplane_1[2] = 1;
+		clipplane_2[2] = -1;
+		clipplane_1[3] = z_number_of_layers;
+		clipplane_2[3] = z_number_of_layers;
+
+		glUniform4fv(glGetUniformLocation(currentProgram, "ClipPlaneUp"), 1, clipplane_1);
+		glUniform4fv(glGetUniformLocation(currentProgram, "ClipPlaneDoen"), 1, clipplane_2);
+
+		color[0] = 1.0;
+		color[1] = 1.0;
+		color[2] = 1.0;
+		color[3] = 1.0;
+		glUniform4fv(glGetUniformLocation(currentProgram, "color"), 1, color);
+		glBindVertexArray(VAOs[Triangles]);
+		glBindBuffer(GL_ARRAY_BUFFER, Triangles_Vertex_Buffer[0]);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+		glEnableVertexAttribArray(0);
+		glDrawArrays(GL_TRIANGLES, 0, sizeof(float) * 108 * voxelamount);
+
+		color[0] = 0.0;
+		color[1] = 0.0;
+		color[2] = 0.0;
+		color[3] = 1.0;
+		glUniform4fv(glGetUniformLocation(currentProgram, "color"), 1, color);
+		glBindVertexArray(VAOs[Wireframe]);
 		glBindBuffer(GL_ARRAY_BUFFER, Wireframe_Vertex_Buffer[0]);
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
 		glEnableVertexAttribArray(0);
 		glDrawArrays(GL_LINES, 0, sizeof(float) * 144 * voxelamount);
 
-		//glBindVertexArray(0);
+		break;
+
+	case THREE_DIMENSION_WINDOW:
+		glUseProgram(program[Simple]);
+		currentProgram = program[Simple];
+		translate(-256 / 2, 0, -256 / 2, modelMat);
+		updateViewing(THREE_DIMENSION_WINDOW);
+
+		color[0] = 1.0;
+		color[1] = 1.0;
+		color[2] = 1.0;
+		color[3] = 1.0;
+		glUniform4fv(glGetUniformLocation(currentProgram,"color"), 1, color);
+		glBindVertexArray(VAOs[Triangles]);
+		glBindBuffer(GL_ARRAY_BUFFER, Triangles_Vertex_Buffer[0]);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+		glEnableVertexAttribArray(0);
+		glDrawArrays(GL_TRIANGLES, 0, sizeof(float) * 108 * voxelamount);
+
+		/*
+		color[0] = 0.0;
+		color[1] = 0.0;
+		color[2] = 0.0;
+		color[3] = 1.0;
+		glUniform4fv(glGetUniformLocation(currentProgram, "color"), 1, color);
+		glBindVertexArray(VAOs[Wireframe]);
+		glBindBuffer(GL_ARRAY_BUFFER, Wireframe_Vertex_Buffer[0]);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+		glEnableVertexAttribArray(0);
+		glDrawArrays(GL_LINES, 0, sizeof(float) * 144 * voxelamount);
+		*/
+
 		break;
 	default:
 		break;
@@ -398,6 +484,8 @@ void EditWidget::paintGL(void)
 
 	glClearColor(0.66, 0.66, 0.66, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	glCullFace(GL_BACK);
 
 	switch (windowmodeID) {
 	case FOUR_WINDOWS:
@@ -749,31 +837,49 @@ void EditWidget::makevDataVBO(vdata_t* vd)
 			for (int x = 0; x < vd->resolution[0]; x++) {
 				if (vd->rawData[x+ y * vd->resolution[0] + z * vd->resolution[0] * vd->resolution[1]].data != 0) {
 					//Triangle vertex 
-					for (int i = 0; i < 12; i++) {
-						for (int j = 0; j < 3; j++) {
-							triangle_buffer[count * 108 + i * 9 + j * 3 + 0] = x + cubeboxpoint[triangle_index[i][j]][0];
-							triangle_buffer[count * 108 + i * 9 + j * 3 + 1] = y + cubeboxpoint[triangle_index[i][j]][1];
-							triangle_buffer[count * 108 + i * 9 + j * 3 + 2] = z + cubeboxpoint[triangle_index[i][j]][2];
-						}
+					int flag = 0;
+					if (x == 0 || vd->rawData[x - 1 + y * vd->resolution[0] + z * vd->resolution[0] * vd->resolution[1]].data == 0 || x == vd->resolution[0] - 1 || vd->rawData[x + 1 + y * vd->resolution[0] + z * vd->resolution[0] * vd->resolution[1]].data == 0) {
+						flag = 1;
 					}
-					//Wireframe vertex
-					for (int i = 0; i < 24; i++) {
-						for (int j = 0; j < 2; j++) {
-							wireframe_buffer[count * 108 + i * 6 + j * 3 + 0] = x + cubeboxpoint[wireframe_index[i][j]][0];
-							wireframe_buffer[count * 108 + i * 6 + j * 3 + 1] = y + cubeboxpoint[wireframe_index[i][j]][1];
-							wireframe_buffer[count * 108 + i * 6 + j * 3 + 2] = z + cubeboxpoint[wireframe_index[i][j]][2];
-						}
+					if (y == 0 || vd->rawData[x + (y - 1) * vd->resolution[0] + z * vd->resolution[0] * vd->resolution[1]].data == 0 || y == vd->resolution[1] - 1 || vd->rawData[x + (y + 1) * vd->resolution[0] + z * vd->resolution[0] * vd->resolution[1]].data == 0) {
+						flag = 1;
 					}
-					count++;
+					if (z == 0 || vd->rawData[x + y * vd->resolution[0] + (z - 1) * vd->resolution[0] * vd->resolution[1]].data == 0 || z == vd->resolution[2] - 1 || vd->rawData[x + y * vd->resolution[0] + (z + 1) * vd->resolution[0] * vd->resolution[1]].data == 0) {
+						flag = 1;
+					}
+					if (flag) {
+						for (int i = 0; i < 12; i++) {
+							for (int j = 0; j < 3; j++) {
+								triangle_buffer[count * 108 + i * 9 + j * 3 + 0] = x + cubeboxpoint[triangle_index[i][j]][0];
+								triangle_buffer[count * 108 + i * 9 + j * 3 + 1] = y + cubeboxpoint[triangle_index[i][j]][1];
+								triangle_buffer[count * 108 + i * 9 + j * 3 + 2] = z + cubeboxpoint[triangle_index[i][j]][2];
+							}
+						}
+						//Wireframe vertex
+						for (int i = 0; i < 24; i++) {
+							for (int j = 0; j < 2; j++) {
+								wireframe_buffer[count * 108 + i * 6 + j * 3 + 0] = x + cubeboxpoint[wireframe_index[i][j]][0];
+								wireframe_buffer[count * 108 + i * 6 + j * 3 + 1] = y + cubeboxpoint[wireframe_index[i][j]][1];
+								wireframe_buffer[count * 108 + i * 6 + j * 3 + 2] = z + cubeboxpoint[wireframe_index[i][j]][2];
+							}
+						}
+						count++;
+					}
 				}
 			}
 		}
 	}
+	cout << count << endl;
 	//Triangles
-	//glBindVertexArray(VAOs[Triangles]);
 
 	//Gen Buffers
 	if (!triangleflag) {
+		/* Allocate and assign a Vertex Array Object to our handle */
+		glGenVertexArrays(1, VAOs);
+
+		/* Bind our Vertex Array Object as the current used object */
+		glBindVertexArray(VAOs[Triangles]);
+
 		glGenBuffers(1, Triangles_Vertex_Buffer);
 		triangleflag = true;
 	}
@@ -784,15 +890,17 @@ void EditWidget::makevDataVBO(vdata_t* vd)
 
 	free(triangle_buffer);
 
-	//glBindVertexArray(0);
 
-	
 	//Wireframe
-	//glBindVertexArray(VAOs[Wireframe]);
-
 
 	//Gen Buffers
 	if (!wireframeflag) {
+		/* Allocate and assign a Vertex Array Object to our handle */
+		glGenVertexArrays(1, VAOs);
+
+		/* Bind our Vertex Array Object as the current used object */
+		glBindVertexArray(VAOs[Wireframe]);
+
 		glGenBuffers(1, Wireframe_Vertex_Buffer);
 		wireframeflag = true;
 	}
@@ -803,7 +911,6 @@ void EditWidget::makevDataVBO(vdata_t* vd)
 
 	free(wireframe_buffer);
 
-	//glBindVertexArray(0);
 
 	return;
 }

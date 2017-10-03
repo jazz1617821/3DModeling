@@ -15,7 +15,6 @@ RCC : warning : No resources in 'C:\Users\Jazz\Documents\GitHub\3DModeling\3DMod
   LoadShaders.cpp
   main.cpp
   tdmmainwindow.cpp
-tdmmainwindow.cpp(473): warning C4552: '+': operator has no effect; expected operator with side-effect
   material.cpp
 material.cpp(62): warning C4838: conversion from 'double' to 'float' requires a narrowing conversion
 material.cpp(90): warning C4838: conversion from 'double' to 'float' requires a narrowing conversion
@@ -52,6 +51,10 @@ editwidget.obj : warning LNK4049: locally defined symbol __glewUseProgram import
 viewwidget.obj : warning LNK4049: locally defined symbol __glewUseProgram imported
 editwidget.obj : warning LNK4049: locally defined symbol __glewVertexAttribPointer imported
 viewwidget.obj : warning LNK4049: locally defined symbol __glewVertexAttribPointer imported
+editwidget.obj : warning LNK4049: locally defined symbol __glewBindVertexArray imported
+viewwidget.obj : warning LNK4049: locally defined symbol __glewBindVertexArray imported
+editwidget.obj : warning LNK4049: locally defined symbol __glewGenVertexArrays imported
+viewwidget.obj : warning LNK4049: locally defined symbol __glewGenVertexArrays imported
 viewwidget.obj : warning LNK4049: locally defined symbol __glewActiveTexture imported
 viewwidget.obj : warning LNK4049: locally defined symbol __glewDisableVertexAttribArray imported
 viewwidget.obj : warning LNK4049: locally defined symbol __glewDrawBuffers imported
@@ -71,8 +74,6 @@ viewwidget.obj : warning LNK4049: locally defined symbol __glewGenRenderbuffers 
 viewwidget.obj : warning LNK4049: locally defined symbol __glewRenderbufferStorage imported
 viewwidget.obj : warning LNK4049: locally defined symbol __glewRenderbufferStorageMultisample imported
 viewwidget.obj : warning LNK4049: locally defined symbol __glewTexImage2DMultisample imported
-viewwidget.obj : warning LNK4049: locally defined symbol __glewBindVertexArray imported
-viewwidget.obj : warning LNK4049: locally defined symbol __glewGenVertexArrays imported
 glew32s.lib(glew.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'glew32s.lib(glew.obj)' or at 'C:\Users\Jazz\Documents\GitHub\3DModeling\x64\Debug\vc120.pdb'; linking object as if no debug info
   3DModeling.vcxproj -> C:\Users\Jazz\Documents\GitHub\3DModeling\x64\Debug\3DModeling.exe
   3DModeling.vcxproj -> C:\Users\Jazz\Documents\GitHub\3DModeling\x64\Debug\3DModeling.pdb (Full PDB)
