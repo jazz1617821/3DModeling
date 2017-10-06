@@ -98,8 +98,9 @@ void EditWidget::setupOpenGL(void)
 
 void EditWidget::initializeGL(void)
 {
-	x_layer_slider->setGeometry(10, 10, 30, this->height()/2);
 	x_number_of_layers = x_layer_slider->value();
+	y_number_of_layers = y_layer_slider->value();
+	z_number_of_layers = z_layer_slider->value();
 
 	float mat[16];
 
@@ -489,6 +490,8 @@ void EditWidget::paintGL(void)
 
 	switch (windowmodeID) {
 	case FOUR_WINDOWS:
+		x_layer_slider->setHidden(false);
+		//x_layer_slider->setGeometry();
 		make_view(X_WINDOW);
 		make_projection(X_WINDOW);
 		glViewport(0, 0, this->width() / 2, this->height() / 2);
