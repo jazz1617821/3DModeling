@@ -4,6 +4,7 @@
 #include <QPushButton>
 #include <QMouseEvent>
 #include <QSlider>
+#include <QSpinBox>
 #include "light.h"
 #include "voxel.h"
 
@@ -44,15 +45,18 @@ private:
 	void getVDataPtr(vdata_t* vdata);
 
 signals:
-
-
+	void xSliderValuechange(int value);
+	void ySliderValuechange(int value);
+	void zSliderValuechange(int value);
 
 private:
 	QSlider* x_layer_slider;
 	QSlider* y_layer_slider;
 	QSlider* z_layer_slider;
 
-
+	QSpinBox* x_layer_spinbox;
+	QSpinBox* y_layer_spinbox;
+	QSpinBox* z_layer_spinbox;
 
 private:
 	//Voxel Data

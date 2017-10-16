@@ -177,7 +177,7 @@ void TDMMainWindow::makeTestFile(void)
 		tempobj_2->bbox->maxBound[i] = 4096;
 		tempobj_2->bbox->minBound[i] = 2048;
 	}
-	tempobj_2->numberOfChild = 1;
+	tempobj_2->numberOfChild = 0;
 	tempobj_2->dataItem = dataitem_2;
 
 
@@ -190,7 +190,7 @@ void TDMMainWindow::makeTestFile(void)
 		tempobj_1_1->bbox->maxBound[i] = 4096;
 		tempobj_1_1->bbox->minBound[i] = 0;
 	}
-	tempobj_1_1->numberOfChild = 1;
+	tempobj_1_1->numberOfChild = 0;
 	tempobj_1_1->dataItem = dataitem_3;
 
 	vobj_t * tempobj_1_2 = new vobj_t;
@@ -201,7 +201,7 @@ void TDMMainWindow::makeTestFile(void)
 		tempobj_1_2->bbox->maxBound[i] = 4096;
 		tempobj_1_2->bbox->minBound[i] = 0;
 	}
-	tempobj_1_2->numberOfChild = 1;
+	tempobj_1_2->numberOfChild = 0;
 	tempobj_1_2->dataItem = dataitem_3;
 
 	//conect link
@@ -231,7 +231,7 @@ void TDMMainWindow::makeTestFile(void)
 
 void TDMMainWindow::addInDataList_VO(vobj_t * vo) 
 {
-	if (vo->numberOfChild == 1) {
+	if (vo->numberOfChild == 0) {
 		MyListWidgetItem* itm = new MyListWidgetItem();
 		itm->dataItem = vo->dataItem;
 		itm->setText(vo->dataItem->voxlData->name);
@@ -267,7 +267,7 @@ void TDMMainWindow::addInTreeList_VO(MyTreeWidgetItem * parent, vobj_t* vobject)
 	itm->setText(0, (QString)vobject->name);
 	itm->vo = vobject;
 	parent->addChild(itm);
-	if (vobject->numberOfChild == 1) {
+	if (vobject->numberOfChild == 0) {
 		addInTreeList_VD(itm, vobject->dataItem);
 	}
 	else {
@@ -411,7 +411,7 @@ void TDMMainWindow::openVO(const char* filepath,FILE * vmodelfile, vobj_t* vo)
 	fscanf(vmodelfile, "Number of child:%d\n", &vo->numberOfChild);
 	cout << vo->numberOfChild << endl;
 
-	if (vo->numberOfChild == 1) {
+	if (vo->numberOfChild == 0) {
 		vo->dataItem = new ditem_t;
 		vo->dataItem->parent = vo;
 		vo->dataItem->voxlData = new vdata_t;
@@ -481,7 +481,7 @@ void TDMMainWindow::writeVO(const char* filepath,FILE* vmodelfile, vobj_t * vo)
 	fprintf(vmodelfile, "Min bound:%fx%fx%f\n", vo->bbox->minBound[0], vo->bbox->minBound[1], vo->bbox->minBound[2]);
 	fprintf(vmodelfile, "Number of child:%d\n", vo->numberOfChild);
 
-	if (vo->numberOfChild == 1) {
+	if (vo->numberOfChild == 0) {
 		fprintf(vmodelfile,"Voxel data filename:%s\n",vo->dataItem->voxlData->name);
 		writeVD(filepath,vo->dataItem->voxlData);
 		return;
@@ -663,7 +663,7 @@ void TDMMainWindow::on_actionOpen_triggered()
 		this,
 		tr("Open Voxel Model"),
 		"",
-		tr("Voxel Files (*.vdat *.vm)")
+		tr("Voxel Files (*.vm)")
 		);
 
 	QByteArray ba = filename.toLatin1();

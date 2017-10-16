@@ -14,6 +14,8 @@
 
 using namespace std;
 
+
+
 EditWidget::EditWidget(QWidget * parent) : QOpenGLWidget(parent)
 {
 	setupOpenGL();
@@ -59,6 +61,7 @@ EditWidget::EditWidget(QWidget * parent) : QOpenGLWidget(parent)
 	//slider 
 	
 	x_layer_slider = new QSlider(Qt::Vertical, this);
+	//x_layer_slider->setProperty("mandatoryField", true);
 	x_layer_slider->setRange(0, 256);
 	x_layer_slider->setValue(0);
 	x_number_of_layers = x_layer_slider->value();
@@ -76,6 +79,26 @@ EditWidget::EditWidget(QWidget * parent) : QOpenGLWidget(parent)
 	z_number_of_layers = z_layer_slider->value();
 	z_layer_slider->setHidden(true);
 	
+	x_layer_spinbox = new QSpinBox(this);
+	x_layer_spinbox->setRange(0, 256);
+	x_layer_spinbox->setValue(0);
+	x_layer_spinbox->setHidden(true);
+
+	y_layer_spinbox = new QSpinBox(this);
+	y_layer_spinbox->setRange(0, 256);
+	y_layer_spinbox->setValue(0);
+	y_layer_spinbox->setHidden(true);
+
+	z_layer_spinbox = new QSpinBox(this);
+	z_layer_spinbox->setRange(0, 256);
+	z_layer_spinbox->setValue(0);
+	z_layer_spinbox->setHidden(true);
+
+	connect(x_layer_slider, QSlider::valueChanged, this, xSliderValuechange);
+	connect(y_layer_slider, QSlider::valueChanged, this, ySliderValuechange);
+	connect(z_layer_slider, QSlider::valueChanged, this, zSliderValuechange);
+
+
 }
 
 EditWidget::~EditWidget()
@@ -491,7 +514,9 @@ void EditWidget::paintGL(void)
 	switch (windowmodeID) {
 	case FOUR_WINDOWS:
 		x_layer_slider->setHidden(false);
-		//x_layer_slider->setGeometry();
+		x_layer_slider->setGeometry(15, 10, 40, this->height() / 2 - 40);
+		x_layer_spinbox->setHidden(false);
+		x_layer_spinbox->setGeometry(15, this->height() / 2 - 30, 40, 20);
 		make_view(X_WINDOW);
 		make_projection(X_WINDOW);
 		glViewport(0, 0, this->width() / 2, this->height() / 2);
@@ -500,6 +525,10 @@ void EditWidget::paintGL(void)
 			drawObject(X_WINDOW);
 		}
 
+		y_layer_slider->setHidden(false);
+		y_layer_slider->setGeometry(15, this->height() / 2 + 10, 40, this->height() / 2 - 40);
+		y_layer_spinbox->setHidden(false);
+		y_layer_spinbox->setGeometry(15, this->height() - 30, 40, 20);
 		make_view(Y_WINDOW);
 		make_projection(Y_WINDOW);
 		glViewport(0, this->height() / 2, this->width() / 2, this->height() / 2);
@@ -508,6 +537,10 @@ void EditWidget::paintGL(void)
 			drawObject(Y_WINDOW);
 		}
 
+		z_layer_slider->setHidden(false);
+		z_layer_slider->setGeometry(this->width() / 2 + 15, this->height() / 2 + 10, 40, this->height() / 2 - 40);
+		z_layer_spinbox->setHidden(false);
+		z_layer_spinbox->setGeometry(this->width() / 2 + 15, this->height() - 30, 40, 20);
 		make_view(Z_WINDOW);
 		make_projection(Z_WINDOW);
 		glViewport(this->width() / 2, 0, this->width() / 2, this->height() / 2);
@@ -527,6 +560,14 @@ void EditWidget::paintGL(void)
 		break;
 
 	case X_WINDOW:
+		y_layer_slider->setHidden(true);
+		z_layer_slider->setHidden(true);
+		x_layer_slider->setHidden(false);
+		x_layer_slider->setGeometry(15, 10, 40, this->height() - 40);
+		y_layer_spinbox->setHidden(true);
+		z_layer_spinbox->setHidden(true);
+		x_layer_spinbox->setHidden(false);
+		x_layer_spinbox->setGeometry(15, this->height() - 30, 40, 20);
 		make_view(X_WINDOW);
 		make_projection(X_WINDOW);
 		glViewport(0, 0, this->width(), this->height());
@@ -538,6 +579,14 @@ void EditWidget::paintGL(void)
 
 		break;
 	case Y_WINDOW:
+		x_layer_slider->setHidden(true);
+		z_layer_slider->setHidden(true);
+		y_layer_slider->setHidden(false);
+		y_layer_slider->setGeometry(15, 10, 40, this->height() - 40);
+		x_layer_spinbox->setHidden(true);
+		z_layer_spinbox->setHidden(true);
+		y_layer_spinbox->setHidden(false);
+		y_layer_spinbox->setGeometry(15, this->height() - 30, 40, 20);
 		make_view(Y_WINDOW);
 		make_projection(Y_WINDOW);
 		glViewport(0, 0, this->width(), this->height());
@@ -548,6 +597,14 @@ void EditWidget::paintGL(void)
 
 		break;
 	case Z_WINDOW:
+		x_layer_slider->setHidden(true);
+		y_layer_slider->setHidden(true);
+		z_layer_slider->setHidden(false);
+		z_layer_slider->setGeometry(15, 10, 40, this->height() - 40);
+		x_layer_spinbox->setHidden(true);
+		y_layer_spinbox->setHidden(true);
+		z_layer_spinbox->setHidden(false);
+		z_layer_spinbox->setGeometry(15, this->height() - 30, 40, 20);
 		make_view(Z_WINDOW);
 		make_projection(Z_WINDOW);
 		glViewport(0, 0, this->width(), this->height());
@@ -916,6 +973,16 @@ void EditWidget::makevDataVBO(vdata_t* vd)
 
 
 	return;
+}
+
+
+//Signal
+void EditWidget::ySliderValuechange(int value)
+{
+}
+
+void EditWidget::zSliderValuechange(int value)
+{
 }
 
 //Private slots:
