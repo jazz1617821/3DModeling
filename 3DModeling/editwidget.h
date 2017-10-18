@@ -38,16 +38,20 @@ private:
 	void drawObject(int mode);
 
 	void caculateVoxelAmount(vdata_t * vd);
-	//make VBO
-	void makevDataVBO(vdata_t*);
+	void createVoxelVBO(vdata_t * vd);
+	void makevDataVBO(vdata_t* vd);
 
 	private slots:
 	void getVDataPtr(vdata_t* vdata);
-
-signals:
 	void xSliderValuechange(int value);
 	void ySliderValuechange(int value);
 	void zSliderValuechange(int value);
+	void xSpinboxValuechange(int value);
+	void ySpinboxValuechange(int value);
+	void zSpinboxValuechange(int value);
+
+signals:
+	
 
 private:
 	QSlider* x_layer_slider;
@@ -143,13 +147,12 @@ private:
 
 	// vbo setting
 	
-	enum VAO_IDs { Ground, Triangles, Wireframe, NumVAOs };
-
+	enum VAO_IDs { Ground, Triangles, NumVAOs };
 	GLuint VAOs[NumVAOs];
-	
-	GLuint Ground_Vertex_Buffer[1];
-	GLuint Triangles_Vertex_Buffer[1];
-	GLuint Wireframe_Vertex_Buffer[1];
+
+	enum Object_Attribs { Vertex, Normal, Texcoor, Color, Wireframe, NumAttribs };
+	GLuint groundvbo[NumAttribs];
+	GLuint objvbo[NumAttribs];
 
 	int voxelamount = 0;
 

@@ -1002,7 +1002,7 @@ void ViewWidget::renderQuad()
 
 void ViewWidget::makeModelVBO(vobj_t* vo)
 {
-	if (vo->numberOfChild == 1) {
+	if (vo->numberOfChild == 0) {
 		cout << "Make " << vo->dataItem->voxlData->name << " VBO." << endl;
 		addVertexBufferObject(createVoxelVBO(vo), vboa);
 		setColorVBO(1.2, 1.0, 0.47, 1.0, vboa->vbos[vboa->numVBOs - 1]);

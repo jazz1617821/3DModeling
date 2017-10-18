@@ -150,9 +150,9 @@ vbo_t * createVoxelVBO(vdata_t * vd)
 	vbo_t* boxVBO;
 	vbo_t* boxWFVBO;
 
-	origin[X] = -128;
+	origin[X] = vd->resolution[X] / 2;
 	origin[Y] = 0;
-	origin[Z] = -128;
+	origin[Z] = vd->resolution[Z] / 2;
 
 	// count drawing faces
 	numFaces = 0;
