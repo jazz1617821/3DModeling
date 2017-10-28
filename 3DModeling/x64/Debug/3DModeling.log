@@ -33,6 +33,9 @@ viewwidget.cpp(754): warning C4838: conversion from 'double' to 'float' requires
 LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
 editwidget.obj : warning LNK4217: locally defined symbol glewInit imported in function "protected: virtual void __cdecl EditWidget::initializeGL(void)" (?initializeGL@EditWidget@@MEAAXXZ)
 viewwidget.obj : warning LNK4049: locally defined symbol glewInit imported
+editwidget.obj : warning LNK4049: locally defined symbol __glewTexImage3D imported
+editwidget.obj : warning LNK4049: locally defined symbol __glewActiveTexture imported
+viewwidget.obj : warning LNK4049: locally defined symbol __glewActiveTexture imported
 editwidget.obj : warning LNK4049: locally defined symbol __glewBindBuffer imported
 viewwidget.obj : warning LNK4049: locally defined symbol __glewBindBuffer imported
 editwidget.obj : warning LNK4049: locally defined symbol __glewBufferData imported
@@ -43,6 +46,8 @@ editwidget.obj : warning LNK4049: locally defined symbol __glewEnableVertexAttri
 viewwidget.obj : warning LNK4049: locally defined symbol __glewEnableVertexAttribArray imported
 editwidget.obj : warning LNK4049: locally defined symbol __glewGetUniformLocation imported
 viewwidget.obj : warning LNK4049: locally defined symbol __glewGetUniformLocation imported
+editwidget.obj : warning LNK4049: locally defined symbol __glewUniform1i imported
+viewwidget.obj : warning LNK4049: locally defined symbol __glewUniform1i imported
 editwidget.obj : warning LNK4049: locally defined symbol __glewUniform4fv imported
 viewwidget.obj : warning LNK4049: locally defined symbol __glewUniform4fv imported
 editwidget.obj : warning LNK4049: locally defined symbol __glewUniformMatrix4fv imported
@@ -55,11 +60,9 @@ editwidget.obj : warning LNK4049: locally defined symbol __glewBindVertexArray i
 viewwidget.obj : warning LNK4049: locally defined symbol __glewBindVertexArray imported
 editwidget.obj : warning LNK4049: locally defined symbol __glewGenVertexArrays imported
 viewwidget.obj : warning LNK4049: locally defined symbol __glewGenVertexArrays imported
-viewwidget.obj : warning LNK4049: locally defined symbol __glewActiveTexture imported
 viewwidget.obj : warning LNK4049: locally defined symbol __glewDisableVertexAttribArray imported
 viewwidget.obj : warning LNK4049: locally defined symbol __glewDrawBuffers imported
 viewwidget.obj : warning LNK4049: locally defined symbol __glewUniform1f imported
-viewwidget.obj : warning LNK4049: locally defined symbol __glewUniform1i imported
 viewwidget.obj : warning LNK4049: locally defined symbol __glewUniform2fv imported
 viewwidget.obj : warning LNK4049: locally defined symbol __glewUniform3fv imported
 viewwidget.obj : warning LNK4049: locally defined symbol __glewUniform4f imported

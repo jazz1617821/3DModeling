@@ -11,9 +11,9 @@
 #define Y 1
 #define Z 2
 #define THREE_DIMENSION_WINDOW 0
-#define X_WINDOW 1
-#define Y_WINDOW 2
-#define Z_WINDOW 3
+#define X_WINDOW 1	//YZ plane
+#define Y_WINDOW 2	//XZ plane
+#define Z_WINDOW 3	//XY plane
 #define FOUR_WINDOWS 4
 
 using namespace std;
@@ -160,18 +160,46 @@ void EditWidget::initializeGL(void)
 		ground[y * 2 + 1 + 512][2] = 0;
 	}
 
-	/* Allocate and assign a Vertex Array Object to our handle */
 	glGenVertexArrays(1, VAOs);
-
-	/* Bind our Vertex Array Object as the current used object */
 	glBindVertexArray(VAOs[Ground]);
 
-	//Gen Buffers
 	glGenBuffers(NumAttribs, groundvbo);
 
-	//Bind ground data
 	glBindBuffer(GL_ARRAY_BUFFER, groundvbo[Vertex]);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(ground), ground, GL_STATIC_DRAW);
+	glBindVertexArray(0);
+
+	glGenVertexArrays(3, VAOs);
+
+	glBindVertexArray(VAOs[XBillBoard]);
+
+	glGenBuffers(NumAttribs, x_billboard);
+
+	glBindBuffer(GL_ARRAY_BUFFER, x_billboard[Vertex]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(xbbVertex), xbbVertex, GL_STATIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, x_billboard[Texcoor]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(xbbTexCoor), xbbTexCoor, GL_DYNAMIC_DRAW);
+	glBindVertexArray(0);
+
+	glBindVertexArray(VAOs[YBillBoard]);
+
+	glGenBuffers(NumAttribs, y_billboard);
+
+	glBindBuffer(GL_ARRAY_BUFFER, y_billboard[Vertex]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(ybbVertex), ybbVertex, GL_STATIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, y_billboard[Texcoor]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(ybbTexCoor), ybbTexCoor, GL_DYNAMIC_DRAW);
+	glBindVertexArray(0);
+
+	glBindVertexArray(VAOs[ZBillBoard]);
+
+	glGenBuffers(NumAttribs, z_billboard);
+
+	glBindBuffer(GL_ARRAY_BUFFER, z_billboard[Vertex]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(zbbVertex), zbbVertex, GL_STATIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, z_billboard[Texcoor]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(zbbTexCoor), zbbTexCoor, GL_DYNAMIC_DRAW);
+	glBindVertexArray(0);
 
 	// load shaders
 
@@ -360,31 +388,21 @@ void EditWidget::drawObject(int mode) {
 	float mat[16], color[4];
 
 	switch (mode) {
-	case X_WINDOW:
+	case X_WINDOW: //YZ plane
 		glUseProgram(program[Slice]);
 		currentProgram = program[Slice];
 		translate(-256 / 2, -256 / 2, -256 / 2, modelMat);
 		updateViewing(X_WINDOW);
 
-		clipplane_1[1] = clipplane_1[2] = clipplane_2[1] = clipplane_2[2] = 0;
-		clipplane_1[0] = 1;
-		clipplane_2[0] = -1;
-		clipplane_1[3] = x_number_of_layers;
-		clipplane_2[3] = x_number_of_layers;
-
-		glUniform4fv(glGetUniformLocation(currentProgram, "ClipPlaneUp"), 1, clipplane_1);
-		glUniform4fv(glGetUniformLocation(currentProgram, "ClipPlaneDoen"), 1, clipplane_2);
-
-		color[0] = 1.0;
-		color[1] = 1.0;
-		color[2] = 1.0;
-		color[3] = 1.0;
-		glUniform4fv(glGetUniformLocation(currentProgram, "color"), 1, color);
-		glBindVertexArray(VAOs[Triangles]);
-		glBindBuffer(GL_ARRAY_BUFFER, objvbo[Vertex]);
+		glViewport(0, 0, this->vdata->resolution[Y], this->vdata->resolution[Z]);
+		glBindVertexArray(VAOs[XBillBoard]);
+		glBindBuffer(GL_ARRAY_BUFFER, x_billboard[Vertex]);
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
 		glEnableVertexAttribArray(0);
-		glDrawArrays(GL_TRIANGLES, 0, sizeof(float) * 108 * voxelamount);
+		glBindBuffer(GL_ARRAY_BUFFER, x_billboard[Texcoor]);
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
+		glEnableVertexAttribArray(1);
+		glDrawArrays(GL_TRIANGLES, 0, sizeof(float) * 4 * 3);
 
 		break;
 	case Y_WINDOW:
@@ -578,6 +596,12 @@ void EditWidget::paintGL(void)
 
 		break;
 	case THREE_DIMENSION_WINDOW:
+		x_layer_slider->setHidden(true);
+		y_layer_slider->setHidden(true);
+		z_layer_slider->setHidden(true);
+		x_layer_spinbox->setHidden(true);
+		y_layer_spinbox->setHidden(true);
+		z_layer_spinbox->setHidden(true);
 		make_view(THREE_DIMENSION_WINDOW);
 		make_projection(THREE_DIMENSION_WINDOW);
 		glViewport(0, 0, this->width(), this->height());
@@ -863,6 +887,23 @@ void EditWidget::createVoxelVBO(vdata_t * vd)
 					false : true;
 				neighbor[5] = (i > 1 && vd->rawData[index - vd->resolution[X] * vd->resolution[Y]].data) ?
 					false : true;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 				/*
 				initBox(boxVBO, neighbor);
 				initBoxWF(boxWFVBO, neighbor);
@@ -1055,6 +1096,34 @@ void EditWidget::makevDataVBO(vdata_t* vd)
 	return;
 }
 
+void EditWidget::Texture() {
+
+	glGenTextures(1, &Data3DTexture);
+
+	glUniform1i(glGetUniformLocation(program[Slice], "dataTexture"), 0);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_3D, Data3DTexture);
+	glTexImage3D(GL_TEXTURE_3D, 0, GL_RGBA32F, this->vdata->resolution[X], this->vdata->resolution[Y], this->vdata->resolution[Z], 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+
+	return;
+}
+
+void EditWidget::makeDataBuffer(vdata_t* vd) {
+	DataBuffer = (unsigned char*)calloc(sizeof(char) , vd->resolution[X] * vd->resolution[Y] * vd->resolution[Z]);
+
+	for (int z = 0; z < vd->resolution[Z]; z++) {
+		for (int y = 0; y < vd->resolution[Y]; y++) {
+			for (int x = 0; x < vd->resolution[X]; x++) {
+				DataBuffer[x + y*vd->resolution[X] + z*vd->resolution[X] * vd->resolution[Y]] = vd->rawData[x + y*vd->resolution[X] + z*vd->resolution[X] * vd->resolution[Y]].data;
+			}
+		}
+	}
+
+	Texture();
+
+	return;
+}
+
 //Private slots:
 void EditWidget::getVDataPtr(vdata_t* vdata) {
 	if (this->vdata == NULL) {
@@ -1064,6 +1133,7 @@ void EditWidget::getVDataPtr(vdata_t* vdata) {
 	cout << this->vdata->name << endl;
 	caculateVoxelAmount(this->vdata);
 	makevDataVBO(this->vdata);
+	makeDataBuffer(this->vdata);
 	update();
 	return;
 }

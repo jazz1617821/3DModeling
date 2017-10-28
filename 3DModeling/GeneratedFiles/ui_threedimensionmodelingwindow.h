@@ -20,11 +20,9 @@
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
-#include <QtWidgets/QRadioButton>
 #include <QtWidgets/QSplitter>
 #include <QtWidgets/QTabWidget>
 #include <QtWidgets/QTableWidget>
-#include <QtWidgets/QToolBox>
 #include <QtWidgets/QTreeWidget>
 #include <QtWidgets/QWidget>
 #include "editwidget.h"
@@ -60,14 +58,7 @@ public:
     QGridLayout *gridLayout_2;
     ViewWidget *viewWidget;
     QWidget *editWidgetLayout;
-    QGridLayout *gridLayout_7;
-    QToolBox *toolBox;
-    QWidget *ioWidget;
-    QGridLayout *gridLayout_4;
-    QRadioButton *radioButton;
-    QRadioButton *radioButton_2;
-    QWidget *morphologicalWidget;
-    QWidget *modellogicalWidget;
+    QGridLayout *gridLayout_12;
     EditWidget *editWidget;
     QMenuBar *menuBar;
     QMenu *menuFile;
@@ -77,7 +68,8 @@ public:
     {
         if (TDMMainWindow->objectName().isEmpty())
             TDMMainWindow->setObjectName(QStringLiteral("TDMMainWindow"));
-        TDMMainWindow->resize(773, 595);
+        TDMMainWindow->resize(773, 606);
+        TDMMainWindow->setMaximumSize(QSize(16777215, 16777215));
         actionSave = new QAction(TDMMainWindow);
         actionSave->setObjectName(QStringLiteral("actionSave"));
         actionOpen = new QAction(TDMMainWindow);
@@ -204,65 +196,21 @@ public:
         editWidgetLayout->setObjectName(QStringLiteral("editWidgetLayout"));
         sizePolicy.setHeightForWidth(editWidgetLayout->sizePolicy().hasHeightForWidth());
         editWidgetLayout->setSizePolicy(sizePolicy);
-        gridLayout_7 = new QGridLayout(editWidgetLayout);
-        gridLayout_7->setSpacing(6);
-        gridLayout_7->setContentsMargins(11, 11, 11, 11);
-        gridLayout_7->setObjectName(QStringLiteral("gridLayout_7"));
-        toolBox = new QToolBox(editWidgetLayout);
-        toolBox->setObjectName(QStringLiteral("toolBox"));
-        QSizePolicy sizePolicy3(QSizePolicy::Expanding, QSizePolicy::Maximum);
-        sizePolicy3.setHorizontalStretch(0);
-        sizePolicy3.setVerticalStretch(0);
-        sizePolicy3.setHeightForWidth(toolBox->sizePolicy().hasHeightForWidth());
-        toolBox->setSizePolicy(sizePolicy3);
-        toolBox->setMinimumSize(QSize(0, 0));
-        toolBox->setMaximumSize(QSize(16777215, 500));
-        ioWidget = new QWidget();
-        ioWidget->setObjectName(QStringLiteral("ioWidget"));
-        ioWidget->setGeometry(QRect(0, 0, 100, 58));
-        sizePolicy.setHeightForWidth(ioWidget->sizePolicy().hasHeightForWidth());
-        ioWidget->setSizePolicy(sizePolicy);
-        gridLayout_4 = new QGridLayout(ioWidget);
-        gridLayout_4->setSpacing(6);
-        gridLayout_4->setContentsMargins(11, 11, 11, 11);
-        gridLayout_4->setObjectName(QStringLiteral("gridLayout_4"));
-        radioButton = new QRadioButton(ioWidget);
-        radioButton->setObjectName(QStringLiteral("radioButton"));
-
-        gridLayout_4->addWidget(radioButton, 0, 0, 1, 1);
-
-        radioButton_2 = new QRadioButton(ioWidget);
-        radioButton_2->setObjectName(QStringLiteral("radioButton_2"));
-
-        gridLayout_4->addWidget(radioButton_2, 1, 0, 1, 1);
-
-        toolBox->addItem(ioWidget, QStringLiteral("Insert , Delete"));
-        morphologicalWidget = new QWidget();
-        morphologicalWidget->setObjectName(QStringLiteral("morphologicalWidget"));
-        morphologicalWidget->setGeometry(QRect(0, 0, 100, 30));
-        sizePolicy.setHeightForWidth(morphologicalWidget->sizePolicy().hasHeightForWidth());
-        morphologicalWidget->setSizePolicy(sizePolicy);
-        toolBox->addItem(morphologicalWidget, QStringLiteral("Morphological"));
-        modellogicalWidget = new QWidget();
-        modellogicalWidget->setObjectName(QStringLiteral("modellogicalWidget"));
-        modellogicalWidget->setGeometry(QRect(0, 0, 100, 30));
-        sizePolicy.setHeightForWidth(modellogicalWidget->sizePolicy().hasHeightForWidth());
-        modellogicalWidget->setSizePolicy(sizePolicy);
-        toolBox->addItem(modellogicalWidget, QStringLiteral("Model logical"));
-
-        gridLayout_7->addWidget(toolBox, 1, 0, 1, 1);
-
+        gridLayout_12 = new QGridLayout(editWidgetLayout);
+        gridLayout_12->setSpacing(6);
+        gridLayout_12->setContentsMargins(11, 11, 11, 11);
+        gridLayout_12->setObjectName(QStringLiteral("gridLayout_12"));
         editWidget = new EditWidget(editWidgetLayout);
         editWidget->setObjectName(QStringLiteral("editWidget"));
         sizePolicy.setHeightForWidth(editWidget->sizePolicy().hasHeightForWidth());
         editWidget->setSizePolicy(sizePolicy);
         editWidget->setMouseTracking(true);
 
-        gridLayout_7->addWidget(editWidget, 0, 0, 1, 1);
+        gridLayout_12->addWidget(editWidget, 0, 0, 1, 1);
 
         view_tabWidget->addTab(editWidgetLayout, QString());
 
-        gridLayout->addWidget(view_tabWidget, 0, 0, 1, 1);
+        gridLayout->addWidget(view_tabWidget, 0, 1, 1, 1);
 
         splitter->addWidget(rightWidgetLayout);
 
@@ -290,7 +238,6 @@ public:
 
         tabWidget->setCurrentIndex(0);
         view_tabWidget->setCurrentIndex(0);
-        toolBox->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(TDMMainWindow);
@@ -307,11 +254,6 @@ public:
         tabWidget->setTabText(tabWidget->indexOf(widget1), QApplication::translate("TDMMainWindow", "Voxel Data", 0));
         AttributeLabel->setText(QApplication::translate("TDMMainWindow", "Attributes", 0));
         view_tabWidget->setTabText(view_tabWidget->indexOf(viewWidgetLayout), QApplication::translate("TDMMainWindow", "View Model", 0));
-        radioButton->setText(QApplication::translate("TDMMainWindow", "RadioButton", 0));
-        radioButton_2->setText(QApplication::translate("TDMMainWindow", "RadioButton", 0));
-        toolBox->setItemText(toolBox->indexOf(ioWidget), QApplication::translate("TDMMainWindow", "Insert , Delete", 0));
-        toolBox->setItemText(toolBox->indexOf(morphologicalWidget), QApplication::translate("TDMMainWindow", "Morphological", 0));
-        toolBox->setItemText(toolBox->indexOf(modellogicalWidget), QApplication::translate("TDMMainWindow", "Model logical", 0));
         view_tabWidget->setTabText(view_tabWidget->indexOf(editWidgetLayout), QApplication::translate("TDMMainWindow", "Edit Model", 0));
         menuFile->setTitle(QApplication::translate("TDMMainWindow", "File", 0));
         menuHelp->setTitle(QApplication::translate("TDMMainWindow", "Help", 0));

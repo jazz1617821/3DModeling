@@ -1,4 +1,4 @@
-#ifndef _OBJECT_H
+﻿#ifndef _OBJECT_H
 #define _OBJECT_H
 
 #include <GL\glew.h>

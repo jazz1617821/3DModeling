@@ -41,6 +41,10 @@ private:
 	void createVoxelVBO(vdata_t * vd);
 	void makevDataVBO(vdata_t* vd);
 
+	void Texture();
+
+	void makeDataBuffer(vdata_t* vd);
+
 	private slots:
 	void getVDataPtr(vdata_t* vdata);
 	void xSliderValuechange(int value);
@@ -147,13 +151,60 @@ private:
 
 	// vbo setting
 	
-	enum VAO_IDs { Ground, Triangles, NumVAOs };
+	enum VAO_IDs { Ground, Triangles, XBillBoard, YBillBoard, ZBillBoard, NumVAOs };
 	GLuint VAOs[NumVAOs];
 
 	enum Object_Attribs { Vertex, Normal, Texcoor, Color, Wireframe, NumAttribs };
 	GLuint groundvbo[NumAttribs];
 	GLuint objvbo[NumAttribs];
 
+	//3 Billboard
+	GLuint x_billboard[NumAttribs];
+	GLuint y_billboard[NumAttribs];
+	GLuint z_billboard[NumAttribs];
+
+	float xbbVertex[4][3] = {//yz_plane vertex
+		{ 0,0,0 },
+		{ 0,0,256 },
+		{ 0,256,256 },
+		{ 0,256,0 }
+	};
+	float ybbVertex[4][3] = {//xz_plane vertex
+		{ 0,0,0 },
+		{ 0,0,256 },
+		{ 256,0,256 },
+		{ 256,0,0 }
+	};
+	float zbbVertex[4][3] = {//xy_plane vertex
+		{ 0,0,0 },
+		{ 256,0,0 },
+		{ 256,256,0 },
+		{ 0,256,0 }
+	};
+	float xbbTexCoor[4][3] = {//yz_plane texture coordinate
+		{ 0,0,0 },
+		{ 0,0,1 },
+		{ 0,1,1 },
+		{ 0,1,0 }
+	};
+	float ybbTexCoor[4][3] = {//xz_plane texture coordinate
+		{ 0,0,0 },
+		{ 0,0,1 },
+		{ 1,0,1 },
+		{ 1,0,0 }
+	};
+	float zbbTexCoor[4][3] = {//xy_plane texture coordinate
+		{ 0,0,0 },
+		{ 1,0,0 },
+		{ 1,1,0 },
+		{ 0,1,0 }
+	};
+
+	
 	int voxelamount = 0;
 
+	//DataBuffer & Texture
+	unsigned char* DataBuffer;
+
+	GLuint Data3DTexture;
 };
